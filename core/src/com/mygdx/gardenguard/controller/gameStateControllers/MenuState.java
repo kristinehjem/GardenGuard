@@ -1,4 +1,4 @@
-package states;
+package com.mygdx.gardenguard.controller.gameStateControllers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
