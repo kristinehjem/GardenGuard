@@ -7,6 +7,8 @@ import com.mygdx.gardenguard.GardenGuard;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.width = GardenGuard.WIDTH;
+		config.height = GardenGuard.HEIGHT;
 		new LwjglApplication(new GardenGuard(), config);
 	}
 }
