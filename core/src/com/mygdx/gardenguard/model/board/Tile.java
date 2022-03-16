@@ -46,10 +46,7 @@ public class Tile {
         return width;
     }
 
-    public void draw(SpriteBatch batch) {
-        tile.draw(batch);
-    }
-    public void render(SpriteBatch sb, float x, float y) {
-        sb.draw(texture, x, y);
+    public Sprite getSprite() {
+        return tile;
     }
 }

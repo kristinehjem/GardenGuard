@@ -12,10 +12,7 @@ public class PlayState extends State {
 
     public PlayState(GameStateManager gsm){
         super(gsm);
-        tile = new Tile(true);
-
-
-
+        this.board = new Board();
     }
 
     @Override
@@ -33,7 +30,7 @@ public class PlayState extends State {
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(tile.getSquareRegion(), 0, 0);
+        board.getTiles()[0][0].getSprite().draw(sb);
         sb.end();
 
     }
