@@ -96,4 +96,3 @@ project(":core") {
         //implementation 'com.google.firebase:firebase-client-android:2.5.0'
     }
 }
-

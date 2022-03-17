@@ -1,3 +1,4 @@
+apply plugin: 'com.google.gms.google-services'
 android {
     buildToolsVersion "29.0.3"
     compileSdkVersion 29
@@ -87,6 +88,11 @@ task run(type: Exec) {
 
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.gardenguard/com.mygdx.gardenguard.AndroidLauncher'
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
 }
 
 eclipse.project.name = appName + "-android"
