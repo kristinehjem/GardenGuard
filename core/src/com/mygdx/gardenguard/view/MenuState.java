@@ -1,10 +1,10 @@
-package com.mygdx.gardenguard.controller.gameStateControllers;
+package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class LobbyState extends State{
+public class MenuState extends State{
 
-    public LobbyState(GameStateManager gsm){
+    public MenuState(GameStateManager gsm){
         super(gsm);
     }
 

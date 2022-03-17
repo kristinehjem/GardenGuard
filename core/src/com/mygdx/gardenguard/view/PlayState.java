@@ -1,7 +1,5 @@
-package com.mygdx.gardenguard.controller.gameStateControllers;
+package com.mygdx.gardenguard.view;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.model.board.Board;
