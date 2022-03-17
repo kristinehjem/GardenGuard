@@ -11,9 +11,10 @@ import com.mygdx.gardenguard.view.PlayState;
 public class GardenGuard extends ApplicationAdapter {
 
 	private GameStateManager gsm;
-
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 900;
+	public static final int numVertical = 15;
+	public static final int numHorisontal = 9;
+	public static final int WIDTH = 480;
+	public static final int HEIGHT = 800;
 	private SpriteBatch batch;
 	
 	@Override

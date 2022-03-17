@@ -36,8 +36,8 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         sb.draw(board.getBg(), 0, 0, 500, 900);
         //Sprite sprite = new Sprite(new Texture("green.png"));
-        for (int y=0;y<15;y++) {
-            for (int x=0; x<10; x++) {
+        for (int y=0;y<GardenGuard.numVertical;y++) {
+            for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 //sb.draw(board.getTileTexture(y, x), x * board.getTiles()[y][x].getWidth(), y * board.getTiles()[y][x].getHeight(), 50, 60);
                 //sprite.setPosition(x * board.getTiles()[y][x].getWidth(), y * board.getTiles()[y][x].getHeight());
                 //drawBackground(sb, board.getTiles()[y][x], x , y );

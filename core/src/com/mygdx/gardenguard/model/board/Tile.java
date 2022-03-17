@@ -15,7 +15,7 @@ public class Tile {
 
     public Tile(boolean walkable) {
         this.walkable = walkable;
-        this.texture = new Texture("green.png");
+        this.texture = new Texture("green2.png");
         width = (int) GardenGuard.WIDTH / 10;
         height = (int) GardenGuard.HEIGHT / 15;
         this.tile = new Sprite(texture, width, height);
