@@ -22,16 +22,18 @@ public class GardenGuard extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		//Gdx.gl.glClearColor(0, 0, 0, 1);
 		gsm.push(new PlayState(gsm));
 	}
 
 	@Override
 	public void render () {
+		ScreenUtils.clear(0, 0, 0, 0);
+		batch.begin();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gsm.render(batch);
-		//comment for edit
+		batch.end();
 	}
 	
 	@Override

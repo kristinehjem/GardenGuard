@@ -15,7 +15,7 @@ public class Tile {
 
     public Tile(boolean walkable) {
         this.walkable = walkable;
-        this.texture = new Texture("grass.png");
+        this.texture = new Texture("green.png");
         width = (int)camera.viewportWidth / 10;
         height = (int)camera.viewportHeight / 15;
         this.tile = new Sprite(texture, width, height);
