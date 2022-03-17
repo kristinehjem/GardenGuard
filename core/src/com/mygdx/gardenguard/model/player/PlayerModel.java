@@ -2,7 +2,7 @@ package com.mygdx.gardenguard.model.player;
 
 public abstract class PlayerModel {
 
-    private String playerID;
+    private int playerID;
     private String position; //Skal ha et board (Board) som består av tiles (Tile).
     private int score;
     private boolean max_vision;
@@ -10,7 +10,7 @@ public abstract class PlayerModel {
     //private firebase for å kunne lage playerID og lagre informasjonen
     //private int face: Sier noe om hvilken retning spriten ser.
 
-    public PlayerModel(String playerID, String postion){
+    public PlayerModel(int playerID, String position){
 
         this.playerID = playerID;
         this.score = 0;
@@ -37,7 +37,7 @@ public abstract class PlayerModel {
         return steps;
     }
 
-    public String getPlayerID() {
+    public int getPlayerID() {
         return playerID;
     }
 
@@ -45,13 +45,11 @@ public abstract class PlayerModel {
         this.max_vision = max_vision;
     }
 
-    public void setPlayerID(String playerID) {
-        this.playerID = playerID;
+    public void setScore(int points) {
+        this.score += points;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
+    public abstract void gainPoints();
 
 }
 
