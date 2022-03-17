@@ -8,6 +8,11 @@ public class HiderModel extends PlayerModel {
         this.setMax_vision(true);
     }
 
+    @Override
+    public void gainPoints() {
+        this.setScore(10);
+    }
+
 
 
 }

@@ -8,6 +8,11 @@ public class SeekerModel extends PlayerModel {
         this.setMax_vision(false);
     }
 
+    //Method for gaining points as a player
+    @Override
+    public void gainPoints() {
+        this.setScore(5);
+    }
 
 
 }
