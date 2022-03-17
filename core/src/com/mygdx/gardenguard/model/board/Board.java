@@ -11,8 +11,10 @@ public class Board {
     OrthographicCamera camera = new OrthographicCamera();
     int tileHeight = 15;
     int tileWidth = 10;
+    Texture bg;
 
     public Board() {
+        this.bg = new Texture("grass.png");
         for (int y=0;y<tileHeight;y++) {
             for (int x=0; x<tileWidth; x++) {
                 //creating board without obstructions
@@ -30,5 +32,9 @@ public class Board {
 
     public Texture getTileTexture(int y, int x){
         return tiles[y][x].getTexture();
+    }
+
+    public Texture getBg() {
+        return bg;
     }
 }
