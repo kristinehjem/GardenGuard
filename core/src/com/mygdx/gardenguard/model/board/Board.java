@@ -14,7 +14,7 @@ public class Board {
     Texture bg;
 
     public Board() {
-        this.bg = new Texture("grass.png");
+        this.bg = new Texture("bg.png");
         for (int y = 0; y< GardenGuard.numVertical; y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 //creating board without obstructions
