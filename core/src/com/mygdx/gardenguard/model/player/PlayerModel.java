@@ -13,8 +13,8 @@ public abstract class PlayerModel {
     public PlayerModel(int playerID, String position){
 
         this.playerID = playerID;
-        this.score = 0;
         this.position = position;
+        this.score = 0;
     }
 
     protected void setSteps(int i) {

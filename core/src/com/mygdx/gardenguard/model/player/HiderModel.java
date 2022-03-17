@@ -1,10 +1,13 @@
 package com.mygdx.gardenguard.model.player;
 
-public class HiderModel extends PlayerModel {
+import java.util.Stack;
 
-    public HiderModel(String playerID, String position) {
+public class HiderModel extends PlayerModel {
+    private Stack<Integer> path; //må endre Integer til Tile
+
+    public HiderModel(int playerID, String position) {
         super(playerID, position);
-        this.setSteps(10);
+        this.setSteps(15);
         this.setMax_vision(true);
     }
 
@@ -12,7 +15,5 @@ public class HiderModel extends PlayerModel {
     public void gainPoints() {
         this.setScore(10);
     }
-
-
 
 }
