@@ -11,4 +11,4 @@ public class DataHolderClass {
     public void PrintSomeValue() {
         System.out.println("From printSomeValue: " + someValue);
     }
-}
+    }

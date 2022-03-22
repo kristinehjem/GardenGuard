@@ -14,7 +14,6 @@ import com.google.firebase.database.ValueEventListener;
 public class AndroidInterFaceClass implements FireBaseInterface{
     FirebaseDatabase database;
     DatabaseReference myRef;
-    DataSnapshot dataSnapshot;
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
@@ -36,7 +35,6 @@ public class AndroidInterFaceClass implements FireBaseInterface{
         } else {
             System.out.println("Databaserreference was not set");
         }
-
     }
 
     //function to set event listener to different objects in the database
@@ -49,7 +47,7 @@ public class AndroidInterFaceClass implements FireBaseInterface{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //This method is called once with the initial value and again
                 // whenever data at this location is  updated
-                String value = dataSnapshot.getValue(String.class);
+                String value = snapshot.getValue(String.class);
                 dataholder.someValue = value;
                 //what you want to do with the changed value
                 dataholder.PrintSomeValue();
