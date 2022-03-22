@@ -1,15 +1,16 @@
 package com.mygdx.gardenguard.API;
 
+/*
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class TestDatabase {
-    private DatabaseReference mDatabase;
-    mDatabase = FirebaseDatabase.getInstance();
     private FirebaseDatabase database = FirebaseDatabase.getInstance("https://gardenguard-5605c-default-rtdb.europe-west1.firebasedatabase.app/.json");
     DatabaseReference myRef = database.getReference("message");
 
-    //myRef.setValue("Hei, verden");
+    myRef.setValue("Hei, verden");
 
-    /*
     private FirebaseAuth mAuth;
     mAuth = FirebaseAuth.getInstance();
     @Override
@@ -61,5 +62,10 @@ public class TestDatabase {
                 // ...
             }
         });
-    */
+
+    public static void main(String[] args) {
+        TestDatabase tb = new TestDatabase();
+
+    }
 }
+*/
