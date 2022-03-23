@@ -3,7 +3,9 @@ package com.mygdx.gardenguard.controller.playerControllers;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
-//PlayerController skal ta av seg all logikk som har med hvordan spilleren beveger seg på bordet per nå.
+/*
+* PlayerController skal ta seg av all logikk som har med hvordan spilleren beveger seg på bordet per nå.
+*/
 
 public class PlayerController {
 
@@ -23,7 +25,7 @@ public class PlayerController {
         return player;
     }
 
-    public void updatePosition() {
+    public void updatePosition() throws Exception {
         if(Gdx.input.isButtonJustPressed(1)) {
             System.out.println("Gå til høyre \n");
             moveRight();
@@ -42,24 +44,54 @@ public class PlayerController {
         }
     }
 
-    private void moveRight() {
-        // x og y i denne if-en må gjøres om. Tanken er at [][] skal være tilen til høyre (det er det ikke nå). Må regne om mellom posisjonen til player og rutenummer i matrisen.
-        //if(board.getTiles()[y][x].isWalkable) {
-        //    path.push(board.getTiles()[y][x]);
-            // et sted i koden må vi vise steps left. Det beregner vi fra player.getSteps() - path.size.
-        //}
+    // Bytt til try catch hvis dette ikke fungerer: https://coderanch.com/t/649165/java/prevent-user-bounds-simple-array
+    private void moveRight() throws Exception {
+        if(player.getSteps() - player.getPath().size == 0) { // sjekker om man har flere steps left TODO: lag path
+            System.out.print("No steps left"); // TODO: leggge dette inn i UI
+        }
+        if(player.getxPos() == board.getTiles().lenght()) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+            throw new Exception("Player cannot move further right, out of bounds");
+            // TODO: lag getTiles
+        }
+        else if(board.getTiles()[player.getyPos()][player.getxPos()+1].isWalkable) {
+            player.pushPath(board.getTiles()[player.getyPos()][player.getxPos()+1]);
+        }
     }
 
-    private void moveLeft() {
-
+    private void moveLeft() throws Exception {
+        if(player.getSteps() - path.size == 0) {
+            System.out.print("No steps left");
+        }
+        if(player.getxPos() == board.getTiles().lenght()) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+            throw new Exception("Player cannot move further left, out of bounds");
+        }
+        else if(board.getTiles()[player.getyPos()][player.getxPos()-1].isWalkable) {
+            path.push(board.getTiles()[player.getyPos()][player.getxPos()-1]);
+        }
     }
 
-    private void moveUp() {
-
+    private void moveUp() throws Exception {
+        if(player.getSteps() - path.size == 0) {
+            System.out.print("No steps left");
+        }
+        if(player.getxPos() == board.getTiles().lenght()) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+            throw new Exception("Player cannot move further up, out of bounds");
+        }
+        else if(board.getTiles()[player.getyPos()-1][player.getxPos()].isWalkable) {
+            path.push(board.getTiles()[player.getyPos()-1][player.getxPos()]);
+        }
     }
 
-    private void moveDown() {
-
+    private void moveDown() throws Exception {
+        if(player.getSteps() - path.size == 0) {
+            System.out.print("No steps left");
+        }
+        if(player.getxPos() == board.getTiles().lenght()) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+            throw new Exception("Player cannot move further left, out of bounds");
+        }
+        else if(board.getTiles()[player.getyPos()+1][player.getxPos()].isWalkable) {
+            path.push(board.getTiles()[player.getyPos()+1][player.getxPos()]);
+        }
     }
 
     private boolean collides() {
