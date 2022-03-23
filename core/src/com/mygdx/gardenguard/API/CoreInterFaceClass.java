@@ -2,19 +2,8 @@ package com.mygdx.gardenguard.API;
 
 public class CoreInterFaceClass implements FireBaseInterface {
 
-
     @Override
-    public void SomeFuction() {
-        System.out.println("gjerkgnl");
-    }
-
-    @Override
-    public void FirstFireBaseTest() {
-
-    }
-
-    @Override
-    public void SetOnValueChangedListener(DataHolderClass dataholder) {
+    public void SetOnValueChangedListener(DataHolderClass dataholder, String gamePin) {
 
     }
 

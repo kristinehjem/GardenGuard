@@ -11,51 +11,38 @@ import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.API.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AndroidInterFaceClass implements FireBaseInterface {
     FirebaseDatabase database;
-    DatabaseReference myRef;
     DatabaseReference gameRef;
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
+        //the game in the database
         gameRef = FirebaseDatabase.getInstance().getReference("games");
-        //this is an object in the database
-        myRef = database.getReference("message");
-    }
-
-    //test function
-    @Override
-    public void SomeFuction() {
-        System.out.println("print in androidinterfaceclass");
-    }
-
-
-    //test function to write to the database
-    @Override
-    public void FirstFireBaseTest() {
-        if (myRef != null) {
-            myRef.setValue("Hello, World");
-        } else {
-            System.out.println("Databaserreference was not set");
-        }
     }
 
     //function to set event listener to different objects in the database
     @Override
-    public void SetOnValueChangedListener(final DataHolderClass dataholder) {
+    public void SetOnValueChangedListener(final DataHolderClass dataholder, String gamePin) {
         //now we get notified when the object in myRef changes
-        myRef.addValueEventListener(new ValueEventListener() {
+        gameRef.child(gamePin).addValueEventListener(new ValueEventListener() {
             //read from the database
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Player> players = new ArrayList<>();
+                //iterating through all the nodes
+                for (DataSnapshot snap : snapshot.child("players").getChildren()) {
+                    Player player = snap.getValue(Player.class);
+                    players.add(player);
+                }
+                dataholder.setPlayers(players);
+            }
                 //This method is called once with the initial value and again
                 // whenever data at this location is  updated
-                String value = snapshot.getValue(String.class);
-                dataholder.someValue = value;
-                //what you want to do with the changed value
-                dataholder.PrintSomeValue();
                 //Log.d(TAG, "Value is: " + value);
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

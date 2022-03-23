@@ -25,18 +25,12 @@ public class GardenGuard extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		dataholder = new DataHolderClass();
-
-		_FBIC.SomeFuction();
-		_FBIC.FirstFireBaseTest();
-		//telling the database we are listening
-		_FBIC.SetOnValueChangedListener(dataholder);
-		//changing the actual value of message in the database
-		//_FBIC.SetValueInDB("new_message", "this is beate speaking");
-		_FBIC.SetOnValueChangedListener(dataholder);
 		this.player = new Player("Elen", "2,0");
-		//_FBIC.SetValueInDB("message", new JSONObject("{\"key\":\"this is beate talking\"}"));
 		this.gamePin = _FBIC.CreateGameAndPlayer1InDB(this.player);
-		_FBIC.UpdatePositionInDB(gamePin, this.player.getPlayerID(), "3,0");
+		_FBIC.CreatePlayerInDB(this.gamePin, new Player("Beate", "4,0"));
+		//telling the database we are listening to the gamePin
+		_FBIC.SetOnValueChangedListener(dataholder, this.gamePin);
+		//_FBIC.UpdatePositionInDB(gamePin, this.player.getPlayerID(), "5,4");
 	}
 
 	@Override

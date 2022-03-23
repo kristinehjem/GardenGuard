@@ -5,16 +5,9 @@ import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 
 public class DesktopInterFaceClass implements FireBaseInterface {
-    @Override
-    public void SomeFuction() {
-    }
 
     @Override
-    public void FirstFireBaseTest() {
-    }
-
-    @Override
-    public void SetOnValueChangedListener(DataHolderClass dataholder) {
+    public void SetOnValueChangedListener(DataHolderClass dataholder, String gamePin) {
     }
 
     @Override

@@ -5,11 +5,7 @@ import com.mygdx.gardenguard.API.Player;
 
 public interface FireBaseInterface {
 
-    public void SomeFuction();
-
-    public void FirstFireBaseTest();
-
-    public void SetOnValueChangedListener(DataHolderClass dataholder);
+    public void SetOnValueChangedListener(DataHolderClass dataholder, String gamePin);
 
     public String CreateGameAndPlayer1InDB(Player player);
 

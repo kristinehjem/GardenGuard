@@ -15,6 +15,10 @@ public class Player {
         this.position = position;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
     public String getPlayerID() {
         return this.playerID;
     }
