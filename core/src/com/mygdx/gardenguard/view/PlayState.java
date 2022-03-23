@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.board.Tile;
+import com.mygdx.gardenguard.view.playViews.TileView;
 
 public class PlayState extends State {
 
     private Board board;
-    private Tile tile;
 
     public PlayState(GameStateManager gsm){
         super(gsm);
@@ -27,25 +27,13 @@ public class PlayState extends State {
 
     }
 
-    private void drawBackground(SpriteBatch sb, Tile tile, int x, int y) {
-        sb.draw(tile.getTexture(), x * tile.getWidth(), y * tile.getHeight(), 50, 60);
-    }
-
     @Override
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
-        sb.draw(board.getBg(), 0, 0, 500, 900);
-        //Sprite sprite = new Sprite(new Texture("green.png"));
         for (int y=0;y<GardenGuard.numVertical;y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
-                //sb.draw(board.getTileTexture(y, x), x * board.getTiles()[y][x].getWidth(), y * board.getTiles()[y][x].getHeight(), 50, 60);
-                //sprite.setPosition(x * board.getTiles()[y][x].getWidth(), y * board.getTiles()[y][x].getHeight());
-                //drawBackground(sb, board.getTiles()[y][x], x , y );
-                if (board.getTiles()[y][x].isWalkable()) {
-                    drawBackground(sb, board.getTiles()[y][x], x, y);
-                }
+                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }}
-        //board.getTiles()[0][0].getSprite().draw(sb);
 
     }
 
