@@ -1,6 +1,7 @@
+apply plugin: 'com.google.gms.google-services'
 android {
     buildToolsVersion "29.0.3"
-    compileSdkVersion 29
+    compileSdkVersion 31 //var 29
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -13,13 +14,17 @@ android {
         }
 
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
         applicationId "com.mygdx.gardenguard"
-        minSdkVersion 14
-        targetSdkVersion 29
+        minSdkVersion 19 //Var 14
+        targetSdkVersion 31 //var 29
         versionCode 1
         versionName "1.0"
     }
@@ -87,6 +92,11 @@ task run(type: Exec) {
 
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.gardenguard/com.mygdx.gardenguard.AndroidLauncher'
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
 }
 
 eclipse.project.name = appName + "-android"
