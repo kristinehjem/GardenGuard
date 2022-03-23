@@ -1,8 +1,5 @@
 package com.mygdx.gardenguard;
 
-import android.provider.ContactsContract;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -10,13 +7,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mygdx.gardenguard.API.DataHolderClass;
+import com.mygdx.gardenguard.API.FireBaseInterface;
+import com.mygdx.gardenguard.API.Player;
 
-public class AndroidInterFaceClass implements FireBaseInterface{
+public class AndroidInterFaceClass implements FireBaseInterface {
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference gameRef;
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
+        gameRef = FirebaseDatabase.getInstance().getReference("games");
         //this is an object in the database
         myRef = database.getReference("message");
     }
@@ -26,6 +28,7 @@ public class AndroidInterFaceClass implements FireBaseInterface{
     public void SomeFuction() {
         System.out.println("print in androidinterfaceclass");
     }
+
 
     //test function to write to the database
     @Override
@@ -62,11 +65,27 @@ public class AndroidInterFaceClass implements FireBaseInterface{
         });
     }
 
-    //writes value to the target object in the database
     @Override
-    public void SetValueInDB(String target, String value) {
-        //changing where you want to set the value. Set it to target, and set it to value
-        myRef = database.getReference(target);
-        myRef.setValue(value);
+    public String CreateGameAndPlayer1InDB(Player player) {
+        String gamePin = gameRef.push().getKey();
+        this.CreatePlayerInDB(gamePin, player);
+        return gamePin;
+    }
+
+    @Override
+    public void CreatePlayerInDB(String gamePin, Player player) {
+        String playerID = gameRef.push().getKey();
+        player.setPlayerID(playerID);
+        gameRef.child(gamePin).child("players").child(playerID).setValue(player);
+    }
+
+    @Override
+    public void UpdatePositionInDB(String gamePin, String playerID, String value) {
+        gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
+    }
+
+    @Override
+    public void UpdateScoreInDB(String target, String value) {
+
     }
 }

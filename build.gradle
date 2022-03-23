@@ -80,6 +80,7 @@ project(":core") {
         implementation platform('com.google.firebase:firebase-bom:29.2.0')
         implementation 'com.google.firebase:firebase-analytics:20.1.0'
         implementation 'com.google.firebase:firebase-database:20.0.4'
+        implementation 'org.json:json:20171018'
     }
 }
 

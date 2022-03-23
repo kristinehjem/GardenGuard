@@ -1,20 +1,21 @@
-package com.mygdx.gardenguard.desktop;
+package com.mygdx.gardenguard.API;
 
-import com.mygdx.gardenguard.API.DataHolderClass;
-import com.mygdx.gardenguard.API.Player;
-import com.mygdx.gardenguard.API.FireBaseInterface;
+public class CoreInterFaceClass implements FireBaseInterface {
 
-public class DesktopInterFaceClass implements FireBaseInterface {
+
     @Override
     public void SomeFuction() {
+        System.out.println("gjerkgnl");
     }
 
     @Override
     public void FirstFireBaseTest() {
+
     }
 
     @Override
     public void SetOnValueChangedListener(DataHolderClass dataholder) {
+
     }
 
     @Override

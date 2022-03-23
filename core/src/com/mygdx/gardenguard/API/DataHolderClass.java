@@ -1,8 +1,8 @@
-package com.mygdx.gardenguard;
+package com.mygdx.gardenguard.API;
 
 public class DataHolderClass {
 
-    String someValue;
+    public String someValue;
 
     public DataHolderClass() {
 
