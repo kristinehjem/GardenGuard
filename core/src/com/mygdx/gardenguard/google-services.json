@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "280261025239",
+    "firebase_url": "https://gardenguard-5605c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "gardenguard-5605c",
+    "storage_bucket": "gardenguard-5605c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280261025239:android:91ed24e06498d4db4eff92",
+        "android_client_info": {
+          "package_name": "com.mygdx.gardenguard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280261025239-lm6ff1so7hqnkk9r3ii4skilqgk2iui3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkRziEQsQpaK8nbAcEpCGSgKMR6KSV9es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280261025239-lm6ff1so7hqnkk9r3ii4skilqgk2iui3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

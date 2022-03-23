@@ -9,6 +9,6 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = GardenGuard.WIDTH;
 		config.height = GardenGuard.HEIGHT;
-		new LwjglApplication(new GardenGuard(), config);
+		new LwjglApplication(new GardenGuard(new DesktopInterFaceClass()), config);
 	}
 }
