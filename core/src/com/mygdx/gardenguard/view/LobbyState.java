@@ -1,11 +1,14 @@
-package com.mygdx.gardenguard.controller.gameStateControllers;
+package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.gardenguard.GardenGuard;
+import com.mygdx.gardenguard.model.board.Board;
 
-public class MenuState extends State{
+public class LobbyState extends State{
 
-    public MenuState(GameStateManager gsm){
+    public LobbyState(GameStateManager gsm){
         super(gsm);
+        cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
     }
 
     @Override
@@ -20,7 +23,7 @@ public class MenuState extends State{
 
     @Override
     protected void render(SpriteBatch sb) {
-
+        sb.setProjectionMatrix(cam.combined);
     }
 
     @Override

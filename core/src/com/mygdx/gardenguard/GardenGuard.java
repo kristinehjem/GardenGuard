@@ -1,20 +1,29 @@
 package com.mygdx.gardenguard;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.API.Player;
+import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.view.PlayState;
+import com.mygdx.gardenguard.view.LobbyState;
 
 public class GardenGuard extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
 	FireBaseInterface _FBIC;
 	DataHolderClass dataholder;
 	String gamePin;
 	Player player;
+
+	private GameStateManager gsm;
+	public static final int numVertical = 15;
+	public static final int numHorisontal = 9;
+	public static final int WIDTH = 480;
+	public static final int HEIGHT = 800;
+	private SpriteBatch batch;
 
 	public GardenGuard(FireBaseInterface FBIC) {
 		_FBIC = FBIC;
@@ -23,27 +32,30 @@ public class GardenGuard extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		dataholder = new DataHolderClass();
-		this.player = new Player("Elen", "2,0");
+		/*this.player = new Player("Elen", "2,0");
 		this.gamePin = _FBIC.CreateGameAndPlayer1InDB(this.player);
 		_FBIC.CreatePlayerInDB(this.gamePin, new Player("Beate", "4,0"));
 		//telling the database we are listening to the gamePin
 		_FBIC.SetOnValueChangedListener(dataholder, this.gamePin);
-		//_FBIC.UpdatePositionInDB(gamePin, this.player.getPlayerID(), "5,4");
+		//_FBIC.UpdatePositionInDB(gamePin, this.player.getPlayerID(), "5,4");*/
+		gsm = new GameStateManager();
+		gsm.push(new PlayState(gsm));
+		gsm.push(new LobbyState(gsm));
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
+		ScreenUtils.clear(0, 0, 0, 0);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		gsm.update(Gdx.graphics.getDeltaTime());
+		gsm.render(batch);
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }

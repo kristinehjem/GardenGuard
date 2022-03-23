@@ -1,10 +1,10 @@
-package com.mygdx.gardenguard.controller.gameStateControllers;
+package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class PlayState extends State {
+public class MenuState extends State{
 
-    public PlayState(GameStateManager gsm){
+    public MenuState(GameStateManager gsm){
         super(gsm);
     }
 
@@ -15,7 +15,6 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-        handleInput();
 
     }
 
