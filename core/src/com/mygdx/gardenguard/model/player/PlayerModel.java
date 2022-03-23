@@ -1,19 +1,26 @@
 package com.mygdx.gardenguard.model.player;
 
+import com.badlogic.gdx.utils.Array;
+
 public abstract class PlayerModel {
 
     private int playerID;
-    private String position; //Skal ha et board (Board) som består av tiles (Tile).
+    //private String position; //Skal ha et board (Board) som består av tiles (Tile).
+    // Forslag Ingrid: heller ha posisjon som x-verdi og y-verdi, og at det sammen gir en tile
+    private int xPos;
+    private int yPos;
     private int score;
     private boolean max_vision;
     private int steps;
     //private firebase for å kunne lage playerID og lagre informasjonen
     //private int face: Sier noe om hvilken retning spriten ser.
 
-    public PlayerModel(int playerID, String position){
+    public PlayerModel(int playerID, int xPos, int yPos){
 
         this.playerID = playerID;
-        this.position = position;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        //this.position = position;
         this.score = 0;
     }
 
@@ -21,8 +28,19 @@ public abstract class PlayerModel {
         this.steps = i;
     }
 
-    public String getPosition() {
+    // Ulempen med å dele posisjon opp i x og y er at da trenger man dobbelt sett med variabler og gettere.
+    // Men samtidig så ser jeg ikke hvordan vi skal finne eks. tilen til høyre om man ikke har x- og y-verdier.
+    // Men om vi finner ut dette, så kan mpten man bruker posisjon oå selvfølgelig endres.
+    /*public String getPosition() {
         return position;
+    }*/
+
+    public int getxPos() {
+        return this.xPos;
+    }
+
+    public int getyPos() {
+        return this.yPos;
     }
 
     public boolean isMax_vision() {
@@ -51,5 +69,6 @@ public abstract class PlayerModel {
 
     public abstract void gainPoints();
 
+    public abstract Array getPath();
 }
 
