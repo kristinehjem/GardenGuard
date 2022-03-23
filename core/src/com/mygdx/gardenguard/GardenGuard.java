@@ -14,7 +14,7 @@ public class GardenGuard extends ApplicationAdapter {
 	public static final int numVertical = 15;
 	public static final int numHorisontal = 9;
 	public static final int WIDTH = 480;
-	public static final int HEIGHT = 800;
+	public static final int HEIGHT = 780;
 	private SpriteBatch batch;
 	
 	@Override

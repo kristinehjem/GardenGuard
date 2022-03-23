@@ -8,22 +8,17 @@ import com.mygdx.gardenguard.GardenGuard;
 import java.util.Arrays;
 
 public class Board {
-    Tile[][] tiles = new Tile[15][10];
-    OrthographicCamera camera = new OrthographicCamera();
-    int tileWidth = 9;
-    Texture bg;
+    Tile[][] tiles = new Tile[15][9];
 
     public Board() {
-        this.bg = new Texture("bg.png");
         for (int y = 0; y< GardenGuard.numVertical; y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 //creating board without obstructions
-                tiles[y][x] = new Tile(true);
-                tiles[y][x].setX(x * tiles[y][x].getWidth());
-                tiles[y][x].setY(y * tiles[y][x].getHeight());
+                tiles[y][x] = new Tile(x, y,true);
+                tiles[y][x].setPosX(x * tiles[y][x].getWidth());
+                tiles[y][x].setPosY(y * tiles[y][x].getHeight());
             }
         }
-        System.out.println(tiles[0][0]);
     };
 
 
@@ -31,11 +26,4 @@ public class Board {
         return tiles;
     }
 
-    public Texture getTileTexture(int y, int x){
-        return tiles[y][x].getTexture();
-    }
-
-    public Texture getBg() {
-        return bg;
-    }
 }
