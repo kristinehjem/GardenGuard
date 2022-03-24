@@ -20,7 +20,7 @@ public class TileView {
     }
 
     public void setPicture(Tile tile){
-        if (tile.isWalkable() == true){
+        if (tile.isWalkable()){
             sprite = new Sprite(grass, tile.getPosX(), tile.getPosY(), tile.getWidth(), tile.getHeight());
         }
         else {

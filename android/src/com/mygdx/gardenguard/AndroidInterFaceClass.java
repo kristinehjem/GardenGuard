@@ -10,6 +10,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.API.Player;
+import com.mygdx.gardenguard.model.player.HiderModel;
+import com.mygdx.gardenguard.model.player.PlayerModel;
+import com.mygdx.gardenguard.model.player.SeekerModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +35,17 @@ public class AndroidInterFaceClass implements FireBaseInterface {
             //read from the database
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Player> players = new ArrayList<>();
+                List<PlayerModel> players = new ArrayList<>();
                 //iterating through all the nodes
                 for (DataSnapshot snap : snapshot.child("players").getChildren()) {
-                    Player player = snap.getValue(Player.class);
-                    players.add(player);
+                    if (snap.child("isSeeker").getValue() == "true") {
+                        System.out.println("er en seeker");
+                        SeekerModel player = snap.getValue(SeekerModel.class);
+                        players.add(player);
+                    } else {
+                        HiderModel player = snap.getValue(HiderModel.class);
+                        players.add(player);
+                    }
                 }
                 dataholder.updatePlayers(players);
             }
@@ -51,14 +60,14 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public String CreateGameAndPlayer1InDB(Player player) {
+    public String CreateGameAndPlayer1InDB(PlayerModel player) {
         String gamePin = gameRef.push().getKey();
         this.CreatePlayerInDB(gamePin, player);
         return gamePin;
     }
 
     @Override
-    public void CreatePlayerInDB(String gamePin, Player player) {
+    public void CreatePlayerInDB(String gamePin, PlayerModel player) {
         String playerID = gameRef.push().getKey();
         player.setPlayerID(playerID);
         gameRef.child(gamePin).child("players").child(playerID).setValue(player);

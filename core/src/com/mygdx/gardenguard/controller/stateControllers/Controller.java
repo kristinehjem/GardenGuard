@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
 import com.mygdx.gardenguard.API.Player;
+import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.view.GameStateManager;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public abstract class Controller {
 
-    protected List<Player> players;
+    protected List<PlayerModel> players;
     protected GameStateManager gsm;
 
     public Controller() {
@@ -17,11 +18,11 @@ public abstract class Controller {
         this.players = new ArrayList<>();
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<PlayerModel> players) {
         this.players = players;
     }
 
-    public List<Player> getPlayers() {
+    public List<PlayerModel> getPlayers() {
         return players;
     }
 }

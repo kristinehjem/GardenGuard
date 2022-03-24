@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.LobbyController;
+import com.mygdx.gardenguard.model.player.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,13 +62,13 @@ public class LobbyState extends State{
 
         sb.setProjectionMatrix(cam.combined);
         sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        List<Player> players = controller.getPlayers();
+        List<PlayerModel> players = controller.getPlayers();
         playerFont.draw(sb, "Players", 180, 600);
         int i = 0;
-        for (Player player: players) {
+        for (PlayerModel player: players) {
             int x_value = (int) (120 + (i*30*Math.pow(-1, i)));
             int y_value = 500-(i*80);
-            nameFont.draw(sb, player.getName(),x_value, y_value);
+            nameFont.draw(sb, player.getPlayerID(),x_value, y_value);
             i += 1;
         }
     }

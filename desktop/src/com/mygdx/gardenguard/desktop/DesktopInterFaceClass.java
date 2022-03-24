@@ -3,6 +3,7 @@ package com.mygdx.gardenguard.desktop;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.API.FireBaseInterface;
+import com.mygdx.gardenguard.model.player.PlayerModel;
 
 public class DesktopInterFaceClass implements FireBaseInterface {
 
@@ -11,12 +12,12 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public String CreateGameAndPlayer1InDB(Player player) {
+    public String CreateGameAndPlayer1InDB(PlayerModel player) {
         return "hei";
     }
 
     @Override
-    public void CreatePlayerInDB(String gamePin, Player player) {
+    public void CreatePlayerInDB(String gamePin, PlayerModel player) {
 
     }
 

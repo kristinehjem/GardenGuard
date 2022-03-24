@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
 import com.mygdx.gardenguard.API.Player;
+import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.view.GameStateManager;
 import com.mygdx.gardenguard.view.PlayState;
 
@@ -15,9 +16,9 @@ public class LobbyController extends Controller {
     }
 
     @Override
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<PlayerModel> players) {
         super.setPlayers(players);
-        if (super.getPlayers().size() == 2) {
+        if (super.getPlayers().size() == 5) {
             super.gsm.push(new PlayState());
         }
     }
