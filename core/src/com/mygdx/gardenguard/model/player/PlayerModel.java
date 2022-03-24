@@ -11,14 +11,23 @@ public abstract class PlayerModel {
     private int score;
     private boolean max_vision;
     private int steps;
+    protected boolean isSeeker;
     //private firebase for å kunne lage playerID og lagre informasjonen
     //private int face: Sier noe om hvilken retning spriten ser.
 
 
-    public PlayerModel(String playerID, Vector2 position){
-        this.playerID = playerID;
+    public PlayerModel(Vector2 position){
         this.position = position;
         this.score = 0;
+    }
+
+    //ikke slett denne, trenger for database
+    public PlayerModel() {
+
+    }
+
+    public void setPlayerID(String playerID) {
+        this.playerID = playerID;
     }
 
     protected void setSteps(int i) {

@@ -1,5 +1,7 @@
 package com.mygdx.gardenguard.API;
 
+import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.view.State;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
 import java.util.ArrayList;
@@ -8,15 +10,16 @@ import java.util.List;
 public class DataHolderClass {
 
     List<PlayerModel> players;
+    GameStateManager gsm;
 
     public DataHolderClass() {
+        this.gsm = GameStateManager.getInstance();
         this.players = new ArrayList<>();
     }
 
-    public void setPlayers(List<PlayerModel> players) {
+    public void updatePlayers(List<PlayerModel> players){
         this.players = players;
-        for (PlayerModel player : players) {
-            System.out.println(player.getPlayerID());
-        }
+        State state = this.gsm.getState();
+        state.getController().setPlayers(this.players);
     }
 }

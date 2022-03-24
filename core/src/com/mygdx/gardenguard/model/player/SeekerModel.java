@@ -6,10 +6,16 @@ import java.util.Stack;
 
 public class SeekerModel extends PlayerModel {
 
-    public SeekerModel(String playerID, Vector2 position) {
-        super(playerID, position);
+    public SeekerModel(Vector2 position) {
+        super(position);
         this.setSteps(3);
         this.setMax_vision(false);
+        super.isSeeker = true;
+    }
+
+    //ikke slett
+    public SeekerModel() {
+
     }
 
     //Method for gaining points as a player

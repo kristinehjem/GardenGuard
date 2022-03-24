@@ -9,10 +9,16 @@ import java.util.Stack;
 public class HiderModel extends PlayerModel {
     private Stack<Vector2> path; //må endre Integer til Tile
 
-    public HiderModel(String playerID, Vector2 position) {
-        super(playerID, position);
+    public HiderModel(Vector2 position) {
+        super(position);
         this.setSteps(15);
         this.setMax_vision(true);
+        super.isSeeker = false;
+    }
+
+    //ikke slett
+    public HiderModel() {
+
     }
 
     @Override
