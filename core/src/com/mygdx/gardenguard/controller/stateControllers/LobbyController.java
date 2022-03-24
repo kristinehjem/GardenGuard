@@ -10,15 +10,15 @@ import java.util.List;
 
 public class LobbyController extends Controller {
 
-    public LobbyController(GameStateManager gsm) {
-        super(gsm);
+    public LobbyController() {
+        super();
     }
 
     @Override
     public void setPlayers(List<Player> players) {
         super.setPlayers(players);
-        if (super.getPlayers().size() == 5) {
-            super.gsm.push(new PlayState(super.gsm));
+        if (super.getPlayers().size() == 2) {
+            super.gsm.push(new PlayState());
         }
     }
 }

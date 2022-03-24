@@ -12,8 +12,8 @@ public abstract class Controller {
     protected List<Player> players;
     protected GameStateManager gsm;
 
-    public Controller(GameStateManager gsm) {
-        this.gsm = gsm;
+    public Controller() {
+        this.gsm = GameStateManager.getInstance();
         this.players = new ArrayList<>();
     }
 

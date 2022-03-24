@@ -5,8 +5,8 @@ import com.mygdx.gardenguard.controller.stateControllers.Controller;
 
 public class MenuState extends State{
 
-    public MenuState(GameStateManager gsm){
-        super(gsm);
+    public MenuState(){
+        super();
     }
 
     @Override

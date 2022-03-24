@@ -12,8 +12,8 @@ public class DataHolderClass {
     List<Player> players;
     GameStateManager gsm;
 
-    public DataHolderClass(GameStateManager gsm) {
-        this.gsm = gsm;
+    public DataHolderClass() {
+        this.gsm = GameStateManager.getInstance();
         this.players = new ArrayList<>();
     }
 

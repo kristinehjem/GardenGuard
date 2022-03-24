@@ -1,10 +1,17 @@
 package com.mygdx.gardenguard.view;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Stack;
 
 public class GameStateManager {
+
+    private static GameStateManager gsm = new GameStateManager();
+
+    public static GameStateManager getInstance(){
+        return gsm;
+    }
 
     private Stack<State> states;
 
@@ -30,8 +37,6 @@ public class GameStateManager {
     }
 
     public State getState() {
-        System.out.println("getstate");
-        System.out.println(states.peek().getClass());
         return states.peek();
     }
 

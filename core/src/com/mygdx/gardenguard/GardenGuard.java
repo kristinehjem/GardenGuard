@@ -32,9 +32,11 @@ public class GardenGuard extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		gsm = new GameStateManager();
-		dataholder = new DataHolderClass(gsm);
-		gsm.push(new LobbyState(gsm));
+		gsm = GameStateManager.getInstance();
+		dataholder = new DataHolderClass();
+		gsm.push(new LobbyState());
+		//gsm.push(new PlayState());
+		dataholder = new DataHolderClass();
 		this.player = new Player("Elen", "2,0");
 		this.gamePin = _FBIC.CreateGameAndPlayer1InDB(this.player);
 		_FBIC.SetOnValueChangedListener(dataholder, this.gamePin);
