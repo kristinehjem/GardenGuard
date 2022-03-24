@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LobbyState extends State{
 
-    public LobbyState(GameStateManager gsm){
-        super(gsm);
+    public LobbyState(){
+        super();
     }
 
     @Override
