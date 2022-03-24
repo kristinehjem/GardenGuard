@@ -35,7 +35,7 @@ public class GardenGuard extends ApplicationAdapter {
 		//Gdx.gl.glClearColor(0, 0, 0, 1);
 		gsm.push(new PlayState());
 		dataholder = new DataHolderClass();
-		this.player = new Player("Elen", "2,0");
+		//this.player = new Player("Elen", "2,0");
 		this.gamePin = _FBIC.CreateGameAndPlayer1InDB(this.player);
 		_FBIC.CreatePlayerInDB(this.gamePin, new Player("Beate", "4,0"));
 		//telling the database we are listening to the gamePin
