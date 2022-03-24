@@ -20,14 +20,14 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
-        //the game in the database
+        //the games in the database
         gameRef = FirebaseDatabase.getInstance().getReference("games");
     }
 
     //function to set event listener to different objects in the database
     @Override
     public void SetOnValueChangedListener(final DataHolderClass dataholder, String gamePin) {
-        //now we get notified when the object in myRef changes
+        //now we get notified when the object in gameRef changes
         gameRef.child(gamePin).addValueEventListener(new ValueEventListener() {
             //read from the database
             @Override
@@ -38,10 +38,8 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                     Player player = snap.getValue(Player.class);
                     players.add(player);
                 }
-                dataholder.setPlayers(players);
+                dataholder.updatePlayers(players);
             }
-                //This method is called once with the initial value and again
-                // whenever data at this location is  updated
                 //Log.d(TAG, "Value is: " + value);
 
             @Override

@@ -29,6 +29,12 @@ public class GameStateManager {
         states.peek().update(dt);
     }
 
+    public State getState() {
+        System.out.println("getstate");
+        System.out.println(states.peek().getClass());
+        return states.peek();
+    }
+
     public void render(SpriteBatch sb){
         states.peek().render(sb);
     }

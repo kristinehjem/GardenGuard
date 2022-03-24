@@ -2,6 +2,7 @@ package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gardenguard.GardenGuard;
+import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.board.Tile;
 import com.mygdx.gardenguard.view.playViews.TileView;
@@ -14,6 +15,11 @@ public class PlayState extends State {
         super(gsm);
         cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
+    }
+
+    @Override
+    public Controller getController() {
+        return null;
     }
 
     @Override

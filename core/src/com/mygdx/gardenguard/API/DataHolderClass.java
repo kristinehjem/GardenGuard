@@ -1,21 +1,25 @@
 package com.mygdx.gardenguard.API;
 
+import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.view.State;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class DataHolderClass {
 
     List<Player> players;
+    GameStateManager gsm;
 
-    public DataHolderClass() {
+    public DataHolderClass(GameStateManager gsm) {
+        this.gsm = gsm;
         this.players = new ArrayList<>();
     }
 
-    public void setPlayers(List<Player> players) {
+    public void updatePlayers(List<Player> players){
         this.players = players;
-        for (Player player : players) {
-            System.out.println(player.getName());
-        }
+        State state = this.gsm.getState();
+        state.getController().setPlayers(this.players);
     }
-
 }
