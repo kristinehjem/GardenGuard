@@ -1,5 +1,6 @@
 package com.mygdx.gardenguard.view;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gardenguard.GardenGuard;
@@ -19,12 +20,13 @@ public class PlayState extends State {
     private Board board;
     private PlayerModel player;
     private ArrayList<PlayerController> players;
+    private Texture bulbaText = new Texture("bulba.png"); // TODO: må separere dette / lage textures osv et annet sted.
 
     public PlayState(){
         super();
         cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
-        this.player = new SeekerModel("HEI", new Vector2(1, 2));
+        this.player = new SeekerModel("bulba", new Vector2(1, 2));
         this.players = new ArrayList<>();
         players.add(new SeekerController((SeekerModel) this.player, this.board));
     }
@@ -36,11 +38,9 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-        for (PlayerController spillere: this.players) {
-            spillere.updatePosition();
+        for (PlayerController playerCont: this.players) {
+            playerCont.updatePosition();
         }
-
-
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PlayState extends State {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }}
-
+        sb.draw(bulbaText, board.getTiles()[0][0].getWidth()*5+board.getTiles()[0][0].getWidth()/2-bulbaText.getWidth()/2, board.getTiles()[0][0].getHeight()*3+board.getTiles()[0][0].getHeight()/2-bulbaText.getHeight()/2);
     }
 
     @Override
