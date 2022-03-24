@@ -1,26 +1,21 @@
 package com.mygdx.gardenguard.model.player;
 
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Vector2;
+import java.util.Stack;
 
 public abstract class PlayerModel {
 
-    private int playerID;
-    //private String position; //Skal ha et board (Board) som består av tiles (Tile).
-    // Forslag Ingrid: heller ha posisjon som x-verdi og y-verdi, og at det sammen gir en tile
-    private int xPos;
-    private int yPos;
+    private String playerID;
+    private Vector2 position;
     private int score;
     private boolean max_vision;
     private int steps;
     //private firebase for å kunne lage playerID og lagre informasjonen
     //private int face: Sier noe om hvilken retning spriten ser.
 
-    public PlayerModel(int playerID, int xPos, int yPos){
-
+    public PlayerModel(String playerID, Vector2 position){
         this.playerID = playerID;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        //this.position = position;
+        this.position = position;
         this.score = 0;
     }
 
@@ -28,19 +23,10 @@ public abstract class PlayerModel {
         this.steps = i;
     }
 
-    // Ulempen med å dele posisjon opp i x og y er at da trenger man dobbelt sett med variabler og gettere.
-    // Men samtidig så ser jeg ikke hvordan vi skal finne eks. tilen til høyre om man ikke har x- og y-verdier.
-    // Men om vi finner ut dette, så kan mpten man bruker posisjon oå selvfølgelig endres.
-    /*public String getPosition() {
-        return position;
-    }*/
+    public Vector2 getPosition() {return this.position;}
 
-    public int getxPos() {
-        return this.xPos;
-    }
-
-    public int getyPos() {
-        return this.yPos;
+    public void setPosition(int xPos, int yPos) {
+        this.position = new Vector2(xPos, yPos);
     }
 
     public boolean isMax_vision() {
@@ -55,7 +41,7 @@ public abstract class PlayerModel {
         return steps;
     }
 
-    public int getPlayerID() {
+    public String getPlayerID() {
         return playerID;
     }
 
@@ -69,6 +55,8 @@ public abstract class PlayerModel {
 
     public abstract void gainPoints();
 
-    public abstract Array getPath();
+    public abstract Stack<Vector2> getPath();
+
+    public abstract void pushPath(Vector2 tile);
 }
 

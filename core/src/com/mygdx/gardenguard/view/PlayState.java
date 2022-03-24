@@ -1,19 +1,32 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gardenguard.GardenGuard;
+import com.mygdx.gardenguard.controller.playerControllers.PlayerController;
+import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.board.Tile;
+import com.mygdx.gardenguard.model.player.PlayerModel;
+import com.mygdx.gardenguard.model.player.SeekerModel;
 import com.mygdx.gardenguard.view.playViews.TileView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayState extends State {
 
     private Board board;
+    private PlayerModel player;
+    private ArrayList<PlayerController> players;
 
     public PlayState(GameStateManager gsm){
         super(gsm);
         cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
+        this.player = new SeekerModel("HEI", new Vector2(1, 2));
+        this.players = new ArrayList<>();
+        players.add(new SeekerController((SeekerModel) this.player, this.board));
     }
 
     @Override
@@ -23,7 +36,10 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-        handleInput();
+        for (PlayerController spillere: this.players) {
+            spillere.updatePosition();
+        }
+
 
     }
 
