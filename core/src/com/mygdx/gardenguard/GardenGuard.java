@@ -6,10 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.view.MenuState;
 import com.mygdx.gardenguard.view.PlayState;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.API.Player;
+
+import java.awt.Menu;
 
 public class GardenGuard extends ApplicationAdapter {
 	private GameStateManager gsm;
@@ -33,7 +36,8 @@ public class GardenGuard extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		gsm = GameStateManager.getInstance();
 		//Gdx.gl.glClearColor(0, 0, 0, 1);
-		gsm.push(new PlayState());
+		//gsm.push(new PlayState());
+		gsm.push(new MenuState());
 		dataholder = new DataHolderClass();
 		this.player = new Player("Elen", "2,0");
 		this.gamePin = _FBIC.CreateGameAndPlayer1InDB(this.player);
