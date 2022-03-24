@@ -10,8 +10,8 @@ public class PlayState extends State {
 
     private Board board;
 
-    public PlayState(GameStateManager gsm){
-        super(gsm);
+    public PlayState(){
+        super();
         cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
     }

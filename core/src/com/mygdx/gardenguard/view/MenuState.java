@@ -6,14 +6,8 @@ import com.mygdx.gardenguard.GardenGuard;
 
 public class MenuState extends State{
 
-    Texture join;
-    Texture create;
-
-
-    public MenuState(GameStateManager gsm){
-        super(gsm);
-        cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-
+    public MenuState(){
+        super();
     }
 
     @Override
