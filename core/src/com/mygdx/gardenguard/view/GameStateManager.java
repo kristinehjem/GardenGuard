@@ -32,8 +32,12 @@ public class GameStateManager {
         states.push(state);
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         states.peek().update(dt);
+    }
+
+    public State getState() {
+        return states.peek();
     }
 
     public void render(SpriteBatch sb){

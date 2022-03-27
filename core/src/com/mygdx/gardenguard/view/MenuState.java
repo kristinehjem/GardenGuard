@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
+import com.mygdx.gardenguard.controller.stateControllers.Controller;
+
 import java.awt.Color;
 
 public class MenuState extends State implements TextInputListener {
@@ -30,6 +32,11 @@ public class MenuState extends State implements TextInputListener {
     public MenuState(){
         super();
 
+    }
+
+    @Override
+    public Controller getController() {
+        return null;
     }
 
     @Override
