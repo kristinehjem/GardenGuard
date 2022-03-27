@@ -42,14 +42,9 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-<<<<<<< HEAD
-=======
         for (PlayerController player: this.players) {
             player.updatePosition();
         }
-
->>>>>>> main
-
     }
 
     @Override
