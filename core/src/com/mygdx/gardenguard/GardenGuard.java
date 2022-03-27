@@ -31,7 +31,7 @@ public class GardenGuard extends ApplicationAdapter {
 	private SpriteBatch batch;
 
 	FireBaseInterface _FBIC;
-	DataHolderClass dataholder;
+
 	String gamePin;
 	PlayerModel player;
 
@@ -43,16 +43,8 @@ public class GardenGuard extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = GameStateManager.getInstance();
-		dataholder = new DataHolderClass();
-		gsm.push(new LobbyState());
-		//gsm.push(new PlayState());
-		dataholder = new DataHolderClass();
-		this.player = new SeekerModel(new Vector2(2, 3));
-		this.gamePin = _FBIC.CreateGameAndPlayer1InDB(this.player);
-		_FBIC.SetOnValueChangedListener(dataholder, this.gamePin);
-		_FBIC.CreatePlayerInDB(this.gamePin, new HiderModel(new Vector2(4, 5)));
-		//_FBIC.CreatePlayerInDB(this.gamePin, new HiderModel("5,0"));
-		//_FBIC.UpdatePositionInDB(gamePin, this.player.getPlayerID(), "5,4");
+		gsm.setFBIC(_FBIC);
+		gsm.push(new MenuState());
 	}
 
 	@Override

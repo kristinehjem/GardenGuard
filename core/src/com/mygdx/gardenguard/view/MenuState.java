@@ -18,6 +18,7 @@ import com.mygdx.gardenguard.GardenGuard;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
+import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 
 import java.awt.Color;
 
@@ -27,16 +28,18 @@ public class MenuState extends State implements TextInputListener {
     Texture bg = new Texture("newBg.jpg");
 
     private Stage stage;
-    public String pin;
+    private String inputPin;
+    private MenuController menuController;
 
     public MenuState(){
         super();
+        this.menuController = new MenuController();
 
     }
 
     @Override
     public Controller getController() {
-        return null;
+        return this.menuController;
     }
 
     @Override
@@ -79,7 +82,6 @@ public class MenuState extends State implements TextInputListener {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("join");
                 Gdx.input.getTextInput(getThis(), "Enter game pin", "", "");
-
                 return true;
             }
         });
@@ -89,6 +91,8 @@ public class MenuState extends State implements TextInputListener {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("create");
+                menuController.handleCreate();
+                //GameStateManager.getInstance().push(new LobbyState());
                 return true;
             }
         });
@@ -98,7 +102,8 @@ public class MenuState extends State implements TextInputListener {
 
     @Override
     public void input(String text) {
-        this.pin = text;
+        this.inputPin = text;
+        menuController.handleJoin(inputPin);
     }
 
     @Override

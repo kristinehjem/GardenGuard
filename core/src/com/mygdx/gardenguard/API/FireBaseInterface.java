@@ -16,4 +16,6 @@ public interface FireBaseInterface {
 
     public void UpdateScoreInDB(String target, String value);
 
+    public boolean checkIfGameExists(String gamePin);
+
 }

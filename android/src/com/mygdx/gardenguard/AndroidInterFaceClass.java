@@ -9,7 +9,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
-import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
@@ -81,5 +80,25 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void UpdateScoreInDB(String target, String value) {
 
+    }
+
+    @Override
+    public boolean checkIfGameExists(String gamePin) {
+        final boolean[] res = {true};
+        gameRef.child(gamePin).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    System.out.println("value is null");
+                    res[0] = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return res[0];
     }
 }

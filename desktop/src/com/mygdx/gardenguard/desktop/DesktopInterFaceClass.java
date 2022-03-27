@@ -30,4 +30,9 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     public void UpdateScoreInDB(String target, String value) {
 
     }
+
+    @Override
+    public boolean checkIfGameExists(String gamePin) {
+        return false;
+    }
 }
