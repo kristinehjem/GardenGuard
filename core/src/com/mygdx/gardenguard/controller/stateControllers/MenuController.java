@@ -7,7 +7,12 @@ public class MenuController {
     private Button join;
     private Button create;
 
-    public void handleClick(){
+    public void handleJoin(String pin){
+
+    }
+
+    public void handleCreate() {
+
     }
 
 }

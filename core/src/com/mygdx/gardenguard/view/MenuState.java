@@ -72,9 +72,7 @@ public class MenuState extends State implements TextInputListener {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("join");
                 Gdx.input.getTextInput(getThis(), "Enter game pin", "", "");
-                //pin attribute will now be updated with the typed pin
-                //if for å sjekke om pin er gyldig
-                //GameStateManager.getInstance().push(new LobbyState());
+
                 return true;
             }
         });
@@ -83,7 +81,6 @@ public class MenuState extends State implements TextInputListener {
         create.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //GameStateManager.getInstance().push(new LobbyState());
                 System.out.println("create");
                 return true;
             }
@@ -99,7 +96,6 @@ public class MenuState extends State implements TextInputListener {
 
     @Override
     public void canceled() {
-        pin = "cancelled";
     }
 
     public TextInputListener getThis() {
