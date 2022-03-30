@@ -1,6 +1,9 @@
 package com.mygdx.gardenguard.API;
 
+import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 import com.mygdx.gardenguard.model.player.PlayerModel;
+
+import sun.security.util.ManifestEntryVerifier;
 
 public class CoreInterFaceClass implements FireBaseInterface {
 
@@ -10,7 +13,7 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public String CreateGameAndPlayer1InDB(PlayerModel player) {
+    public String CreateGameInDB() {
         return "hei";
     }
 
@@ -28,4 +31,10 @@ public class CoreInterFaceClass implements FireBaseInterface {
     public void UpdateScoreInDB(String target, String value) {
 
     }
+
+    @Override
+    public void checkIfGameExists(String gamePin, MenuController MC) {
+
+    }
+
 }

@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
-import com.mygdx.gardenguard.API.Player;
+import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
@@ -60,9 +60,8 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public String CreateGameAndPlayer1InDB(PlayerModel player) {
+    public String CreateGameInDB() {
         String gamePin = gameRef.push().getKey();
-        this.CreatePlayerInDB(gamePin, player);
         return gamePin;
     }
 
@@ -81,5 +80,25 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void UpdateScoreInDB(String target, String value) {
 
+    }
+
+    @Override
+    public void checkIfGameExists(String gamePin, MenuController MC) {
+        gameRef.child(gamePin).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    MC.setPinExist(false);
+                    System.out.println("not exist");
+                    System.out.println(MC.getPinExist());
+                } else {
+                    MC.setPinExist(false);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

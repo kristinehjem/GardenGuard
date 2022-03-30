@@ -19,7 +19,8 @@ public class DataHolderClass {
 
     public void updatePlayers(List<PlayerModel> players){
         this.players = players;
-        State state = this.gsm.getState();
+        System.out.println("hei fra updatePlayers");
+        State state = GameStateManager.getInstance().getState();
         state.getController().setPlayers(this.players);
     }
 }

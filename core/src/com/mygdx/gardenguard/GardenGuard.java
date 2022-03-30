@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.view.MenuState;
+import com.mygdx.gardenguard.view.PlayState;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.API.Player;
@@ -16,6 +20,8 @@ import com.mygdx.gardenguard.view.GameStateManager;
 import com.mygdx.gardenguard.view.LobbyState;
 import com.mygdx.gardenguard.view.PlayState;
 
+import java.awt.Menu;
+
 public class GardenGuard extends ApplicationAdapter {
 	private GameStateManager gsm;
 	public static final int numVertical = 15;
@@ -25,7 +31,7 @@ public class GardenGuard extends ApplicationAdapter {
 	private SpriteBatch batch;
 
 	FireBaseInterface _FBIC;
-	DataHolderClass dataholder;
+
 	String gamePin;
 	PlayerModel player;
 
@@ -37,16 +43,8 @@ public class GardenGuard extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = GameStateManager.getInstance();
-		dataholder = new DataHolderClass();
-		gsm.push(new LobbyState());
-		//gsm.push(new PlayState());
-		dataholder = new DataHolderClass();
-		this.player = new SeekerModel(new Vector2(2, 3));
-		this.gamePin = _FBIC.CreateGameAndPlayer1InDB(this.player);
-		_FBIC.SetOnValueChangedListener(dataholder, this.gamePin);
-		_FBIC.CreatePlayerInDB(this.gamePin, new HiderModel(new Vector2(4, 5)));
-		//_FBIC.CreatePlayerInDB(this.gamePin, new HiderModel("5,0"));
-		//_FBIC.UpdatePositionInDB(gamePin, this.player.getPlayerID(), "5,4");
+		gsm.setFBIC(_FBIC);
+		gsm.push(new MenuState());
 	}
 
 	@Override

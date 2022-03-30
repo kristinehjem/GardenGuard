@@ -45,8 +45,6 @@ public class PlayState extends State {
         for (PlayerController player: this.players) {
             player.updatePosition();
         }
-
-
     }
 
     @Override
