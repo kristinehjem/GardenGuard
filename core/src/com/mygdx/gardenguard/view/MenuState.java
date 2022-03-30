@@ -3,8 +3,10 @@ package com.mygdx.gardenguard.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.Input.TextInputListener;
@@ -13,7 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
@@ -69,10 +73,12 @@ public class MenuState extends State implements TextInputListener {
     protected void dispose() {
         stage.dispose();
     }
+private Viewport viewport;
 
     @Override
     protected void create() {
-        stage = new Stage(new ScreenViewport());
+        viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button join = new TextButton("Join game", mySkin, "small");
