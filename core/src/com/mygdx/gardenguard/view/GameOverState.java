@@ -1,10 +1,8 @@
 package com.mygdx.gardenguard.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.GameOverController;
@@ -68,6 +66,7 @@ public class GameOverState extends State {
         for (String score : scores) {
             scoreText.draw(sb, score, (float) (GardenGuard.WIDTH) / 2 - 50, (float)GardenGuard.HEIGHT / 2 + scoreText.getLineHeight() * i++);
         }
+        //System.out.println(scores);
         scoreText.getData().setScale(2,2);
     }
 

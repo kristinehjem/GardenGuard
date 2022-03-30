@@ -2,8 +2,6 @@ package com.mygdx.gardenguard.controller.stateControllers;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.view.MenuState;
 
@@ -43,7 +41,8 @@ public class GameOverController extends Controller {
             scores.add(player.getPlayerID() + ": " + player.getScore());
 
         }
-
+        System.out.println(players);
+        System.out.println(sortedPlayers);
         return scores;
     }
 }
