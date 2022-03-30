@@ -1,11 +1,45 @@
 package com.mygdx.gardenguard.view;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.Input.TextInputListener;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.gardenguard.GardenGuard;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
-public class MenuState extends State{
+import com.mygdx.gardenguard.controller.stateControllers.Controller;
+import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 
-    public MenuState(GameStateManager gsm){
-        super(gsm);
+import java.awt.Color;
+
+public class MenuState extends State implements TextInputListener {
+
+    BitmapFont name, font;
+    Texture bg = new Texture("newBg.jpg");
+
+    private Stage stage;
+    private String inputPin;
+    private MenuController menuController;
+
+    public MenuState(){
+        super();
+        this.menuController = new MenuController();
+
+    }
+
+    @Override
+    public Controller getController() {
+        return this.menuController;
     }
 
     @Override
@@ -20,7 +54,13 @@ public class MenuState extends State{
 
     @Override
     protected void render(SpriteBatch sb) {
-
+        sb.setProjectionMatrix(cam.combined);
+        //sb.draw(bg, 0,0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
+        Gdx.gl.glClearColor(0,0,0,0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        create();
+        stage.act();
+        stage.draw();
     }
 
     @Override
@@ -30,6 +70,47 @@ public class MenuState extends State{
 
     @Override
     protected void create() {
-
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button join = new TextButton("Join game", mySkin, "small");
+        Button create = new TextButton("Create game", mySkin, "small");
+        join.setSize(100, 50);
+        join.setPosition(170, 400);
+        join.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("join");
+                Gdx.input.getTextInput(getThis(), "Enter game pin", "", "");
+                return true;
+            }
+        });
+        create.setSize(130, 50);
+        create.setPosition(170, 330);
+        create.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("create");
+                menuController.handleCreate();
+                //GameStateManager.getInstance().push(new LobbyState());
+                return true;
+            }
+        });
+        stage.addActor(join);
+        stage.addActor(create);
     }
+
+    @Override
+    public void input(String text) {
+        this.inputPin = text;
+        menuController.handleJoin(inputPin);
+    }
+
+    @Override
+    public void canceled() {
+    }
+
+    public TextInputListener getThis() {
+        return this;
+    };
 }

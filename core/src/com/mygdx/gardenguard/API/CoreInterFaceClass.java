@@ -1,5 +1,7 @@
 package com.mygdx.gardenguard.API;
 
+import com.mygdx.gardenguard.model.player.PlayerModel;
+
 public class CoreInterFaceClass implements FireBaseInterface {
 
     @Override
@@ -8,12 +10,12 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public String CreateGameAndPlayer1InDB(Player player) {
+    public String CreateGameAndPlayer1InDB(PlayerModel player) {
         return "hei";
     }
 
     @Override
-    public void CreatePlayerInDB(String gamePin, Player player) {
+    public void CreatePlayerInDB(String gamePin, PlayerModel player) {
 
     }
 
@@ -26,4 +28,15 @@ public class CoreInterFaceClass implements FireBaseInterface {
     public void UpdateScoreInDB(String target, String value) {
 
     }
+
+    @Override
+    public boolean checkIfGameExists(String gamePin) {
+        return false;
+    }
+
+    @Override
+    public void getScores(String gamePin) {
+
+    }
+
 }
