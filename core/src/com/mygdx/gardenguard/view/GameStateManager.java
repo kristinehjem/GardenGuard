@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
+import com.mygdx.gardenguard.model.player.PlayerModel;
 
 import java.util.Stack;
 
@@ -19,6 +20,7 @@ public class GameStateManager {
     private FireBaseInterface FBIC;
     private DataHolderClass dataholder;
     private String pin;
+    private PlayerModel player;
 
     public GameStateManager(){
         states = new Stack<State>();
@@ -34,7 +36,7 @@ public class GameStateManager {
     }
 
     public void set(State state){
-        states.pop();
+        states.pop().dispose();
         states.push(state);
     }
 
@@ -70,4 +72,11 @@ public class GameStateManager {
         states.peek().render(sb);
     }
 
+    public PlayerModel getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(PlayerModel player) {
+        this.player = player;
+    }
 }

@@ -6,13 +6,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.LobbyController;
+import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
+import com.mygdx.gardenguard.model.player.SeekerModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +35,7 @@ public class LobbyState extends State{
     Collection<String> playerNames;
     private BitmapFont playerFont = new BitmapFont();
     private BitmapFont nameFont = new BitmapFont();
+    private Viewport viewport;
 
     public LobbyState(){
         super();
@@ -64,6 +73,7 @@ public class LobbyState extends State{
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
+        create();
         List<PlayerModel> players = controller.getPlayers();
         playerFont.draw(sb, "Players", 180, 600);
         int i = 0;
@@ -73,23 +83,38 @@ public class LobbyState extends State{
             nameFont.draw(sb, player.getPlayerID(),x_value, y_value);
             i += 1;
         }
-        if (players.size() > 4) {
-            super.gsm.push(new PlayState());
-        }
+        stage.act();
+        stage.draw();
         sb.end();
     }
 
     @Override
     protected void dispose() {
-        stage.dispose();
+        stage.clear();
+        System.out.print("Lobby state disposed");
     }
 
     @Override
     protected void create() {
-        stage = new Stage(new ScreenViewport());
-        create();
-        stage.act();
-        stage.draw();
+        viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button startGame = new TextButton("Start game", mySkin, "small");
+        startGame.setSize(100, 50);
+        startGame.setPosition(170, 300);
+        startGame.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                controller.handleStart();
+                System.out.println("start clicked");
+                return true;
+            }
+        });
+        if (super.gsm.getPlayer() instanceof HiderModel) {
+            startGame.setVisible(false);
+        }
+        stage.addActor(startGame);
     }
 
 
