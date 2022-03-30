@@ -70,8 +70,6 @@ public class LobbyState extends State{
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        /*Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         create();
         List<PlayerModel> players = controller.getPlayers();

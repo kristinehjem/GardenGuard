@@ -56,6 +56,7 @@ public class GameOverState extends State {
     @Override
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
+        sb.begin();
         sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         sb.draw(endGameButton, cam.position.x - ((float) GardenGuard.WIDTH / 4), cam.position.y / 2, (float) GardenGuard.WIDTH / 2, (float) GardenGuard.WIDTH / 6);
         buttonText.draw(sb, "End game", cam.position.x - ((float)GardenGuard.WIDTH / 4) + 25, cam.position.y / 2 + 55);
@@ -66,8 +67,8 @@ public class GameOverState extends State {
         for (String score : scores) {
             scoreText.draw(sb, score, (float) (GardenGuard.WIDTH) / 2 - 50, (float)GardenGuard.HEIGHT / 2 + scoreText.getLineHeight() * i++);
         }
-        //System.out.println(scores);
         scoreText.getData().setScale(2,2);
+        sb.end();
     }
 
     @Override

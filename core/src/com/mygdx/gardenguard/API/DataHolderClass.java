@@ -9,18 +9,14 @@ import java.util.List;
 
 public class DataHolderClass {
 
-    List<PlayerModel> players;
     GameStateManager gsm;
 
     public DataHolderClass() {
         this.gsm = GameStateManager.getInstance();
-        this.players = new ArrayList<>();
     }
 
     public void updatePlayers(List<PlayerModel> players){
-        this.players = players;
-        System.out.println("hei fra updatePlayers");
         State state = GameStateManager.getInstance().getState();
-        state.getController().setPlayers(this.players);
+        state.getController().setPlayers(players);
     }
 }

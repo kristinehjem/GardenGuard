@@ -23,19 +23,8 @@ public class MenuController extends Controller {
     }
 
     public void handleJoin(String pin) throws InterruptedException {
-        /*try {
-            super.gsm.getFBIC().CreatePlayerInDB(pin, new HiderModel(new Vector2(4, 5)));
-            super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
-            super.gsm.setPin(pin);
-            super.gsm.push(new LobbyState());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("pin doesnt exist");
-        }*/
-
         super.gsm.getFBIC().checkIfGameExists(pin, this);
         TimeUnit.SECONDS.sleep(1);
-        System.out.println(getPinExist());
         if (getPinExist()) {
             PlayerModel player = new HiderModel(new Vector2(2, 3));
             super.gsm.setPlayer(player);
@@ -43,9 +32,9 @@ public class MenuController extends Controller {
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
             super.gsm.setPin(pin);
             super.gsm.push(new LobbyState());
-            System.out.println("COMPLETED!");
         }
         else {
+            //real error handling
             System.out.println("pin not exist...End");
         }
     }
@@ -57,7 +46,6 @@ public class MenuController extends Controller {
         super.gsm.setPin(gamePin);
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
         super.gsm.set(new LobbyState());
-        System.out.println("create clicked");
     }
 
     public void setPinExist(boolean pinExist) {

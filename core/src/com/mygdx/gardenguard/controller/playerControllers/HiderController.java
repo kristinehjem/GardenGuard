@@ -15,7 +15,6 @@ public class HiderController extends PlayerController {
         this.player = player;
     }
 
-
     @Override
     public HiderModel getPlayer() {
         return player;

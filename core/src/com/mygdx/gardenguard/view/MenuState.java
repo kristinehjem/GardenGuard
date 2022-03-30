@@ -61,9 +61,6 @@ public class MenuState extends State implements TextInputListener {
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        //sb.draw(bg, 0,0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        /*Gdx.gl.glClearColor(0,0,0,0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         create();
         stage.act();
         stage.draw();

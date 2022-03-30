@@ -91,17 +91,10 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println(snapshot);
-                System.out.println(snapshot.child(gamePin).exists());
                 if (!snapshot.child(gamePin).exists()) {
-                    System.out.println("Les denne om det er FALSE");
                     MC.setPinExist(false);
-                    System.out.println("SJEKK OM DENNE LESER I DET HELE TATT!");
-                    //System.out.println(MC.getPinExist());
                 } else {
-                    System.out.println("Les denne om det er TRUE");
                     MC.setPinExist(true);
-
                 }
             }
             @Override

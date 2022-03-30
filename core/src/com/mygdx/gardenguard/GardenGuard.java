@@ -9,6 +9,7 @@ import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.view.GameOverState;
 import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.view.MenuState;
 
 public class GardenGuard extends ApplicationAdapter {
 	private GameStateManager gsm;
@@ -20,9 +21,6 @@ public class GardenGuard extends ApplicationAdapter {
 
 	FireBaseInterface _FBIC;
 
-	String gamePin;
-	PlayerModel player;
-
 	public GardenGuard(FireBaseInterface FBIC) {
 		_FBIC = FBIC;
 	}
@@ -32,10 +30,9 @@ public class GardenGuard extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		gsm = GameStateManager.getInstance();
 		gsm.setFBIC(_FBIC);
-		gsm.setPin("hei");
-		gsm.push(new GameOverState());
-
-		//gsm.push(new MenuState());
+		//gsm.setPin("hei");
+		//gsm.push(new GameOverState());
+		gsm.push(new MenuState());
 	}
 
 	@Override
