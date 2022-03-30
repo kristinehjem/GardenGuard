@@ -26,10 +26,11 @@ public class MenuController extends Controller {
         System.out.println(getPinExist());
         if (getPinExist()) {
             PlayerModel player = new HiderModel(new Vector2(2, 3));
+            super.gsm.setPlayer(player);
             super.gsm.getFBIC().CreatePlayerInDB(pin, player);
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
             super.gsm.setPin(pin);
-            super.gsm.push(new LobbyState());
+            super.gsm.set(new LobbyState());
         }
         else {
             System.out.println("pin not exist");
@@ -42,7 +43,8 @@ public class MenuController extends Controller {
         super.gsm.getFBIC().CreatePlayerInDB(gamePin, player);
         super.gsm.setPin(gamePin);
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
-        super.gsm.push(new LobbyState());
+        super.gsm.set(new LobbyState());
+        System.out.println("create clicked");
     }
 
     public void setPinExist(boolean pinExist) {

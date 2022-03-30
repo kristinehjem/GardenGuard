@@ -15,4 +15,7 @@ public class LobbyController extends Controller {
         super();
     }
 
+    public void handleStart() {
+        super.gsm.set(new PlayState());
+    }
 }
