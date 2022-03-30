@@ -9,29 +9,25 @@ import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.playerControllers.PlayerController;
 import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.model.board.Board;
-import com.mygdx.gardenguard.model.board.Tile;
-import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PlayState extends State {
 
     private Board board;
-    private ArrayList<PlayerModel> players;
-    private ArrayList<PlayerController> controllers;
-    private List<String> pngs = Arrays.asList("bulba.png", "char.png", "squirtle.png", "clafiry.png", "ditto.png");
+    private PlayerModel player;
+    private List<PlayerController> players;
 
     public PlayState(){
         super();
         cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
-       // this.player = new SeekerModel(new Vector2(1, 2));
+        this.player = new SeekerModel(new Vector2(1, 2));
         this.players = new ArrayList<>();
-        //players.add(new SeekerController((SeekerModel) this.player, this.board));
+        players.add(new SeekerController((SeekerModel) this.player, this.board));
     }
 
     @Override
