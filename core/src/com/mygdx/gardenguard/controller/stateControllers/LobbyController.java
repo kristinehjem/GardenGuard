@@ -15,11 +15,4 @@ public class LobbyController extends Controller {
         super();
     }
 
-    @Override
-    public void setPlayers(List<PlayerModel> players) {
-        super.setPlayers(players);
-        if (super.getPlayers().size() > 3) {
-            super.gsm.push(new PlayState());
-        }
-    }
 }
