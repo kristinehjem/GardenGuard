@@ -38,16 +38,18 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 List<PlayerModel> players = new ArrayList<>();
                 //iterating through all the nodes
                 for (DataSnapshot snap : snapshot.child("players").getChildren()) {
-                    HiderModel player = snap.getValue(HiderModel.class);
-                    players.add(player);
-                    /*if (snap.child("isSeeker").getValue() == "true") {
+                    if (snap.child("isSeeker").getValue() == "true") {
                         System.out.println("er en seeker");
                         SeekerModel player = snap.getValue(SeekerModel.class);
                         players.add(player);
                     } else {
+                        System.out.println("er en hider");
                         HiderModel player = snap.getValue(HiderModel.class);
                         players.add(player);
-                    }*/
+                    }
+                }
+                for (PlayerModel player: players) {
+                    System.out.println(player.getIsSeeker());
                 }
                 dataholder.updatePlayers(players);
             }
@@ -86,15 +88,20 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
     @Override
     public void checkIfGameExists(String gamePin, MenuController MC) {
-        gameRef.child(gamePin).addListenerForSingleValueEvent(new ValueEventListener() {
+        gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) {
+                System.out.println(snapshot);
+                System.out.println(snapshot.child(gamePin).exists());
+                if (!snapshot.child(gamePin).exists()) {
+                    System.out.println("Les denne om det er FALSE");
                     MC.setPinExist(false);
-                    System.out.println("not exist");
-                    System.out.println(MC.getPinExist());
+                    System.out.println("SJEKK OM DENNE LESER I DET HELE TATT!");
+                    //System.out.println(MC.getPinExist());
                 } else {
-                    MC.setPinExist(false);
+                    System.out.println("Les denne om det er TRUE");
+                    MC.setPinExist(true);
+
                 }
             }
             @Override
@@ -102,5 +109,12 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
             }
         });
+    }
+
+    @Override
+    public void getScores(String gamePin) {
+        System.out.println(gameRef.child(gamePin).child("players").get());
+        //gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
+
     }
 }

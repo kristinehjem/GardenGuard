@@ -19,4 +19,5 @@ public interface FireBaseInterface {
 
     public void checkIfGameExists(String gamePin, MenuController MC);
 
+    void getScores(String gamePin);
 }
