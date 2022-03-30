@@ -27,7 +27,6 @@ public class LobbyState extends State{
 
     public LobbyState(){
         super();
-        cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         controller = new LobbyController();
         sprite = new Sprite(backround);
         this.playerNames = new ArrayList<>();

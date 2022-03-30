@@ -14,8 +14,11 @@ import java.awt.Button;
 
 public class MenuController extends Controller {
 
+    private boolean pinExist;
+
     public MenuController() {
         super();
+        pinExist = true;
     }
 
     public void handleJoin(String pin){
@@ -28,8 +31,11 @@ public class MenuController extends Controller {
             e.printStackTrace();
             System.out.println("pin doesnt exist");
         }*/
-        if (super.gsm.getFBIC().checkIfGameExists(pin)) {
-            super.gsm.getFBIC().CreatePlayerInDB(pin, new HiderModel(new Vector2(4, 5)));
+        super.gsm.getFBIC().checkIfGameExists(pin, this);
+        System.out.println(getPinExist());
+        if (getPinExist()) {
+            PlayerModel player = new HiderModel(new Vector2(2, 3));
+            super.gsm.getFBIC().CreatePlayerInDB(pin, player);
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
             super.gsm.setPin(pin);
             super.gsm.push(new LobbyState());
@@ -41,10 +47,19 @@ public class MenuController extends Controller {
 
     public void handleCreate() {
         PlayerModel player = new SeekerModel(new Vector2(2, 3));
-        String gamePin = super.gsm.getFBIC().CreateGameAndPlayer1InDB(player);
+        String gamePin = super.gsm.getFBIC().CreateGameInDB();
+        super.gsm.getFBIC().CreatePlayerInDB(gamePin, player);
         super.gsm.setPin(gamePin);
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
         super.gsm.push(new LobbyState());
+    }
+
+    public void setPinExist(boolean pinExist) {
+        this.pinExist = pinExist;
+    }
+
+    public boolean getPinExist() {
+        return pinExist;
     }
 
 }
