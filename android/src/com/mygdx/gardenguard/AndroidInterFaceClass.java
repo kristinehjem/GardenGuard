@@ -38,16 +38,18 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 List<PlayerModel> players = new ArrayList<>();
                 //iterating through all the nodes
                 for (DataSnapshot snap : snapshot.child("players").getChildren()) {
-                    HiderModel player = snap.getValue(HiderModel.class);
-                    players.add(player);
-                    /*if (snap.child("isSeeker").getValue() == "true") {
+                    if (snap.child("isSeeker").getValue() == "true") {
                         System.out.println("er en seeker");
                         SeekerModel player = snap.getValue(SeekerModel.class);
                         players.add(player);
                     } else {
+                        System.out.println("er en hider");
                         HiderModel player = snap.getValue(HiderModel.class);
                         players.add(player);
-                    }*/
+                    }
+                }
+                for (PlayerModel player: players) {
+                    System.out.println(player.getIsSeeker());
                 }
                 dataholder.updatePlayers(players);
             }
