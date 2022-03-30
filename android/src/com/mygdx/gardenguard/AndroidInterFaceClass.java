@@ -84,15 +84,20 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
     @Override
     public void checkIfGameExists(String gamePin, MenuController MC) {
-        gameRef.child(gamePin).addListenerForSingleValueEvent(new ValueEventListener() {
+        gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) {
+                System.out.println(snapshot);
+                System.out.println(snapshot.child(gamePin).exists());
+                if (!snapshot.child(gamePin).exists()) {
+                    System.out.println("Les denne om det er FALSE");
                     MC.setPinExist(false);
-                    System.out.println("not exist");
-                    System.out.println(MC.getPinExist());
+                    System.out.println("SJEKK OM DENNE LESER I DET HELE TATT!");
+                    //System.out.println(MC.getPinExist());
                 } else {
-                    MC.setPinExist(false);
+                    System.out.println("Les denne om det er TRUE");
+                    MC.setPinExist(true);
+
                 }
             }
             @Override
