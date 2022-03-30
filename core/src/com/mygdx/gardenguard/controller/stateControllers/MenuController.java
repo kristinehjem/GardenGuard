@@ -11,6 +11,7 @@ import com.mygdx.gardenguard.view.MenuState;
 import com.mygdx.gardenguard.view.PlayState;
 
 import java.awt.Button;
+import java.util.concurrent.TimeUnit;
 
 public class MenuController extends Controller {
 
@@ -18,11 +19,22 @@ public class MenuController extends Controller {
 
     public MenuController() {
         super();
-        pinExist = true;
+        pinExist = false;
     }
 
-    public void handleJoin(String pin){
+    public void handleJoin(String pin) throws InterruptedException {
+        /*try {
+            super.gsm.getFBIC().CreatePlayerInDB(pin, new HiderModel(new Vector2(4, 5)));
+            super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
+            super.gsm.setPin(pin);
+            super.gsm.push(new LobbyState());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("pin doesnt exist");
+        }*/
+
         super.gsm.getFBIC().checkIfGameExists(pin, this);
+        TimeUnit.SECONDS.sleep(1);
         System.out.println(getPinExist());
         if (getPinExist()) {
             PlayerModel player = new HiderModel(new Vector2(2, 3));
@@ -30,9 +42,10 @@ public class MenuController extends Controller {
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
             super.gsm.setPin(pin);
             super.gsm.push(new LobbyState());
+            System.out.println("COMPLETED!");
         }
         else {
-            System.out.println("pin not exist");
+            System.out.println("pin not exist...End");
         }
     }
 
