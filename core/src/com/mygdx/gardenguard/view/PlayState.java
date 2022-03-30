@@ -8,25 +8,31 @@ import com.mygdx.gardenguard.controller.playerControllers.PlayerController;
 import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.board.Tile;
+import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 import com.mygdx.gardenguard.view.playViews.TileView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlayState extends State {
 
     private Board board;
-    private PlayerModel player;
-    private ArrayList<PlayerController> players;
-    private Texture bulbaText = new Texture("bulba.png"); // TODO: må separere dette / lage textures osv et annet sted.
+    private ArrayList<PlayerModel> players;
+    private ArrayList<PlayerController> controllers;
+    private List<String> pngs = Arrays.asList("bulba.png", "char.png", "squirtle.png", "clafiry.png", "ditto.png");
 
     public PlayState(){
         super();
         cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
-        this.player = new SeekerModel("bulba", new Vector2(1, 2));
+        this.player = new HiderModel("bulba", new Vector2(1, 2));
+        this.player = new HiderModel("bulba", new Vector2(1, 2));
+        this.player = new HiderModel("bulba", new Vector2(1, 2));
+        this.player = new HiderModel("bulba", new Vector2(1, 2));
+        this.player = new SeekerModel("ditto", new Vector2(1, 2));
         this.players = new ArrayList<>();
         players.add(new SeekerController((SeekerModel) this.player, this.board));
     }
