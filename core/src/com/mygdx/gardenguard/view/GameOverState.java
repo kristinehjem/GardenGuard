@@ -37,7 +37,7 @@ public class GameOverState extends State {
 
     @Override
     public Controller getController() {
-        return null;
+        return controller;
     }
 
     @Override
