@@ -22,15 +22,6 @@ public class MenuController extends Controller {
     }
 
     public void handleJoin(String pin){
-        /*try {
-            super.gsm.getFBIC().CreatePlayerInDB(pin, new HiderModel(new Vector2(4, 5)));
-            super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
-            super.gsm.setPin(pin);
-            super.gsm.push(new LobbyState());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("pin doesnt exist");
-        }*/
         super.gsm.getFBIC().checkIfGameExists(pin, this);
         System.out.println(getPinExist());
         if (getPinExist()) {

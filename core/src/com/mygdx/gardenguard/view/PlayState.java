@@ -23,7 +23,7 @@ public class PlayState extends State {
 
     public PlayState(){
         super();
-        cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
+        //cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
         this.player = new SeekerModel(new Vector2(1, 2));
         this.players = new ArrayList<>();
@@ -49,15 +49,16 @@ public class PlayState extends State {
 
     @Override
     protected void render(SpriteBatch sb) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         sb.setProjectionMatrix(cam.combined);
+        sb.begin();
+        /*Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         for (int y=0;y<GardenGuard.numVertical;y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
-            }}
-
+            }
+        }
+        sb.end();
     }
 
     @Override
