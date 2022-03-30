@@ -111,7 +111,11 @@ private Viewport viewport;
     @Override
     public void input(String text) {
         this.inputPin = text;
-        menuController.handleJoin(inputPin);
+        try {
+            menuController.handleJoin(inputPin);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
