@@ -26,41 +26,39 @@ public abstract class PlayerModel {
     public void setPlayerID(String playerID) {
         this.playerID = playerID;
     }
+    public String getPlayerID() {
+        return playerID;
+    }
 
     protected void setSteps(int i) {
         this.steps = i;
     }
-
-
-    public Vector2 getPosition() {return this.position;}
+    public int getSteps() {
+        return steps;
+    }
 
     public void setPosition(int xPos, int yPos) {
         this.position = new Vector2(xPos, yPos);
     }
+    public Vector2 getPosition() {return this.position;}
 
     public boolean isMax_vision() {
         return max_vision;
     }
 
+    public void setScore(int points) {
+        this.score += points;
+    }
     public int getScore() {
         return score;
-    }
-
-    public int getSteps() {
-        return steps;
-    }
-
-    public String getPlayerID() {
-        return playerID;
     }
 
     protected void setMax_vision(boolean max_vision) {
         this.max_vision = max_vision;
     }
 
-    public void setScore(int points) {
-        this.score += points;
-    }
+    protected void setIsSeeker(boolean isSeeker) { this.isSeeker = isSeeker; }
+    public boolean getIsSeeker() { return this.isSeeker; }
 
     public abstract void gainPoints();
 

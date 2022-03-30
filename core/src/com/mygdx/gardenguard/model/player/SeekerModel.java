@@ -10,7 +10,7 @@ public class SeekerModel extends PlayerModel {
         super(position);
         this.setSteps(3);
         this.setMax_vision(false);
-        super.isSeeker = true;
+        super.setIsSeeker(true);
     }
 
     //ikke slett

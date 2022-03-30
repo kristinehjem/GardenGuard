@@ -13,7 +13,7 @@ public class HiderModel extends PlayerModel {
         super(position);
         this.setSteps(15);
         this.setMax_vision(true);
-        super.isSeeker = false;
+        super.setIsSeeker(false);
     }
 
     //ikke slett
