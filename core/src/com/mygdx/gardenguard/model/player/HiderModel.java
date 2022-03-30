@@ -38,4 +38,5 @@ public class HiderModel extends PlayerModel {
         path.pop();
     }
 
+
 }

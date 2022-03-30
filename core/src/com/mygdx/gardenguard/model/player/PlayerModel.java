@@ -4,7 +4,7 @@ package com.mygdx.gardenguard.model.player;
 import com.badlogic.gdx.math.Vector2;
 import java.util.Stack;
 
-public abstract class PlayerModel {
+public abstract class PlayerModel implements Comparable<PlayerModel> {
 
     private String playerID;
     private Vector2 position;
@@ -65,5 +65,9 @@ public abstract class PlayerModel {
     public abstract Stack<Vector2> getPath();
 
     public abstract void pushPath(Vector2 tile);
+
+    public int compareTo(PlayerModel other) {
+        return this.getScore() - other.getScore();
+    }
 }
 
