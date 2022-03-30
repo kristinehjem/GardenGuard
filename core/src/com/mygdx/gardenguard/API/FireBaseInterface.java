@@ -18,4 +18,5 @@ public interface FireBaseInterface {
 
     public boolean checkIfGameExists(String gamePin);
 
+    void getScores(String gamePin);
 }

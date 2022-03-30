@@ -101,4 +101,11 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         });
         return res[0];
     }
+
+    @Override
+    public void getScores(String gamePin) {
+        System.out.println(gameRef.child(gamePin).child("players").get());
+        //gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
+
+    }
 }

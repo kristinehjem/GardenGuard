@@ -33,4 +33,10 @@ public class CoreInterFaceClass implements FireBaseInterface {
     public boolean checkIfGameExists(String gamePin) {
         return false;
     }
+
+    @Override
+    public void getScores(String gamePin) {
+
+    }
+
 }

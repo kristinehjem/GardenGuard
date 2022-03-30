@@ -35,4 +35,9 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     public boolean checkIfGameExists(String gamePin) {
         return false;
     }
+
+    @Override
+    public void getScores(String gamePin) {
+
+    }
 }
