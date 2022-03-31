@@ -21,14 +21,6 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     //ikke slett denne, trenger for database
     public PlayerModel() {}
 
-    public void setTexture(String ImgUrl) {
-        this.texture = new Texture(ImgUrl);
-    }
-
-    public Texture getTexture() {
-        return this.texture;
-    }
-
     public void setTexture(String textureFile) { this.textureFile = textureFile;};
     public String getTextureFile() { return this.textureFile;};
 
@@ -51,19 +43,11 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     }
     public Vector2 getPosition() {return this.position;}
 
-    public boolean isMax_vision() {
-        return max_vision;
-    }
-
     public void setScore(int points) {
         this.score += points;
     }
     public int getScore() {
         return score;
-    }
-
-    protected void setMax_vision(boolean max_vision) {
-        this.max_vision = max_vision;
     }
 
     protected void setIsSeeker(boolean isSeeker) { this.isSeeker = isSeeker; }

@@ -62,7 +62,7 @@ public class PlayState extends State {
             }
         }
         sb.draw(upButton, 200, 50); // TODO: plassere denne rett. test om dette fungerer
-        sb.draw(player.getTexture(), 100,100);
+        sb.draw(new Texture(player.getTextureFile()), 100,100);
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
