@@ -86,7 +86,7 @@ public class PlayState extends State {
     }
 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
+    // TODO: Hva er screenX og screenY? Musepososjonen? Hvordan sender jeg inn den?
         temp.set(screenX,screenY,0);
         // camera.unproject(temp); //vet ikke hva denne gjør. Tatt fra nett.
 
