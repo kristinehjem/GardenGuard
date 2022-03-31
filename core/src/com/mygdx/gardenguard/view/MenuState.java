@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 

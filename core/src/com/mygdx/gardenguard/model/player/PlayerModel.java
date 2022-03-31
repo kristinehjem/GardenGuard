@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.model.player;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import java.util.Stack;
 
@@ -9,8 +10,9 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private String playerID;
     private Vector2 position;
     private int score;
-    private boolean max_vision;
     private int steps;
+    private Texture texture = new Texture("player0.png");
+    private boolean max_vision;
     protected boolean isSeeker;
 
     public PlayerModel(Vector2 position){
@@ -19,8 +21,14 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     }
 
     //ikke slett denne, trenger for database
-    public PlayerModel() {
+    public PlayerModel() {}
 
+    public void setTexture(String ImgUrl) {
+        this.texture = new Texture(ImgUrl);
+    }
+
+    public Texture getTexture() {
+        return this.texture;
     }
 
     public void setPlayerID(String playerID) {

@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.controller.playerControllers;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.board.Tile;
@@ -9,7 +10,7 @@ import com.mygdx.gardenguard.model.board.Tile;
 * PlayerController skal ta seg av all logikk som har med hvordan spilleren beveger seg på bordet per nå.
 */
 
-public abstract class PlayerController {
+public abstract class PlayerController extends Controller {
 
     protected Board board;
 
@@ -20,6 +21,16 @@ public abstract class PlayerController {
 
     public abstract PlayerModel getPlayer();
 
+    // Denne metoden setter texturen til playeren ut i fra når den joinet spillet
+    // Flytter denne metoden til menu state. Kommenterer den derfor bare ut her.
+    /*public void setTexture() {
+        int numOfPlayers = super.getPlayers().size();
+        for(int playerNo = 0; playerNo < numOfPlayers; playerNo++) {
+            if(super.gsm.getPlayer().getPlayerID() == super.getPlayers().get(playerNo).getPlayerID()) {
+                super.gsm.getPlayer().setTexture("player" + String.valueOf(playerNo) + ".png");
+            }
+        }
+    }*/
 
     public void updatePosition() {
         if(Gdx.input.isButtonJustPressed(1)) { // TODO: endre isButtonJustPressed() til noe som passer med knappene våre

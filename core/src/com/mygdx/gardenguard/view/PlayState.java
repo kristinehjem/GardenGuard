@@ -53,14 +53,15 @@ public class PlayState extends State {
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(upButton, 200, 50); // TODO: plassere denne rett. Koden kjører ikke atm, så får ikke testet om dette fungerer
-        /*Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         for (int y=0;y<GardenGuard.numVertical;y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }
         }
+        sb.draw(upButton, 200, 50); // TODO: plassere denne rett. test om dette fungerer
+        sb.draw(player.getTexture(), 100,100);
+        /*Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
     }
 
