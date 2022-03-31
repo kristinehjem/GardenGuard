@@ -63,6 +63,10 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         });
     }
 
+    public void DeleteGame(String gamePin) {
+        gameRef.child(gamePin).removeValue();
+    }
+
     @Override
     public String CreateGameInDB() {
         String gamePin = gameRef.push().getKey();

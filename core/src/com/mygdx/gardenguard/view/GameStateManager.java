@@ -19,7 +19,7 @@ public class GameStateManager {
     private Stack<State> states;
     private FireBaseInterface FBIC;
     private DataHolderClass dataholder;
-    private String pin;
+    private String gamePin;
     private PlayerModel player;
 
     public GameStateManager(){
@@ -48,12 +48,12 @@ public class GameStateManager {
         return FBIC;
     }
 
-    public String getPin() {
-        return pin;
+    public String getGamePin() {
+        return gamePin;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+    public void setGamePin(String pin) {
+        this.gamePin = pin;
     }
 
     public DataHolderClass getDataholder() {

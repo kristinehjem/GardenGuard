@@ -93,6 +93,7 @@ public class LobbyState extends State{
     @Override
     protected void dispose() {
         stage.dispose();
+        backround.dispose();
     }
 
     @Override
@@ -102,8 +103,8 @@ public class LobbyState extends State{
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button startGame = new TextButton("Start game", mySkin, "small");
-        startGame.setSize(120, 50);
-        startGame.setPosition(170, 100);
+        startGame.setSize(GardenGuard.WIDTH/4, GardenGuard.HEIGHT/12);
+        startGame.setPosition((GardenGuard.WIDTH-GardenGuard.WIDTH/4)/2, GardenGuard.HEIGHT/8);
         startGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

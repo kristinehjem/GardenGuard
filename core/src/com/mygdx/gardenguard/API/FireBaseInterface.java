@@ -22,4 +22,6 @@ public interface FireBaseInterface {
     public void UpdateUsername(String gamePin, String playerID, String username);
 
     void getScores(String gamePin);
+
+    public void DeleteGame(String gamePin);
 }
