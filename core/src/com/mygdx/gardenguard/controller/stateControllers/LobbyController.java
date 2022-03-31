@@ -18,4 +18,9 @@ public class LobbyController extends Controller {
     public void handleStart() {
         super.gsm.set(new PlayState());
     }
+
+    public void setUsername(String username) {
+        super.gsm.getPlayer().setUsername(username);
+        super.gsm.getFBIC().UpdateUsername(super.gsm.getPin(), super.gsm.getPlayer().getPlayerID(), username);
+    }
 }

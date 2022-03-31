@@ -24,7 +24,6 @@ public abstract class PlayerController {
 
     public abstract PlayerModel getPlayer();
 
-
     public void updatePosition() {
         if(Gdx.input.isButtonJustPressed(1)) {
             System.out.println("Gå til høyre \n");

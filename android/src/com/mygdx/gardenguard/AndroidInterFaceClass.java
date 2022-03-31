@@ -82,6 +82,11 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     }
 
     @Override
+    public void UpdateUsername(String gamePin, String playerID, String username) {
+        gameRef.child(gamePin).child("players").child(playerID).child("username").setValue(username);
+    }
+
+    @Override
     public void UpdateScoreInDB(String target, String value) {
 
     }

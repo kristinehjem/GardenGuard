@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -44,6 +45,7 @@ public class LobbyState extends State{
         this.playerNames = new ArrayList<>();
         playerFont.getData().setScale(3f);
         nameFont.getData().setScale(2.5f);
+        create();
     }
 
     @Override
@@ -71,14 +73,14 @@ public class LobbyState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        create();
+        //create();
         List<PlayerModel> players = controller.getPlayers();
         playerFont.draw(sb, "Players", 180, 600);
         int i = 0;
         for (PlayerModel player: players) {
             int x_value = (int) (100 + (i*30*Math.pow(-1, i)));
             int y_value = 500-(i*80);
-            nameFont.draw(sb, player.getPlayerID(),x_value, y_value);
+            nameFont.draw(sb, player.getUsername(),x_value, y_value);
             i += 1;
         }
         stage.act();
@@ -109,6 +111,15 @@ public class LobbyState extends State{
                 return true;
             }
         });
+        Gdx.input.getTextInput(new Input.TextInputListener() {
+            @Override
+            public void input(String text) { controller.setUsername(text);
+            }
+
+            @Override
+            public void canceled() {
+            }
+        }, "Enter username", "", "");
         if (super.gsm.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
         }
