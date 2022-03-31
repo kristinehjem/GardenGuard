@@ -21,6 +21,8 @@ import java.util.List;
 public class PlayState extends State {
 
     private Board board;
+    private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
+    private int tileHeight = 53;
     private Sprite upSprite = new Sprite(new Texture("upButton.png"));
     private Sprite downSprite = new Sprite(new Texture("downButton.png"));
     private Sprite leftSprite = new Sprite(new Texture("leftButton.png"));
@@ -32,11 +34,16 @@ public class PlayState extends State {
         super();
         //cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
-        upSprite.setPosition(GardenGuard.WIDTH/2-25,150);
-        downSprite.setPosition(GardenGuard.WIDTH/2-25,50);
-        leftSprite.setPosition(GardenGuard.WIDTH/2-75,100);
-        rightSprite.setPosition(GardenGuard.WIDTH/2+25,100);
-        squareSprite.setPosition(GardenGuard.WIDTH/2-25, 100);
+        upSprite.setSize(tileWidth,tileHeight);
+        downSprite.setSize(tileWidth,tileHeight);
+        leftSprite.setSize(tileWidth,tileHeight);
+        rightSprite.setSize(tileWidth,tileHeight);
+        squareSprite.setSize(tileWidth,tileHeight);
+        upSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1,tileHeight*3);
+        downSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1,tileHeight);
+        leftSprite.setPosition(GardenGuard.WIDTH/2-tileWidth-tileWidth/2-1,tileHeight*2-1);
+        rightSprite.setPosition(GardenGuard.WIDTH/2+tileWidth/2-1,tileHeight*2);
+        squareSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1, tileHeight*2);
     }
 
     @Override
@@ -56,17 +63,18 @@ public class PlayState extends State {
                 System.out.println("XXXXXXX Høyre XXXXXXX");
 
                 System.out.println("Før: " + super.gsm.getPlayer().getPosition().x); // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x + 50, super.gsm.getPlayer().getPosition().y); // TODO: Dette ble mye super.gsm.getPLayer(). Skulle jeg lagret en lokal variabel emd dette, og referert til den heller? Eller blir det feil når man lager flere instanser av klassen?
+                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x + upSprite.getWidth(), super.gsm.getPlayer().getPosition().y); // TODO: Dette ble mye super.gsm.getPLayer(). Skulle jeg lagret en lokal variabel emd dette, og referert til den heller? Eller blir det feil når man lager flere instanser av klassen?
+                // TODO: Nå bruker jeg upSprite
                 System.out.println("Etter: " + super.gsm.getPlayer().getPosition().x);
             } if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
                 System.out.println("XXXXXXX Opp XXXXXXX");
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y + 50);
+                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y + tileHeight);
             } if(downSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
                 System.out.println("XXXXXXX Ned XXXXXXX");
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y - 50);
+                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y - tileHeight);
             } if(leftSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
                 System.out.println("XXXXXXX Venstre XXXXXXX");
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x - 50, super.gsm.getPlayer().getPosition().y);
+                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x - tileWidth, super.gsm.getPlayer().getPosition().y);
             }
         }
     }
