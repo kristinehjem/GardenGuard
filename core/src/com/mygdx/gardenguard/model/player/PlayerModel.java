@@ -38,7 +38,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         return steps;
     }
 
-    public void setPosition(int xPos, int yPos) {
+    public void setPosition(float xPos, float yPos) {
         this.position.x = xPos;
         this.position.y = yPos;
     }
