@@ -33,7 +33,7 @@ public class HiderController extends PlayerController {
     }
 
     protected void moveLeft() {
-        if(player.getPosition().x == 0) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        if(player.getPosition().x == 0) {
             System.out.println("Player cannot move further left, out of bounds");
         }
         else if(board.getTiles()[(int) player.getPosition().y][ (int) player.getPosition().x-1].isWalkable()) {
@@ -43,7 +43,7 @@ public class HiderController extends PlayerController {
     }
 
     protected void moveUp() {
-        if(player.getPosition().y == 0) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        if(player.getPosition().y == 0) {
             System.out.println("Player cannot move further up, out of bounds");
         }
         else if(board.getTiles()[(int) player.getPosition().y-1][(int) player.getPosition().x].isWalkable()) {
@@ -53,7 +53,7 @@ public class HiderController extends PlayerController {
     }
 
     protected void moveDown() {
-        if(player.getPosition().y == board.getTiles().length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        if(player.getPosition().y == board.getTiles().length) {
             System.out.println("Player cannot move further left, out of bounds");
         }
         else if(board.getTiles()[(int) player.getPosition().y+1][ (int) player.getPosition().x].isWalkable()) {

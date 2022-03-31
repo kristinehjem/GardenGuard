@@ -10,7 +10,6 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private String playerID;
     private Vector2 position;
     private int score;
-    private boolean max_vision;
     private int steps;
     private String textureFile;
     protected boolean isSeeker;
@@ -21,8 +20,14 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     }
 
     //ikke slett denne, trenger for database
-    public PlayerModel() {
+    public PlayerModel() {}
 
+    public void setTexture(String ImgUrl) {
+        this.texture = new Texture(ImgUrl);
+    }
+
+    public Texture getTexture() {
+        return this.texture;
     }
 
     public void setTexture(String textureFile) { this.textureFile = textureFile;};
