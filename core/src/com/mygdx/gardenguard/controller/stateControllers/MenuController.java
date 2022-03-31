@@ -29,8 +29,9 @@ public class MenuController extends Controller {
         if (getPinExist()) {
             PlayerModel player = new HiderModel(new Vector2(2, 3));
             super.gsm.setPlayer(player);
-            player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
+            setTexture();
+            player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
             super.gsm.setPin(gamePin);
             super.gsm.push(new LobbyState());
         }
@@ -41,12 +42,16 @@ public class MenuController extends Controller {
     }
 
     public void handleCreate() {
+        //alt som er kommentert ut kan kommenteres inn om man vil teste med to spillere
         PlayerModel player = new SeekerModel(new Vector2(2, 3));
+        //PlayerModel player2 = new HiderModel(new Vector2(2, 3));
+        //player2.setTexture("player1.png");
         super.gsm.setPlayer(player);
         String gamePin = super.gsm.getFBIC().CreateGameInDB();
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
         setTexture();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
+        //super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
         super.gsm.setPin(gamePin);
         super.gsm.set(new LobbyState());
     }
@@ -54,11 +59,6 @@ public class MenuController extends Controller {
     private void setTexture() {
         int numOfPlayers = super.getPlayers().size();
         super.gsm.getPlayer().setTexture("player" + String.valueOf(numOfPlayers) + ".png");
-        /*for(int playerNo = 0; playerNo < numOfPlayers; playerNo++) {
-            if(super.gsm.getPlayer().getPlayerID() == super.getPlayers().get(playerNo).getPlayerID()) {
-                super.gsm.getPlayer().setTexture(new Texture("player" + String.valueOf(playerNo) + ".png"));
-            }
-        }*/
     }
 
     public void setPinExist(boolean pinExist) {
