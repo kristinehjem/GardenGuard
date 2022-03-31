@@ -10,6 +10,7 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.view.GameOverState;
 import com.mygdx.gardenguard.view.GameStateManager;
 import com.mygdx.gardenguard.view.MenuState;
+import com.mygdx.gardenguard.view.PlayState;
 
 public class GardenGuard extends ApplicationAdapter {
 	private GameStateManager gsm;
