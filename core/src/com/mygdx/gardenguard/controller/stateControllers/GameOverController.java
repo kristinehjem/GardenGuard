@@ -16,9 +16,8 @@ public class GameOverController extends Controller {
     }
 
     public void handleInput() {
-        if (Gdx.input.justTouched()) { //Kanskje sjekke om knappen faktisk ble trykket, ikke bare at skjermen ble trykket?
-            gsm.set(new MenuState());
-        }
+        super.gsm.getFBIC().DeleteGame(super.gsm.getGamePin());
+        gsm.set(new MenuState());
     }
 
 

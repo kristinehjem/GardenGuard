@@ -32,7 +32,7 @@ public class MenuController extends Controller {
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             setTexture();
             player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
-            super.gsm.setPin(gamePin);
+            super.gsm.setGamePin(gamePin);
             super.gsm.push(new LobbyState());
         }
         else {
@@ -52,7 +52,7 @@ public class MenuController extends Controller {
         setTexture();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         //super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
-        super.gsm.setPin(gamePin);
+        super.gsm.setGamePin(gamePin);
         super.gsm.set(new LobbyState());
     }
 

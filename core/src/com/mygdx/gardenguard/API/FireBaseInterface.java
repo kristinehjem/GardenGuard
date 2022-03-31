@@ -20,4 +20,6 @@ public interface FireBaseInterface {
     public void checkIfGameExists(String gamePin, MenuController MC);
 
     void getScores(String gamePin);
+
+    public void DeleteGame(String gamePin);
 }

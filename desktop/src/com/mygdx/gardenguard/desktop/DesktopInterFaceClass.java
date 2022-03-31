@@ -42,4 +42,9 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     public void getScores(String gamePin) {
 
     }
+
+    @Override
+    public void DeleteGame(String gamePin) {
+
+    }
 }
