@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
@@ -22,15 +23,15 @@ public class MenuController extends Controller {
         pinExist = false;
     }
 
-    public void handleJoin(String pin) throws InterruptedException {
-        super.gsm.getFBIC().checkIfGameExists(pin, this);
+    public void handleJoin(String gamePin) throws InterruptedException {
+        super.gsm.getFBIC().checkIfGameExists(gamePin, this);
         TimeUnit.SECONDS.sleep(1);
         if (getPinExist()) {
             PlayerModel player = new HiderModel(new Vector2(2, 3));
             super.gsm.setPlayer(player);
-            super.gsm.getFBIC().CreatePlayerInDB(pin, player);
-            super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), pin);
-            super.gsm.setPin(pin);
+            player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
+            super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
+            super.gsm.setPin(gamePin);
             super.gsm.push(new LobbyState());
         }
         else {
@@ -41,11 +42,23 @@ public class MenuController extends Controller {
 
     public void handleCreate() {
         PlayerModel player = new SeekerModel(new Vector2(2, 3));
+        super.gsm.setPlayer(player);
         String gamePin = super.gsm.getFBIC().CreateGameInDB();
-        super.gsm.getFBIC().CreatePlayerInDB(gamePin, player);
-        super.gsm.setPin(gamePin);
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
+        setTexture();
+        player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
+        super.gsm.setPin(gamePin);
         super.gsm.set(new LobbyState());
+    }
+
+    private void setTexture() {
+        int numOfPlayers = super.getPlayers().size();
+        super.gsm.getPlayer().setTexture("player" + String.valueOf(numOfPlayers) + ".png");
+        /*for(int playerNo = 0; playerNo < numOfPlayers; playerNo++) {
+            if(super.gsm.getPlayer().getPlayerID() == super.getPlayers().get(playerNo).getPlayerID()) {
+                super.gsm.getPlayer().setTexture(new Texture("player" + String.valueOf(playerNo) + ".png"));
+            }
+        }*/
     }
 
     public void setPinExist(boolean pinExist) {

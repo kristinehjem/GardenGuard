@@ -11,8 +11,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private Vector2 position;
     private int score;
     private int steps;
-    private Texture texture = new Texture("player0.png");
-    private boolean max_vision;
+    private String textureFile;
     protected boolean isSeeker;
 
     public PlayerModel(Vector2 position){
@@ -30,6 +29,9 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     public Texture getTexture() {
         return this.texture;
     }
+
+    public void setTexture(String textureFile) { this.textureFile = textureFile;};
+    public String getTextureFile() { return this.textureFile;};
 
     public void setPlayerID(String playerID) {
         this.playerID = playerID;
