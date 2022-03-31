@@ -12,7 +12,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private boolean max_vision;
     private int steps;
     protected boolean isSeeker;
-    protected boolean isFounded;
+    protected boolean isFound;
 
     public PlayerModel(Vector2 position){
         this.position = position;
@@ -48,7 +48,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     }
 
     public void setScore(int points) {
-        this.score += points;
+        this.score = points;
     }
     public int getScore() {
         return score;
@@ -61,8 +61,6 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     protected void setIsSeeker(boolean isSeeker) { this.isSeeker = isSeeker; }
     public boolean getIsSeeker() { return this.isSeeker; }
 
-    public abstract void gainPoints();
-
     public abstract Stack<Vector2> getPath();
 
     public abstract void pushPath(Vector2 tile);
@@ -71,12 +69,12 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         return this.getScore() - other.getScore();
     }
 
-    public boolean isFounded() {
-        return isFounded;
+    public boolean isFound() {
+        return isFound;
     }
 
     public void setIsFound(boolean isFounded) {
-        this.isFounded = isFounded;
+        this.isFound = isFounded;
     }
 
 

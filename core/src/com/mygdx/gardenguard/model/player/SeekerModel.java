@@ -19,10 +19,6 @@ public class SeekerModel extends PlayerModel {
     }
 
     //Method for gaining points as a player
-    @Override
-    public void gainPoints() {
-        this.setScore(5);
-    }
 
     @Override
     public Stack<Vector2> getPath() {
