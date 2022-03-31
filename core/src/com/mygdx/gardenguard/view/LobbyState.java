@@ -126,6 +126,7 @@ public class LobbyState extends State{
 
             @Override
             public void canceled() {
+                controller.setUsername(controller.getPlayer().getPlayerID());
             }
         }, "Enter username", "", "");
         if (super.gsm.getPlayer() instanceof HiderModel) {
