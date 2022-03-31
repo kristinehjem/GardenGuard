@@ -11,22 +11,18 @@ import com.mygdx.gardenguard.model.board.Tile;
 
 public abstract class PlayerController {
 
-    protected Board board; //Må endre type til board
+    protected Board board;
 
 
     public PlayerController(Board board) {
         this.board = board;
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     public abstract PlayerModel getPlayer();
 
 
     public void updatePosition() {
-        if(Gdx.input.isButtonJustPressed(1)) {
+        if(Gdx.input.isButtonJustPressed(1)) { // TODO: endre isButtonJustPressed() til noe som passer med knappene våre
             System.out.println("Gå til høyre \n");
             moveRight();
         }
@@ -45,6 +41,7 @@ public abstract class PlayerController {
     }
 
     // Bytt til try catch hvis dette ikke fungerer: https://coderanch.com/t/649165/java/prevent-user-bounds-simple-array
+    // Disse metodene implementeres hver for seg i hider og seeker, siden hider skal gå og lagre det i en stack, mens seeker bare skal gå
     protected abstract void moveRight();
 
     protected abstract void moveLeft();
