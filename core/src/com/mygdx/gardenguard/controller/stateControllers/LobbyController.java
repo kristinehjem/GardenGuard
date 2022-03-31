@@ -16,11 +16,12 @@ public class LobbyController extends Controller {
     }
 
     public void handleStart() {
-        if (this.enoughPlayers()) {
+        super.gsm.set(new PlayState()); //fjern denne. brukes bare for testing
+        /*if (this.enoughPlayers()) {
             super.gsm.set(new PlayState());
         } else {
             System.err.println("not enough players");
-        }
+        }*/
     }
 
     private boolean enoughPlayers() {

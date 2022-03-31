@@ -20,16 +20,11 @@ public class PlayState extends State {
 
     private Board board;
     private Texture upButton = new Texture("arrowButton.png"); // denne peker foreløpig skrått opp. Må snu den.
-    private PlayerModel player;
-    private List<PlayerController> players; // TODO: Fikse dette med antall models og controllers. Beate sa at vi bare trengte én playerController siden hver person bare skal ha styr på seg selv. Så får vi heller hente posisjonen til de andre spillerne (for rendring) fra databasen
 
     public PlayState(){
         super();
         //cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
-        this.player = new SeekerModel(new Vector2(1, 2));
-        this.players = new ArrayList<>();
-        players.add(new SeekerController((SeekerModel) this.player, this.board));
     }
 
     @Override
@@ -44,16 +39,16 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-        for (PlayerController player: this.players) {
+        // Tror dette ikke er aktuelt lenger når vi ikke har kontroll på alle playersene lenger
+        /*for (PlayerController player: this.players) {
             player.updatePosition();
-        }
+        }*/
     }
 
     @Override
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(upButton, 200, 50); // TODO: plassere denne rett. Koden kjører ikke atm, så får ikke testet om dette fungerer
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         for (int y=0;y<GardenGuard.numVertical;y++) {
@@ -61,8 +56,8 @@ public class PlayState extends State {
                 board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }
         }
-        sb.draw(upButton, 200, 50); // TODO: plassere denne rett. test om dette fungerer
-        sb.draw(new Texture(player.getTextureFile()), 100,100);
+        sb.draw(upButton, 200, 50, 50, 50); // TODO: plassere denne rett. test om dette fungerer
+        sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), GardenGuard.WIDTH/9*4,GardenGuard.WIDTH/15*7, 50, 50);
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
