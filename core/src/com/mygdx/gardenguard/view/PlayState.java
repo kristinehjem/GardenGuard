@@ -21,18 +21,12 @@ import java.util.List;
 public class PlayState extends State {
 
     private Board board;
-    private Texture upTexture = new Texture("upButton.png");
-    private Texture downTexture = new Texture("downButton.png");
-    private Texture leftTexture = new Texture("leftButton.png");
-    private Texture rightTexture = new Texture("rightButton.png");
-    private Texture yellowSquare = new Texture("yellowSquare.png");
-    private Sprite upSprite = new Sprite(upTexture);
-    private Sprite downSprite = new Sprite(downTexture);
-    private Sprite leftSprite = new Sprite(leftTexture);
-    private Sprite rightSprite = new Sprite(rightTexture);
-    private Sprite squareSprite = new Sprite(yellowSquare);
-    private Vector3 temp; // litt usikker på hva temå står for (tatt fra nett), men det brukes lengre nede
-    Vector3 touchPoint=new Vector3();
+    private Sprite upSprite = new Sprite(new Texture("upButton.png"));
+    private Sprite downSprite = new Sprite(new Texture("downButton.png"));
+    private Sprite leftSprite = new Sprite(new Texture("leftButton.png"));
+    private Sprite rightSprite = new Sprite(new Texture("rightButton.png"));
+    private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
+    private Vector3 touchPoint=new Vector3();
 
     public PlayState(){
         super();
@@ -52,19 +46,12 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
-
-    }
-
-    @Override
-    protected void update(float dt) {
+        // Hos meg (Ingrid) må man trykke under knappene for å treffe om man jeg er i emulator.
+        // I desktop går det fint. Tror det handler om at mobilen jeg bruker har lengre skjerm enn
+        // spillet, så skjerm-koordinatene er ikke de samme som spill-koordinatene
         if(Gdx.input.justTouched()) {
-            //unprojects the camera:
+            //unprojects the camera: (vet ikke hva det vil si, men klikkingen fungerer ikke uten det)
             cam.unproject(touchPoint.set(Gdx.input.getX(),Gdx.input.getY(),0));
-            System.out.print("upSprite rectangle: " + upSprite.getBoundingRectangle() + "\n");
-            System.out.print("downSprite rectangle: " + downSprite.getBoundingRectangle() + "\n");
-            System.out.print("leftSprite rectangle: " + leftSprite.getBoundingRectangle() + "\n");
-            System.out.print("rightSprite rectangle: " + rightSprite.getBoundingRectangle() + "\n");
-            System.out.print("touchpoint, x, y: " + touchPoint.x + ", " + touchPoint.y + "\n");
             if(rightSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
                 System.out.println("XXXXXXX Høyre XXXXXXX");
             } if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
@@ -75,6 +62,11 @@ public class PlayState extends State {
                 System.out.println("XXXXXXX Venstre XXXXXXX");
             }
         }
+    }
+
+    @Override
+    protected void update(float dt) { // TODO: Jeg bruker ikke dt til noe. Skal jeg det?
+        handleInput();
     }
 
     @Override
@@ -100,29 +92,15 @@ public class PlayState extends State {
         sb.end();
     }
 
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    // TODO: Hva er screenX og screenY? Musepososjonen? Hvordan sender jeg inn den?
-        temp.set(screenX,screenY,0);
-        // camera.unproject(temp); //vet ikke hva denne gjør. Tatt fra nett.
-
-        /*if(upSprite.getBoundingRectangle().contains(temp.x,temp.y))
-            System.out.println("Touch on upSprite");
-        if(downSprite.getBoundingRectangle().contains(temp.x,temp.y))
-            System.out.println("Touch on downSprite");
-        if(leftSprite.getBoundingRectangle().contains(temp.x,temp.y))
-            System.out.println("Touch on leftSprite");
-        if(rightSprite.getBoundingRectangle().contains(temp.x,temp.y))
-            System.out.println("Touch on rightSprite");*/
-
-        return false;
-    }
-
     @Override
     protected void dispose() {
-        upTexture.dispose();
+        // Måtte fjerne disse da jeg heller lagde textursene inni spritene, siden da fantes ikke
+        // texturesene som varibaler lengre. Men som taxturwe lages new inni spriten, må vi
+        // fortsatt dispose da?
+        /*upTexture.dispose();
         downTexture.dispose();
         leftTexture.dispose();
-        rightTexture.dispose();
+        rightTexture.dispose();*/
     }
 
     @Override
