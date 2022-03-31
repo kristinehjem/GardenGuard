@@ -32,6 +32,7 @@ public class PlayState extends State {
     private Sprite rightSprite = new Sprite(rightTexture);
     private Sprite squareSprite = new Sprite(yellowSquare);
     private Vector3 temp; // litt usikker på hva temå står for (tatt fra nett), men det brukes lengre nede
+    Vector3 touchPoint=new Vector3();
 
     public PlayState(){
         super();
@@ -56,10 +57,24 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-        // Tror dette ikke er aktuelt lenger når vi ikke har kontroll på alle playersene lenger
-        /*for (PlayerController player: this.players) {
-            player.updatePosition();
-        }*/
+        if(Gdx.input.justTouched()) {
+            //unprojects the camera:
+            cam.unproject(touchPoint.set(Gdx.input.getX(),Gdx.input.getY(),0));
+            System.out.print("upSprite rectangle: " + upSprite.getBoundingRectangle() + "\n");
+            System.out.print("downSprite rectangle: " + downSprite.getBoundingRectangle() + "\n");
+            System.out.print("leftSprite rectangle: " + leftSprite.getBoundingRectangle() + "\n");
+            System.out.print("rightSprite rectangle: " + rightSprite.getBoundingRectangle() + "\n");
+            System.out.print("touchpoint, x, y: " + touchPoint.x + ", " + touchPoint.y + "\n");
+            if(rightSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
+                System.out.println("XXXXXXX Høyre XXXXXXX");
+            } if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
+                System.out.println("XXXXXXX Opp XXXXXXX");
+            } if(downSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
+                System.out.println("XXXXXXX Ned XXXXXXX");
+            } if(leftSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
+                System.out.println("XXXXXXX Venstre XXXXXXX");
+            }
+        }
     }
 
     @Override
@@ -90,14 +105,14 @@ public class PlayState extends State {
         temp.set(screenX,screenY,0);
         // camera.unproject(temp); //vet ikke hva denne gjør. Tatt fra nett.
 
-        if(upSprite.getBoundingRectangle().contains(temp.x,temp.y))
+        /*if(upSprite.getBoundingRectangle().contains(temp.x,temp.y))
             System.out.println("Touch on upSprite");
         if(downSprite.getBoundingRectangle().contains(temp.x,temp.y))
             System.out.println("Touch on downSprite");
         if(leftSprite.getBoundingRectangle().contains(temp.x,temp.y))
             System.out.println("Touch on leftSprite");
         if(rightSprite.getBoundingRectangle().contains(temp.x,temp.y))
-            System.out.println("Touch on rightSprite");
+            System.out.println("Touch on rightSprite");*/
 
         return false;
     }
