@@ -18,6 +18,10 @@ public abstract class Controller {
         this.players = new ArrayList<>();
     }
 
+    public PlayerModel getPlayer() {
+        return gsm.getPlayer();
+    }
+
     public void setPlayers(List<PlayerModel> players) {
         this.players = players;
     }
