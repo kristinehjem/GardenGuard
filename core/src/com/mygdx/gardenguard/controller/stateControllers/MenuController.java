@@ -27,6 +27,7 @@ public class MenuController extends Controller {
         super.gsm.getFBIC().checkIfGameExists(gamePin, this);
         TimeUnit.SECONDS.sleep(1);
         if (getPinExist()) {
+            System.out.println("pin exists");
             PlayerModel player = new HiderModel(new Vector2(2, 3));
             super.gsm.setPlayer(player);
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
@@ -37,7 +38,7 @@ public class MenuController extends Controller {
         }
         else {
             //real error handling
-            System.out.println("pin not exist...End");
+            System.err.println("pin not exist...End");
         }
     }
 
@@ -68,5 +69,6 @@ public class MenuController extends Controller {
     public boolean getPinExist() {
         return pinExist;
     }
+
 
 }

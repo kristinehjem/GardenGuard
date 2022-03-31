@@ -28,4 +28,9 @@ public class LobbyController extends Controller {
             return true;
         } return false;
     }
+
+    public void setUsername(String username) {
+        super.gsm.getPlayer().setUsername(username);
+        super.gsm.getFBIC().UpdateUsername(super.gsm.getPin(), super.gsm.getPlayer().getPlayerID(), username);
+    }
 }

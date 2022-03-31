@@ -12,10 +12,12 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private int steps;
     private String textureFile;
     protected boolean isSeeker;
+    private String username;
 
     public PlayerModel(Vector2 position){
         this.position = position;
         this.score = 0;
+        this.username = "";
     }
 
     //ikke slett denne, trenger for database
@@ -52,6 +54,13 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
 
     protected void setIsSeeker(boolean isSeeker) { this.isSeeker = isSeeker; }
     public boolean getIsSeeker() { return this.isSeeker; }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public abstract void gainPoints();
 

@@ -25,7 +25,7 @@ import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 
 import java.awt.Color;
 
-public class MenuState extends State implements TextInputListener {
+public class MenuState extends State {
 
     BitmapFont name, font;
     Texture bg = new Texture("newBg.jpg");
@@ -34,10 +34,14 @@ public class MenuState extends State implements TextInputListener {
     private String inputPin;
     private MenuController menuController;
     private Viewport viewport;
+    private BitmapFont info = new BitmapFont();
+    private String username;
 
     public MenuState(){
         super();
         this.menuController = new MenuController();
+        info.getData().setScale(3f);
+        create();
 
     }
 
@@ -85,9 +89,24 @@ public class MenuState extends State implements TextInputListener {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("join");
-                Gdx.input.getTextInput(getThis(), "Enter game pin", "", "");
+                Gdx.input.getTextInput(new TextInputListener() {
+                    @Override
+                    public void input(String text) {
+                        inputPin = text;
+                        try {
+                            menuController.handleJoin(inputPin);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void canceled() {
+                    }
+                }, "Enter game pin", "", "");
                 return true;
             }
+
         });
         create.setSize(130, 50);
         create.setPosition(170, 330);
@@ -96,7 +115,6 @@ public class MenuState extends State implements TextInputListener {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("create");
                 menuController.handleCreate();
-                //GameStateManager.getInstance().push(new LobbyState());
                 return true;
             }
         });
@@ -104,21 +122,5 @@ public class MenuState extends State implements TextInputListener {
         stage.addActor(create);
     }
 
-    @Override
-    public void input(String text) {
-        this.inputPin = text;
-        try {
-            menuController.handleJoin(inputPin);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public void canceled() {
-    }
-
-    public TextInputListener getThis() {
-        return this;
-    };
 }
