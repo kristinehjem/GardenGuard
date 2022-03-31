@@ -70,7 +70,6 @@ public class MenuState extends State implements TextInputListener {
     @Override
     protected void dispose() {
         stage.dispose();
-        System.out.print("Menu state disposed");
     }
 
     @Override
