@@ -33,8 +33,8 @@ public class GardenGuard extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		gsm = GameStateManager.getInstance();
 		gsm.setFBIC(_FBIC);
-		//gsm.setPin("hei");
-		//gsm.push(new GameOverState());
+
+		//testing game over state:
 		/*PlayerModel player = new SeekerModel(new Vector2(2, 3));
 		gsm.setPlayer(player);
 		String gamePin = gsm.getFBIC().CreateGameInDB();
@@ -43,6 +43,7 @@ public class GardenGuard extends ApplicationAdapter {
 		//super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
 		gsm.setGamePin(gamePin);
 		gsm.push(new GameOverState());*/
+
 		gsm.push(new MenuState());
 	}
 
