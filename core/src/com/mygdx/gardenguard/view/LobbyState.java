@@ -81,9 +81,9 @@ public class LobbyState extends State{
             int x_value = (50);
             int y_value = 500-(i*80);
             nameFont.draw(sb, player.getPlayerID(),x_value, y_value);
+            sb.draw(new Texture(player.getTextureFile()), 10, y_value, 50, 50);
             i += 1;
         }
-        sb.draw(new Texture(controller.getPlayer().getTextureFile()), 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         stage.act();
         stage.draw();
         sb.end();
