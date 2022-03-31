@@ -63,6 +63,10 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         });
     }
 
+    public void DeleteGame(String gamePin) {
+        gameRef.child(gamePin).removeValue();
+    }
+
     @Override
     public String CreateGameInDB() {
         String gamePin = gameRef.push().getKey();
@@ -80,6 +84,11 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void UpdatePositionInDB(String gamePin, String playerID, String value) {
         gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
+    }
+
+    @Override
+    public void UpdateUsername(String gamePin, String playerID, String username) {
+        gameRef.child(gamePin).child("players").child(playerID).child("username").setValue(username);
     }
 
     @Override

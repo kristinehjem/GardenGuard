@@ -23,7 +23,7 @@ public class PlayState extends State {
     private PlayerModel player;
     private List<PlayerController> players; // TODO: Fikse dette med antall models og controllers. Beate sa at vi bare trengte én playerController siden hver person bare skal ha styr på seg selv. Så får vi heller hente posisjonen til de andre spillerne (for rendring) fra databasen
 
-    public PlayState(){
+    public PlayState() {
         super();
         //cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();

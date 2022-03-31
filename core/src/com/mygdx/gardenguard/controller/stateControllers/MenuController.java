@@ -27,17 +27,18 @@ public class MenuController extends Controller {
         super.gsm.getFBIC().checkIfGameExists(gamePin, this);
         TimeUnit.SECONDS.sleep(1);
         if (getPinExist()) {
+            System.out.println("pin exists");
             PlayerModel player = new HiderModel(new Vector2(2, 3));
             super.gsm.setPlayer(player);
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             setTexture();
             player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
-            super.gsm.setPin(gamePin);
+            super.gsm.setGamePin(gamePin);
             super.gsm.push(new LobbyState());
         }
         else {
             //real error handling
-            System.out.println("pin not exist...End");
+            System.err.println("pin not exist...End");
         }
     }
 
@@ -52,7 +53,7 @@ public class MenuController extends Controller {
         setTexture();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         //super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
-        super.gsm.setPin(gamePin);
+        super.gsm.setGamePin(gamePin);
         super.gsm.set(new LobbyState());
     }
 
@@ -68,5 +69,6 @@ public class MenuController extends Controller {
     public boolean getPinExist() {
         return pinExist;
     }
+
 
 }

@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -44,7 +45,7 @@ public class LobbyState extends State{
         this.playerNames = new ArrayList<>();
         playerFont.getData().setScale(3f);
         nameFont.getData().setScale(2.5f);
-        System.out.println(super.gsm.getPlayer().getPlayerID());
+        create();
     }
 
     @Override
@@ -73,15 +74,15 @@ public class LobbyState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        create();
+        //create();
         List<PlayerModel> players = controller.getPlayers();
         playerFont.draw(sb, "Players", 180, 700);
         int i = 0;
         for (PlayerModel player: players) {
-            int x_value = (50);
+            int x_value = (80);
             int y_value = 500-(i*80);
-            nameFont.draw(sb, player.getPlayerID(),x_value, y_value);
-            sb.draw(new Texture(player.getTextureFile()), 10, y_value, 50, 50);
+            nameFont.draw(sb, player.getUsername(),x_value, y_value);
+            sb.draw(new Texture(player.getTextureFile()), 10, y_value-40, 50, 50);
             i += 1;
         }
         stage.act();
@@ -92,6 +93,7 @@ public class LobbyState extends State{
     @Override
     protected void dispose() {
         stage.dispose();
+        backround.dispose();
     }
 
     @Override
@@ -101,8 +103,8 @@ public class LobbyState extends State{
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button startGame = new TextButton("Start game", mySkin, "small");
-        startGame.setSize(120, 50);
-        startGame.setPosition(170, 100);
+        startGame.setSize(GardenGuard.WIDTH/4, GardenGuard.HEIGHT/12);
+        startGame.setPosition((GardenGuard.WIDTH-GardenGuard.WIDTH/4)/2, GardenGuard.HEIGHT/8);
         startGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -118,6 +120,16 @@ public class LobbyState extends State{
                 }
             };
         });
+        Gdx.input.getTextInput(new Input.TextInputListener() {
+            @Override
+            public void input(String text) { controller.setUsername(text);
+            }
+
+            @Override
+            public void canceled() {
+                controller.setUsername(controller.getPlayer().getPlayerID());
+            }
+        }, "Enter username", "", "");
         if (super.gsm.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
         }

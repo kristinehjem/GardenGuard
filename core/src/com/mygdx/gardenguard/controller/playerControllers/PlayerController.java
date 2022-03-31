@@ -21,17 +21,6 @@ public abstract class PlayerController extends Controller {
 
     public abstract PlayerModel getPlayer();
 
-    // Denne metoden setter texturen til playeren ut i fra når den joinet spillet
-    // Flytter denne metoden til menu state. Kommenterer den derfor bare ut her.
-    /*public void setTexture() {
-        int numOfPlayers = super.getPlayers().size();
-        for(int playerNo = 0; playerNo < numOfPlayers; playerNo++) {
-            if(super.gsm.getPlayer().getPlayerID() == super.getPlayers().get(playerNo).getPlayerID()) {
-                super.gsm.getPlayer().setTexture("player" + String.valueOf(playerNo) + ".png");
-            }
-        }
-    }*/
-
     public void updatePosition() {
         if(Gdx.input.isButtonJustPressed(1)) { // TODO: endre isButtonJustPressed() til noe som passer med knappene våre
             System.out.println("Gå til høyre \n");
