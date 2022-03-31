@@ -26,7 +26,6 @@ public class GameOverState extends State {
     private final List<String> scores;
     private final Texture background;
     private final BitmapFont scoreText;
-    private final BitmapFont buttonText;
     private final BitmapFont titleText;
     private Stage stage;
     private Viewport viewport;
@@ -36,7 +35,6 @@ public class GameOverState extends State {
         super();
         this.background = new Texture("GameOverStateBackground.png");
         this.scoreText = new BitmapFont();
-        this.buttonText = new BitmapFont();
         this.titleText = new BitmapFont();
         this.controller = new GameOverController();
         this.scores = controller.getScores();
@@ -92,7 +90,6 @@ public class GameOverState extends State {
         endGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("endGame");
                 controller.handleInput();
                 return true;
             }
