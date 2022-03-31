@@ -9,7 +9,6 @@ public class SeekerModel extends PlayerModel {
     public SeekerModel(Vector2 position) {
         super(position);
         this.setSteps(3);
-        this.setMax_vision(false);
         super.setIsSeeker(true);
     }
 

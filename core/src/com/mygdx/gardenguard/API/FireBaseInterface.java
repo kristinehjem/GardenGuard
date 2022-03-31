@@ -11,7 +11,7 @@ public interface FireBaseInterface {
 
     public String CreateGameInDB();
 
-    public void CreatePlayerInDB(String gamePin, PlayerModel player);
+    public String CreatePlayerInDB(String gamePin, PlayerModel player);
 
     public void UpdatePositionInDB(String gamePin, String playerID, String value);
 

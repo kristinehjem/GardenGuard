@@ -70,10 +70,11 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void CreatePlayerInDB(String gamePin, PlayerModel player) {
+    public String CreatePlayerInDB(String gamePin, PlayerModel player) {
         String playerID = gameRef.push().getKey();
         player.setPlayerID(playerID);
         gameRef.child(gamePin).child("players").child(playerID).setValue(player);
+        return playerID;
     }
 
     @Override

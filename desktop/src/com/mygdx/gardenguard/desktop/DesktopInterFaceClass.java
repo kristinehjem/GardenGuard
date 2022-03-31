@@ -18,8 +18,8 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void CreatePlayerInDB(String gamePin, PlayerModel player) {
-
+    public String CreatePlayerInDB(String gamePin, PlayerModel player) {
+        return "hei";
     }
 
     @Override

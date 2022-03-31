@@ -16,7 +16,17 @@ public class LobbyController extends Controller {
     }
 
     public void handleStart() {
-        super.gsm.set(new PlayState());
+        if (this.enoughPlayers()) {
+            super.gsm.set(new PlayState());
+        } else {
+            System.err.println("not enough players");
+        }
+    }
+
+    private boolean enoughPlayers() {
+        if (super.getPlayers().size() > 1) {
+            return true;
+        } return false;
     }
 
     public void setUsername(String username) {

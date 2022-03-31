@@ -51,7 +51,8 @@ public class LobbyState extends State{
     @Override
     public Controller getController() {
         if (this.controller == null) {
-            System.out.println("Controller is null");
+            //TODO fix error handling (is this enough?)
+            System.err.println("Controller is null");
             return null;
         } else {
             return this.controller;
@@ -75,12 +76,13 @@ public class LobbyState extends State{
         sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         //create();
         List<PlayerModel> players = controller.getPlayers();
-        playerFont.draw(sb, "Players", 180, 600);
+        playerFont.draw(sb, "Players", 180, 700);
         int i = 0;
         for (PlayerModel player: players) {
-            int x_value = (int) (100 + (i*30*Math.pow(-1, i)));
+            int x_value = (80);
             int y_value = 500-(i*80);
             nameFont.draw(sb, player.getUsername(),x_value, y_value);
+            sb.draw(new Texture(player.getTextureFile()), 10, y_value-40, 50, 50);
             i += 1;
         }
         stage.act();
@@ -90,8 +92,7 @@ public class LobbyState extends State{
 
     @Override
     protected void dispose() {
-        stage.clear();
-        System.out.print("Lobby state disposed");
+        stage.dispose();
     }
 
     @Override
@@ -101,15 +102,22 @@ public class LobbyState extends State{
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button startGame = new TextButton("Start game", mySkin, "small");
-        startGame.setSize(100, 50);
-        startGame.setPosition(170, 300);
+        startGame.setSize(120, 50);
+        startGame.setPosition(170, 100);
         startGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                controller.handleStart();
-                System.out.println("start clicked");
-                return true;
-            }
+                try {
+                    controller.handleStart();
+                    System.out.println("start clicked");
+                    return true;
+                } catch (Exception e){
+                    System.out.println("not enough players");
+                    //put in pop up window
+                    e.printStackTrace();
+                    return true;
+                }
+            };
         });
         Gdx.input.getTextInput(new Input.TextInputListener() {
             @Override
