@@ -22,7 +22,7 @@ public abstract class PlayerController extends Controller {
     public abstract PlayerModel getPlayer();
 
     public void updatePosition() {
-        if(Gdx.input.isButtonJustPressed(1)) { // TODO: endre isButtonJustPressed() til noe som passer med knappene våre
+        if(Gdx.input.isButtonJustPressed(1)) {
             System.out.println("Gå til høyre \n");
             moveRight();
         }

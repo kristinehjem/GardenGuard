@@ -40,8 +40,9 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         return steps;
     }
 
-    public void setPosition(int xPos, int yPos) {
-        this.position = new Vector2(xPos, yPos);
+    public void setPosition(float xPos, float yPos) {
+        this.position.x = xPos;
+        this.position.y = yPos;
     }
     public Vector2 getPosition() {return this.position;}
 
