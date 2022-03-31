@@ -1,15 +1,38 @@
 package com.mygdx.gardenguard.controller.playerControllers;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.model.board.Board;
+import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeekerController extends PlayerController {
 
-    private final SeekerModel player;
+    private SeekerModel player;
+    private Rectangle view;
+    public final int tileWidth = GardenGuard.WIDTH / GardenGuard.numHorisontal;
+    public final int tileHeight = GardenGuard.HEIGHT / GardenGuard.numVertical;
 
     public SeekerController(SeekerModel player, Board board) {
         super(board);
         this.player = player;
+        this.view = new Rectangle();
+
+    }
+
+    public Rectangle getView() {
+        return this.view;
+    }
+
+    private void updateView() {
+        float x_pos = this.player.getPosition().x;
+        float y_pos = this.player.getPosition().y;
+
+        this.view = new Rectangle(x_pos - tileWidth, y_pos - tileHeight, tileWidth * 2, tileHeight *2);
+
     }
 
     @Override
@@ -23,6 +46,7 @@ public class SeekerController extends PlayerController {
         }
         else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x+1].isWalkable()) {
             player.setPosition((int) (player.getPosition().x)+1, (int) player.getPosition().y);
+            updateView();
         }
     }
 
@@ -32,6 +56,7 @@ public class SeekerController extends PlayerController {
         }
         else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x-1].isWalkable()) {
             player.setPosition((int) (player.getPosition().x)-1, (int) player.getPosition().y);
+            updateView();
         }
     }
 
@@ -41,6 +66,7 @@ public class SeekerController extends PlayerController {
         }
         else if(board.getTiles()[(int) player.getPosition().y-1][(int) player.getPosition().x].isWalkable()) {
             player.setPosition((int) player.getPosition().x, (int) player.getPosition().y-1);
+            updateView();
         }
     }
 
@@ -50,6 +76,19 @@ public class SeekerController extends PlayerController {
         }
         else if(board.getTiles()[(int) player.getPosition().y+1][(int) player.getPosition().x].isWalkable()) {
             player.setPosition((int) player.getPosition().x, (int) player.getPosition().y+1);
+            updateView();
         }
     }
+
+    public void checkForPlayers() {
+        List<PlayerModel> list_player = super.getPlayers();
+        for(PlayerModel other_players : list_player) {
+            if(getView().contains(other_players.getPosition()) || other_players.isFounded()) {
+                other_players.setIsFound(true);
+                this.player.gainPoints();
+            }
+        }
+    }
+
+
 }

@@ -20,47 +20,47 @@ public class HiderController extends PlayerController {
         return player;
     }
 
+    @Override
+    protected void checkForPlayers() {
+
+    }
+
     // Bytt til try catch hvis dette ikke fungerer: https://coderanch.com/t/649165/java/prevent-user-bounds-simple-array
     protected void moveRight() {
-        if(player.getPosition().x == board.getTiles()[0].length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        if (player.getPosition().x == board.getTiles()[0].length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
             System.out.println("Player cannot move further right, out of bounds");
 
-        }
-        else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x+1].isWalkable()) {
-            player.pushPath(new Vector2((int) (player.getPosition().x)+1, (int) player.getPosition().y));
-            player.setPosition((int) (player.getPosition().x)+1, (int) player.getPosition().y);
+        } else if (board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x + 1].isWalkable()) {
+            player.pushPath(new Vector2((int) (player.getPosition().x) + 1, (int) player.getPosition().y));
+            player.setPosition((int) (player.getPosition().x) + 1, (int) player.getPosition().y);
         }
     }
 
     protected void moveLeft() {
-        if(player.getPosition().x == 0) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        if (player.getPosition().x == 0) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
             System.out.println("Player cannot move further left, out of bounds");
-        }
-        else if(board.getTiles()[(int) player.getPosition().y][ (int) player.getPosition().x-1].isWalkable()) {
-            player.pushPath(new Vector2(player.getPosition().x-1, player.getPosition().y));
-            player.setPosition((int) player.getPosition().x-1, (int) player.getPosition().y);
+        } else if (board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x - 1].isWalkable()) {
+            player.pushPath(new Vector2(player.getPosition().x - 1, player.getPosition().y));
+            player.setPosition((int) player.getPosition().x - 1, (int) player.getPosition().y);
         }
     }
 
     protected void moveUp() {
-        if(player.getPosition().y == 0) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        if (player.getPosition().y == 0) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
             System.out.println("Player cannot move further up, out of bounds");
-        }
-        else if(board.getTiles()[(int) player.getPosition().y-1][(int) player.getPosition().x].isWalkable()) {
-            player.pushPath(new Vector2(player.getPosition().x, player.getPosition().y-1));
-            player.setPosition((int) player.getPosition().x, (int) player.getPosition().y-1);
+        } else if (board.getTiles()[(int) player.getPosition().y - 1][(int) player.getPosition().x].isWalkable()) {
+            player.pushPath(new Vector2(player.getPosition().x, player.getPosition().y - 1));
+            player.setPosition((int) player.getPosition().x, (int) player.getPosition().y - 1);
         }
     }
 
     protected void moveDown() {
-        if(player.getPosition().y == board.getTiles().length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        if (player.getPosition().y == board.getTiles().length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
             System.out.println("Player cannot move further left, out of bounds");
-        }
-        else if(board.getTiles()[(int) player.getPosition().y+1][ (int) player.getPosition().x].isWalkable()) {
-            player.pushPath(new Vector2(player.getPosition().x, player.getPosition().y+1));
-            player.setPosition((int) player.getPosition().x, (int) player.getPosition().y+1);
+        } else if (board.getTiles()[(int) player.getPosition().y + 1][(int) player.getPosition().x].isWalkable()) {
+            player.pushPath(new Vector2(player.getPosition().x, player.getPosition().y + 1));
+            player.setPosition((int) player.getPosition().x, (int) player.getPosition().y + 1);
         }
     }
-
 
 }

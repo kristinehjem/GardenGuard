@@ -1,15 +1,15 @@
 package com.mygdx.gardenguard.controller.playerControllers;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.PlayerModel;
-import com.mygdx.gardenguard.model.board.Tile;
 
 /*
 * PlayerController skal ta seg av all logikk som har med hvordan spilleren beveger seg på bordet per nå.
 */
 
-public abstract class PlayerController {
+public abstract class PlayerController extends Controller {
 
     protected Board board; //Må endre type til board
 
@@ -42,7 +42,12 @@ public abstract class PlayerController {
             System.out.println("Gå ned \n");
             moveDown();
         }
+        if(getPlayer().getIsSeeker()) {
+            checkForPlayers();
+        }
     }
+
+    protected abstract void checkForPlayers();
 
     // Bytt til try catch hvis dette ikke fungerer: https://coderanch.com/t/649165/java/prevent-user-bounds-simple-array
     protected abstract void moveRight();

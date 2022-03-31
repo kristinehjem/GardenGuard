@@ -13,6 +13,7 @@ public class HiderModel extends PlayerModel {
         super(position);
         this.setSteps(15);
         this.setMax_vision(true);
+        this.setIsFound(false);
         super.setIsSeeker(false);
     }
 
