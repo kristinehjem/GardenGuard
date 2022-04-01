@@ -80,7 +80,9 @@ public class PlayState extends State {
                 if(super.gsm.getPlayer().getPosition().y == 15) { // TODO: Endre 14 og 8 til board.numTilesHeight og board.numTilesWidth
                     System.out.println("Player cannot move further down, out of bounds \n");
                 } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y + 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
+                    System.out.print("YOYOYO vi prøver å bevege oss ned \n");
                     super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x), (int) super.gsm.getPlayer().getPosition().y - 1);
+                    System.out.print("Dette er etter vi har prøvd å bevege oss \n");
                 }
             }
             // Prøver å gå til venstre:
