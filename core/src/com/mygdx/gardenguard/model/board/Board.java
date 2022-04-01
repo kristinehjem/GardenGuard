@@ -15,10 +15,9 @@ public class Board {
         for (int y = 0; y< GardenGuard.numVertical; y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 //creating board without obstructions
-                if((y==7) && (x==4)){
+                if((y==7 && x==4) || (y==8 && x==3) || (y==8 && x==5) || (y==6 && x==3) || (y==6 && x==5)){
                     tiles[y][x] = new Tile(x, y,true);
-                }
-                else {
+                } else {
                     Random random = new Random();
                     tiles[y][x] = new Tile(x, y,getRandomBoolean(random));
                 }
@@ -26,7 +25,7 @@ public class Board {
                 tiles[y][x].setPosY(y * tiles[y][x].getHeight());
             }
         }
-    };
+    }
 
     public boolean getRandomBoolean(Random random){
         return random.nextFloat() < 0.75;

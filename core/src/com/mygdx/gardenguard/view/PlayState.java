@@ -20,6 +20,8 @@ import java.util.List;
 
 public class PlayState extends State {
 
+    // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
+
     private Board board;
     private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
     private int tileHeight = 53;
@@ -53,27 +55,33 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
+        // TODO: Logikken inni disse if-statementsene burde nok flyttes til PlayerController. Men jeg vet ikke hvordan jeg kan nå PlayerController fra PlayState.
+        // TODO: Dette ble mye super.gsm.getPLayer(). Skulle jeg lagret en lokal variabel emd dette, og referert til den heller? Eller blir det feil når man lager flere instanser av klassen?
+        // TODO: I denne klassen har jeg brukt koordinater som referanse. I koden jeg tok utgangspunkt i for krasje-måling brukte vi antall tiles som referanse. Jeg vet ikke hva som er best, men jeg gjør det om til koordinater nå. Men kan endres til tiles senere.
         // Hos meg (Ingrid) må man trykke under knappene for å treffe om man er i emulator.
         // I desktop går det fint. Tror det handler om at mobilen jeg bruker har lengre skjerm enn
         // spillet, så skjerm-koordinatene er ikke de samme som spill-koordinatene
         if(Gdx.input.justTouched()) {
             //unprojects the camera (vet ikke hva det vil si, men klikkingen fungerer ikke uten det):
             cam.unproject(touchPoint.set(Gdx.input.getX(),Gdx.input.getY(),0));
-            if(rightSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.println("XXXXXXX Høyre XXXXXXX");
-
-                System.out.println("Før: " + super.gsm.getPlayer().getPosition().x); // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x + upSprite.getWidth(), super.gsm.getPlayer().getPosition().y); // TODO: Dette ble mye super.gsm.getPLayer(). Skulle jeg lagret en lokal variabel emd dette, og referert til den heller? Eller blir det feil når man lager flere instanser av klassen?
-                // TODO: Nå bruker jeg upSprite
-                System.out.println("Etter: " + super.gsm.getPlayer().getPosition().x);
-            } if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.println("XXXXXXX Opp XXXXXXX");
+            if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
+                if(super.gsm.getPlayer().getPosition().y >= tileHeight*14) {
+                    System.out.println("Player cannot move further up, out of bounds");
+                }
+                else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y-1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
+                    // Kommenterer denne ut siden her bruker jeg antall tiles som referanse, mens
+                    // ellers i denne klassen bruker jeg koordinater. Vet ikke hva som er best,
+                    // men holder meg til koordinater for now
+                    //super.gsm.getPlayer().pushPath(new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y-1));
+                    super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y + tileHeight);
+                }
+                // Denne linjen må fjernes når elsen over kjører:
                 super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y + tileHeight);
+            } if(rightSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
+                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x + upSprite.getWidth(), super.gsm.getPlayer().getPosition().y);
             } if(downSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.println("XXXXXXX Ned XXXXXXX");
                 super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y - tileHeight);
             } if(leftSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.println("XXXXXXX Venstre XXXXXXX");
                 super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x - tileWidth, super.gsm.getPlayer().getPosition().y);
             }
         }
@@ -100,7 +108,7 @@ public class PlayState extends State {
         leftSprite.draw(sb, 50);
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
-        //sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), GardenGuard.WIDTH/2-25,GardenGuard.HEIGHT/2-25, 50, 50);
+        // TODO: kanskje ikke lage en new Texture hver gang? Føler det krever mer (med mindre vi disposer den hele tiden). Kan vel bare bruke den samme? (Jeg gjorde det i helicopter)
         sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x,super.gsm.getPlayer().getPosition().y, 50, 50);
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/

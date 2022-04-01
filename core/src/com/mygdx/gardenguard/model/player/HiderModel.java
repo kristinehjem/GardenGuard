@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class HiderModel extends PlayerModel {
-    private Stack<Vector2> path; //må endre Integer til Tile
+    private Stack<Vector2> path; //må endre Integer til Tile. Edit: endre fra Vector 2 til Tile? Eller skal vi ha Vector2?
 
     public HiderModel(Vector2 position) {
         super(position);
@@ -15,9 +15,8 @@ public class HiderModel extends PlayerModel {
         super.setIsSeeker(false);
     }
 
-    //ikke slett
+    //Ikke slett, trenger til database
     public HiderModel() {
-
     }
 
     @Override
