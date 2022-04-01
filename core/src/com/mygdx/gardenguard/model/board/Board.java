@@ -4,12 +4,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gardenguard.GardenGuard;
-
 import java.util.Arrays;
 import java.util.Random;
 
 public class Board {
-    Tile[][] tiles = new Tile[15][9];
+    public static final int numTilesWidth = 9;
+    public static final int numTilesHeight = 15;
+    Tile[][] tiles = new Tile[numTilesHeight][numTilesWidth];
 
     public Board() {
         for (int y = 0; y< GardenGuard.numVertical; y++) {

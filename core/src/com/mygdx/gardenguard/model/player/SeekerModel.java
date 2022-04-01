@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.model.player;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.gardenguard.model.board.Tile;
 
 import java.util.Stack;
 
@@ -12,10 +13,8 @@ public class SeekerModel extends PlayerModel {
         super.setIsSeeker(true);
     }
 
-    //ikke slett
-    public SeekerModel() {
-
-    }
+    //ikke slett, trenger til databasen
+    public SeekerModel() {}
 
     //Method for gaining points as a player
     @Override
@@ -29,7 +28,7 @@ public class SeekerModel extends PlayerModel {
     }
 
     @Override
-    public void pushPath(Vector2 tile) {
+    public void pushPath(Vector2 position) {
 
     }
 

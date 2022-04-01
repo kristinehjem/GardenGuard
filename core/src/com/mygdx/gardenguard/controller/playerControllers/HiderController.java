@@ -20,7 +20,7 @@ public class HiderController extends PlayerController {
         return player;
     }
 
-    // Bytt til try catch hvis dette ikke fungerer: https://coderanch.com/t/649165/java/prevent-user-bounds-simple-array
+    // TODO: Her har vi implementert flyttingen på en annen måte enn i seekerController. Sjekk hvilken som funker best, og bruk den på begge.
     protected void moveRight() {
         if(player.getPosition().x == board.getTiles()[0].length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
             System.out.println("Player cannot move further right, out of bounds");
@@ -54,7 +54,7 @@ public class HiderController extends PlayerController {
 
     protected void moveDown() {
         if(player.getPosition().y == board.getTiles().length) {
-            System.out.println("Player cannot move further left, out of bounds");
+            System.out.println("Player cannot move further down, out of bounds");
         }
         else if(board.getTiles()[(int) player.getPosition().y+1][ (int) player.getPosition().x].isWalkable()) {
             player.pushPath(new Vector2(player.getPosition().x, player.getPosition().y+1));
