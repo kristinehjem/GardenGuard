@@ -67,40 +67,42 @@ public class PlayState extends State {
 
             // Prøver å gå opp:
             if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.print("Spillerens y-posisjon ved klikk opp: " + super.gsm.getPlayer().getPosition().y + "\n");
-                if(super.gsm.getPlayer().getPosition().y == 0) {
+                if(super.gsm.getPlayer().getPosition().y == 14) {
                     System.out.println("Player cannot move further up, out of bounds \n");
-                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y - 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
+                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y + 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
                     super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x), (int) super.gsm.getPlayer().getPosition().y + 1);
+                } else {
+                    System.out.print("Can't move up because of hedge \n");
                 }
             }
             // Prøver å gå ned:
             if(downSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.print("Spillerens y-posisjon ved klikk ned: " + super.gsm.getPlayer().getPosition().y + "\n");
-                if(super.gsm.getPlayer().getPosition().y == 15) { // TODO: Endre 14 og 8 til board.numTilesHeight og board.numTilesWidth
+                if(super.gsm.getPlayer().getPosition().y == 0) { // TODO: Endre 14 og 8 til board.numTilesHeight og board.numTilesWidth
                     System.out.println("Player cannot move further down, out of bounds \n");
-                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y + 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
-                    System.out.print("YOYOYO vi prøver å bevege oss ned \n");
+                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y - 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
                     super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x), (int) super.gsm.getPlayer().getPosition().y - 1);
-                    System.out.print("Dette er etter vi har prøvd å bevege oss \n");
+                }  else {
+                    System.out.print("Can't move down because of hedge \n");
                 }
             }
             // Prøver å gå til venstre:
             if(leftSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.print("Spillerens x-posisjon ved klikk venstre: " + super.gsm.getPlayer().getPosition().x + "\n");
                 if(super.gsm.getPlayer().getPosition().x == 0) {
                     System.out.println("Player cannot move further left, out of bounds \n");
                 } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y][(int) super.gsm.getPlayer().getPosition().x - 1].isWalkable()) {
                     super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x - 1), (int) super.gsm.getPlayer().getPosition().y);
+                } else {
+                    System.out.print("Can't move left because of hedge \n");
                 }
             }
             // Prøver å gå til høyre:
             if(rightSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                System.out.print("Spillerens x-posisjon ved klikk høyre: " + super.gsm.getPlayer().getPosition().x + "\n");
                 if(super.gsm.getPlayer().getPosition().x == 8) {
                     System.out.println("Player cannot move further right, out of bounds \n");
                 } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y][(int) super.gsm.getPlayer().getPosition().x + 1].isWalkable()) {
                     super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x + 1), (int) super.gsm.getPlayer().getPosition().y);
+                } else {
+                    System.out.print("Can't move right because of hedge \n");
                 }
             }
             // Pusher ny posisjon til path:
@@ -110,20 +112,6 @@ public class PlayState extends State {
             // path til seeker, siden den gjør vel ikke noe med den koden uansett.
             super.gsm.getPlayer().pushPath(new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
         }
-        // Den gamle koden (før jeg byttet fra koordinater til Vector2), for referanse:
-        /*if(Gdx.input.justTouched()) {
-            //unprojects the camera (vet ikke hva det vil si, men klikkingen fungerer ikke uten det):
-            cam.unproject(touchPoint.set(Gdx.input.getX(),Gdx.input.getY(),0));
-            if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y + tileHeight);
-            } if(rightSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x + upSprite.getWidth(), super.gsm.getPlayer().getPosition().y);
-            } if(downSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y - tileHeight);
-            } if(leftSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
-                super.gsm.getPlayer().setPosition(super.gsm.getPlayer().getPosition().x - tileWidth, super.gsm.getPlayer().getPosition().y);
-            }
-        }*/
     }
 
     @Override
@@ -148,7 +136,7 @@ public class PlayState extends State {
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
         // TODO: kanskje ikke lage en new Texture hver gang? Føler det krever mer (med mindre vi disposer den hele tiden). Kan vel bare bruke den samme? (Jeg gjorde det i helicopter)
-        sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x,super.gsm.getPlayer().getPosition().y, 50, 50);
+        sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x * tileWidth,super.gsm.getPlayer().getPosition().y * tileHeight, 50, 50);
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
