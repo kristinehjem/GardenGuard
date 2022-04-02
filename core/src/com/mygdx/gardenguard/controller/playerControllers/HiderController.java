@@ -20,46 +20,49 @@ public class HiderController extends PlayerController {
         return player;
     }
 
-    // TODO: Her har vi implementert flyttingen på en annen måte enn i seekerController. Sjekk hvilken som funker best, og bruk den på begge.
+    // TODO: Logikken for flytting som nå ligger i PlayState burde flyttes hit. Koden som ligger
+    //  inni move-funksjonene nå er redundant. Koden vi bruker (og fungerer) ligger i handleInput()
+    //  i PlayState. Så koden som ligger i move-funkdjonene nå skal egt ikke brukes, jeg bare
+    //  beholder den i tilfelle det kan være nyttig til når vi flytter logikken fra PlayState over hit.
     protected void moveRight() {
-        if(player.getPosition().x == board.getTiles()[0].length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
+        /*if(player.getPosition().x == board.getTiles()[0].length) { // length osv. her er feil. Tanken er at man må sjekka om man er i enden av brettet, hvis ikke vil neste linje gi feilmelding
             System.out.println("Player cannot move further right, out of bounds");
 
         }
         else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x+1].isWalkable()) {
             player.pushPath(new Vector2((int) (player.getPosition().x)+1, (int) player.getPosition().y));
             player.setPosition((int) (player.getPosition().x)+1, (int) player.getPosition().y);
-        }
+        }*/
     }
 
     protected void moveLeft() {
-        if(player.getPosition().x == 0) {
+        /*if(player.getPosition().x == 0) {
             System.out.println("Player cannot move further left, out of bounds");
         }
         else if(board.getTiles()[(int) player.getPosition().y][ (int) player.getPosition().x-1].isWalkable()) {
             player.pushPath(new Vector2(player.getPosition().x-1, player.getPosition().y));
             player.setPosition((int) player.getPosition().x-1, (int) player.getPosition().y);
-        }
+        }*/
     }
 
     protected void moveUp() {
-        if(player.getPosition().y == 0) {
+        /*if(player.getPosition().y == 0) {
             System.out.println("Player cannot move further up, out of bounds");
         }
         else if(board.getTiles()[(int) player.getPosition().y-1][(int) player.getPosition().x].isWalkable()) {
             player.pushPath(new Vector2(player.getPosition().x, player.getPosition().y-1));
             player.setPosition((int) player.getPosition().x, (int) player.getPosition().y-1);
-        }
+        }*/
     }
 
     protected void moveDown() {
-        if(player.getPosition().y == board.getTiles().length) {
+        /*if(player.getPosition().y == board.getTiles().length) {
             System.out.println("Player cannot move further down, out of bounds");
         }
         else if(board.getTiles()[(int) player.getPosition().y+1][ (int) player.getPosition().x].isWalkable()) {
             player.pushPath(new Vector2(player.getPosition().x, player.getPosition().y+1));
             player.setPosition((int) player.getPosition().x, (int) player.getPosition().y+1);
-        }
+        }*/
     }
 
 
