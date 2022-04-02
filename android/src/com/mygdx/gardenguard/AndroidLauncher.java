@@ -11,6 +11,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		config.depth = 15;
 		initialize(new GardenGuard(new AndroidInterFaceClass()), config);
 	}
 }

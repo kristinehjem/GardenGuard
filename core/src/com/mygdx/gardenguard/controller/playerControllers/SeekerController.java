@@ -13,8 +13,6 @@ public class SeekerController extends PlayerController {
 
     private SeekerModel player;
     private Rectangle view;
-    public final int tileWidth = GardenGuard.WIDTH / GardenGuard.numHorisontal;
-    public final int tileHeight = GardenGuard.HEIGHT / GardenGuard.numVertical;
 
     public SeekerController(SeekerModel player, Board board) {
         super(board);
@@ -80,6 +78,7 @@ public class SeekerController extends PlayerController {
         }
     }
 
+    // Checks if a player is in view
     public void checkForPlayers() {
         List<PlayerModel> list_player = super.getPlayers();
         for(PlayerModel other_players : list_player) {
@@ -90,6 +89,5 @@ public class SeekerController extends PlayerController {
             }
         }
     }
-
 
 }

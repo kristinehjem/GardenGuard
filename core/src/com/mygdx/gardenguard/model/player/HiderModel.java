@@ -22,11 +22,6 @@ public class HiderModel extends PlayerModel {
 
     }
 
-    @Override
-    public void gainPoints() {
-        this.setScore(10);
-    }
-
     public Stack<Vector2> getPath() {
         return path;
     }
