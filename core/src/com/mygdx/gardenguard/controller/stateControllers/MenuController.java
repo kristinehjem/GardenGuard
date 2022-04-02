@@ -28,7 +28,7 @@ public class MenuController extends Controller {
         TimeUnit.SECONDS.sleep(1);
         if (getPinExist()) {
             System.out.println("pin exists");
-            PlayerModel player = new HiderModel(new Vector2(2, 3));
+            PlayerModel player = new HiderModel(new Vector2(3, 8)); // TODO: Når kommer vel alle hiderene oppå hverandre?
             super.gsm.setPlayer(player);
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             setTexture();
@@ -44,7 +44,7 @@ public class MenuController extends Controller {
 
     public void handleCreate() {
         //alt som er kommentert ut kan kommenteres inn om man vil teste med to spillere
-        PlayerModel player = new SeekerModel(new Vector2(2, 3));
+        PlayerModel player = new SeekerModel(new Vector2(4, 7));
         //PlayerModel player2 = new HiderModel(new Vector2(2, 3));
         //player2.setTexture("player1.png");
         super.gsm.setPlayer(player);

@@ -2,12 +2,13 @@ package com.mygdx.gardenguard.model.player;
 
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.gardenguard.model.board.Tile;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class HiderModel extends PlayerModel {
-    private Stack<Vector2> path; //må endre Integer til Tile
+    private Stack<Vector2> path;
 
     public HiderModel(Vector2 position) {
         super(position);
@@ -15,9 +16,8 @@ public class HiderModel extends PlayerModel {
         super.setIsSeeker(false);
     }
 
-    //ikke slett
+    //Ikke slett, trenger til database
     public HiderModel() {
-
     }
 
     @Override
@@ -29,8 +29,8 @@ public class HiderModel extends PlayerModel {
         return path;
     }
 
-    public void pushPath(Vector2 tile) { //endre Integer til Tile
-        path.push(tile);
+    public void pushPath(Vector2 position) { //endre Integer til Tile
+        path.push(position);
     }
 
     public void popPath() {
