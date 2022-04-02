@@ -16,7 +16,7 @@ public class Board {
         for (int y = 0; y< GardenGuard.numVertical; y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
                 //creating board without obstructions
-                if((y==7 && x==4) || (y==8 && x==3) || (y==8 && x==5) || (y==6 && x==3) || (y==6 && x==5)){ // Note: Tallene til board/tiles går 0-8 og 0-14
+                if((y==6 && x==3) || (y==7 && x==3) || (y==8 && x==3) || (y==6 && x==4) || (y==7 && x==4) || (y==8 && x==4) || (y==6 && x==5) || (y==7 && x==5) || (y==8 && x==5)){ // Note: Tallene til board/tiles går 0-8 og 0-14
                     tiles[y][x] = new Tile(x, y,true);
                 } else {
                     Random random = new Random();
@@ -36,5 +36,4 @@ public class Board {
     public Tile[][] getTiles() {
         return tiles;
     }
-
 }
