@@ -22,22 +22,7 @@ public abstract class PlayerController extends Controller {
     public abstract PlayerModel getPlayer();
 
     public void updatePosition() {
-        if(Gdx.input.isButtonJustPressed(1)) {
-            System.out.println("Gå til høyre \n");
-            moveRight();
-        }
-        if(Gdx.input.isButtonJustPressed(2)) {
-            System.out.println("Gå til venstre \n");
-            moveLeft();
-        }
-        if(Gdx.input.isButtonJustPressed(3)) {
-            System.out.println("Gå opp \n");
-            moveUp();
-        }
-        if(Gdx.input.isButtonJustPressed(4)) {
-            System.out.println("Gå ned \n");
-            moveDown();
-        }
+        // Logikken for flytting som nå ligger i PlayState burde flyttes hit
     }
 
     // Bytt til try catch hvis dette ikke fungerer: https://coderanch.com/t/649165/java/prevent-user-bounds-simple-array

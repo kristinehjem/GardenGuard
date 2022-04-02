@@ -2,11 +2,16 @@ package com.mygdx.gardenguard.model.player;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.gardenguard.model.board.Tile;
+
 import java.util.Stack;
 
 public abstract class PlayerModel implements Comparable<PlayerModel> {
 
     private String playerID;
+    // Playerens posistion gis av "sjakk-koordinater" på brettet, f.eks. [2][7].
+    // Går fra 0-8 i bredden, og 0-14 i høyden.
+    // I Vector2 bruker vi [x][y], mens i listen av tiles bruker vi [y][x]
     private Vector2 position;
     private int score;
     private int steps;
@@ -40,7 +45,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         return steps;
     }
 
-    public void setPosition(float xPos, float yPos) {
+    public void setPosition(int xPos, int yPos) {
         this.position.x = xPos;
         this.position.y = yPos;
     }
@@ -67,7 +72,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
 
     public abstract Stack<Vector2> getPath();
 
-    public abstract void pushPath(Vector2 tile);
+    public abstract void pushPath(Vector2 position);
 
     public int compareTo(PlayerModel other) {
         return this.getScore() - other.getScore();
