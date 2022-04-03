@@ -56,8 +56,8 @@ public class PlayState extends State {
         rightSprite.setPosition(GardenGuard.WIDTH/2+tileWidth/2-1,tileHeight*2);
         squareSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1, tileHeight*2);
 
-        this.player = new SeekerModel(new Vector2(1, 2));
-        this.controller = new SeekerController((SeekerModel) this.player, this.board);
+        /*this.player = new SeekerModel(new Vector2(1, 2));
+        this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
     }
 
     @Override
@@ -146,17 +146,18 @@ public class PlayState extends State {
                     board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
                 }
             }
-            sb.draw(new Texture("char.png"), this.player.getPosition().x * this.controller.tileWidth,
+            sb.draw(new Texture("player0.png"), this.player.getPosition().x * this.controller.tileWidth,
                     this.player.getPosition().y * this.controller.tileHeight, (float) this.controller.tileWidth, (float) this.controller.tileHeight);
             sb.end();
         }
+        sb.begin();
         upSprite.draw(sb, 50);
         downSprite.draw(sb, 50);
         leftSprite.draw(sb, 50);
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
         // TODO: kanskje ikke lage en new Texture hver gang? Føler det krever mer (med mindre vi disposer den hele tiden). Kan vel bare bruke den samme? (Jeg gjorde det i helicopter)
-        sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x * tileWidth,super.gsm.getPlayer().getPosition().y * tileHeight, 50, 50);
+        // sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x * tileWidth,super.gsm.getPlayer().getPosition().y * tileHeight, 50, 50);
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
@@ -211,7 +212,7 @@ public class PlayState extends State {
                 board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }
         }
-        sb.draw(new Texture("char.png"), this.player.getPosition().x * this.controller.tileWidth,
+        sb.draw(new Texture("player0.png"), this.player.getPosition().x * this.controller.tileWidth,
                 this.player.getPosition().y * this.controller.tileHeight, (float) this.controller.tileWidth, (float) this.controller.tileHeight);
         sb.end();
         // Ensure depth test is disabled so that depth

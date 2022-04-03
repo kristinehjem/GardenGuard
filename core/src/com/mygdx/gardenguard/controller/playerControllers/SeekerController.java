@@ -111,8 +111,8 @@ public class SeekerController extends PlayerController {
         List<PlayerModel> list_player = super.getPlayers();
         for(PlayerModel other_players : list_player) {
             if(getView().contains(other_players.getPosition()) || !other_players.isFound()) {
-                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getPin(), player.getPlayerID(), String.valueOf(true));
-                super.gsm.getFBIC().UpdateScoreInDB(gsm.getPin(), player.getPlayerID(), String.valueOf(player.getScore() + 5));
+                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(true));
+                super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(player.getScore() + 5));
 
             }
         }
