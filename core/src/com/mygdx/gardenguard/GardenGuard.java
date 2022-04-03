@@ -44,7 +44,10 @@ public class GardenGuard extends ApplicationAdapter {
 		gsm.setGamePin(gamePin);
 		gsm.push(new GameOverState());*/
 
-		gsm.push(new MenuState());
+		//gsm.setPin("hei");
+		//gsm.push(new GameOverState());
+		//gsm.push(new MenuState());
+		gsm.push(new PlayState());
 	}
 
 	@Override

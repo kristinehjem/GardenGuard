@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.gardenguard.GardenGuard;
@@ -23,6 +26,7 @@ public class PlayState extends State {
     // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
 
     private Board board;
+
     private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
     private int tileHeight = 53; // TODO: Prøv å bruk den nye referansen jeg lagde i board-klassen
     private Sprite upSprite = new Sprite(new Texture("upButton.png"));
@@ -31,10 +35,15 @@ public class PlayState extends State {
     private Sprite rightSprite = new Sprite(new Texture("rightButton.png"));
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint=new Vector3();
+    private PlayerModel player;
+    private PlayerController controller;
+    private ShapeRenderer shapes;
+
 
     public PlayState() {
         super();
-        //cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
+        this.shapes = new ShapeRenderer();
+        shapes.setProjectionMatrix(cam.combined);
         this.board = new Board();
         upSprite.setSize(tileWidth,tileHeight);
         downSprite.setSize(tileWidth,tileHeight);
@@ -46,6 +55,9 @@ public class PlayState extends State {
         leftSprite.setPosition(GardenGuard.WIDTH/2-tileWidth-tileWidth/2-1,tileHeight*2-1);
         rightSprite.setPosition(GardenGuard.WIDTH/2+tileWidth/2-1,tileHeight*2);
         squareSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1, tileHeight*2);
+
+        this.player = new SeekerModel(new Vector2(1, 2));
+        this.controller = new SeekerController((SeekerModel) this.player, this.board);
     }
 
     @Override
@@ -119,16 +131,24 @@ public class PlayState extends State {
         handleInput();
     }
 
+
     @Override
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
-        sb.begin();
-        /*Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
-        for (int y=0;y<GardenGuard.numVertical;y++) {
-            for (int x=0; x<GardenGuard.numHorisontal; x++) {
-                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+        if (player instanceof SeekerModel) {
+            renderStencilImage(sb);
+
+        }
+        else {
+            sb.begin();
+            for (int y = 0; y < GardenGuard.numVertical; y++) {
+                for (int x = 0; x < GardenGuard.numHorisontal; x++) {
+                    board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+                }
             }
+            sb.draw(new Texture("char.png"), this.player.getPosition().x * this.controller.tileWidth,
+                    this.player.getPosition().y * this.controller.tileHeight, (float) this.controller.tileWidth, (float) this.controller.tileHeight);
+            sb.end();
         }
         upSprite.draw(sb, 50);
         downSprite.draw(sb, 50);
@@ -141,6 +161,7 @@ public class PlayState extends State {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
     }
+
 
     @Override
     protected void dispose() {
@@ -157,4 +178,47 @@ public class PlayState extends State {
     protected void create() {
         // Hva er tanken med denne klassen?
     }
+
+    private void renderStencilImage(SpriteBatch sb){
+        // Clear the buffer
+        Gdx.gl.glClearDepthf(1.0f);
+        Gdx.gl.glClear(GL30.GL_DEPTH_BUFFER_BIT);
+
+        // Disable writing to frame buffer and
+        // Set up the depth test
+        Gdx.gl.glDepthFunc(GL20.GL_LESS);
+        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+        Gdx.gl.glDepthMask(true);
+        Gdx.gl.glColorMask(true, false, false, true);
+        //Here add your mask shape rendering code i.e. rectangle
+        //triangle, or other polygonal shape mask
+        shapes.begin(ShapeRenderer.ShapeType.Filled);
+        shapes.setColor(1, 1, 1, 0.5f);
+        shapes.circle((float) (player.getPosition().x * controller.tileWidth + controller.tileWidth / 2.0),
+                (float) (player.getPosition().y * controller.tileHeight + controller.tileHeight / 2.0), (float) (controller.tileWidth* 1.5));
+        shapes.end();
+
+        // Enable writing to the FrameBuffer
+        // and set up the texture to render with the mask
+        // applied
+        Gdx.gl.glColorMask(true, true, true, true);
+        Gdx.gl.glDepthMask(false);
+        Gdx.gl.glDepthFunc(GL20.GL_EQUAL);
+        // Here add your texture rendering code
+        sb.begin();
+        for (int y = 0; y < GardenGuard.numVertical; y++) {
+            for (int x = 0; x < GardenGuard.numHorisontal; x++) {
+                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+            }
+        }
+        sb.draw(new Texture("char.png"), this.player.getPosition().x * this.controller.tileWidth,
+                this.player.getPosition().y * this.controller.tileHeight, (float) this.controller.tileWidth, (float) this.controller.tileHeight);
+        sb.end();
+        // Ensure depth test is disabled so that depth
+        // testing is not run on other rendering code.
+        Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
+
+
+    }
+
 }
