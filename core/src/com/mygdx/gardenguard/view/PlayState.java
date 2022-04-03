@@ -2,10 +2,15 @@ package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+<<<<<<< HEAD
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.badlogic.gdx.graphics.GL30;
+=======
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Texture;
+>>>>>>> 55e066f15fb5068813d6c2b324b1802ac4dbed85
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -38,7 +43,6 @@ public class PlayState extends State {
     private PlayerModel player;
     private PlayerController controller;
     private ShapeRenderer shapes;
-
 
     public PlayState() {
         super();
@@ -130,6 +134,10 @@ public class PlayState extends State {
     protected void update(float dt) { // TODO: Jeg bruker ikke dt til noe. Skal jeg det?
         handleInput();
     }
+    /*protected void update(float dt) {
+        controller.updatePosition();
+
+    }*/
 
 
     @Override
@@ -146,6 +154,7 @@ public class PlayState extends State {
                     board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
                 }
             }
+
             sb.draw(new Texture("player0.png"), this.player.getPosition().x * this.controller.tileWidth,
                     this.player.getPosition().y * this.controller.tileHeight, (float) this.controller.tileWidth, (float) this.controller.tileHeight);
             sb.end();
@@ -221,5 +230,4 @@ public class PlayState extends State {
 
 
     }
-
 }

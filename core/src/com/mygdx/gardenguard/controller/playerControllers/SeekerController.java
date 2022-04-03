@@ -104,6 +104,7 @@ public class SeekerController extends PlayerController {
             player.setPosition((int) player.getPosition().x, (int) player.getPosition().y+1);
             updateView();
         }*/
+
     }
 
     // Checks if a player is in view
@@ -111,8 +112,10 @@ public class SeekerController extends PlayerController {
         List<PlayerModel> list_player = super.getPlayers();
         for(PlayerModel other_players : list_player) {
             if(getView().contains(other_players.getPosition()) || !other_players.isFound()) {
+
                 super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(true));
                 super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(player.getScore() + 5));
+
 
             }
         }

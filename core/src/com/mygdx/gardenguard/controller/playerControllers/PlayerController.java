@@ -13,7 +13,6 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 
 public abstract class PlayerController extends Controller {
 
-
     protected Board board; //Må endre type til board
     public final int tileWidth = GardenGuard.WIDTH / GardenGuard.numHorisontal;
     public final int tileHeight = GardenGuard.HEIGHT / GardenGuard.numVertical;
@@ -45,7 +44,6 @@ public abstract class PlayerController extends Controller {
         if(getPlayer().getIsSeeker()) {
             checkForPlayers();
         }
-
     }
 
     protected abstract void checkForPlayers();

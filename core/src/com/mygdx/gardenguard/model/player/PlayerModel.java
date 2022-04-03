@@ -18,7 +18,6 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private String textureFile;
     protected boolean isSeeker;
     private String username;
-
     protected boolean isFound;
 
     public PlayerModel(Vector2 position){

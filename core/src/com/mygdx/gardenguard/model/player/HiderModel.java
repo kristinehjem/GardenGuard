@@ -19,6 +19,7 @@ public class HiderModel extends PlayerModel {
 
     //Ikke slett, trenger til database
     public HiderModel() {
+
     }
 
     public Stack<Vector2> getPath() {
