@@ -35,25 +35,24 @@ public class GardenGuard extends ApplicationAdapter {
 		gsm.setFBIC(_FBIC);
 
 		//testing game over state:
-		PlayerModel player = new SeekerModel(new Vector2(2, 3));
-		gsm.push(new PlayState());
+		/*PlayerModel player = new SeekerModel(new Vector2(2, 3));
 		gsm.setPlayer(player);
 		String gamePin = gsm.getFBIC().CreateGameInDB();
 		gsm.getFBIC().SetOnValueChangedListener(gsm.getDataholder(), gamePin);
 		player.setPlayerID(gsm.getFBIC().CreatePlayerInDB(gamePin, player));
 		//super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
 		gsm.setGamePin(gamePin);
-		//gsm.push(new PlayState());
+		//gsm.push(new PlayState());*/
 
 		//gsm.setPin("hei");
 		//gsm.push(new GameOverState());
-		//gsm.push(new MenuState());
+		gsm.push(new MenuState());
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0, 0, 0, 0);
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		ScreenUtils.clear(0f, 0f, 0f, 0f);
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gsm.render(batch);
