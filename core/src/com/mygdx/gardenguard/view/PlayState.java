@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.gardenguard.GardenGuard;
@@ -18,6 +19,7 @@ import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.playerControllers.PlayerController;
 import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.model.board.Board;
+import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
@@ -38,20 +40,22 @@ public class PlayState extends State {
     private Sprite rightSprite = new Sprite(new Texture("rightButton.png"));
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint=new Vector3();
-    //private PlayerModel player;
     //private PlayerController controller;
+    private PlayerModel hider;
+    private Rectangle vision;
 
     // For rendering the seeker view
-    private ShapeRenderer shapes;
     private Texture light;
     private Sprite lightSprite;
 
     public PlayState() {
         super();
-        this.shapes = new ShapeRenderer();
-        light = new Texture("oaaB1.png");
-        lightSprite = new Sprite(light);
-        //shapes.setProjectionMatrix(cam.combined);
+        //SHADOW FOR SEEKER
+        this.light = new Texture("oaaB1.png");
+        this.lightSprite = new Sprite(light);
+        //DUMMY HIDER FOR TESTING
+        this.hider = new HiderModel(new Vector2(8,8));
+        //BUTTONS
         this.board = new Board();
         upSprite.setSize(tileWidth,tileHeight);
         downSprite.setSize(tileWidth,tileHeight);
@@ -64,7 +68,8 @@ public class PlayState extends State {
         rightSprite.setPosition(GardenGuard.WIDTH/2+tileWidth/2-1,tileHeight*2);
         squareSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1, tileHeight*2);
 
-        /*this.player = new SeekerModel(new Vector2(1, 2));
+        /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
+        this.player = new SeekerModel(new Vector2(1, 2));
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
     }
 
@@ -131,6 +136,7 @@ public class PlayState extends State {
             // skritt (siden vi ikke rekker det), eller at det kanskje ikke gjør noe om man pusher
             // path til seeker, siden den gjør vel ikke noe med den koden uansett.
             super.gsm.getPlayer().pushPath(new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
+            this.vision.setPosition(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1);
         }
     }
 
@@ -178,6 +184,14 @@ public class PlayState extends State {
         /*Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
+
+        if(this.vision.contains(hider.getPosition())) {
+            sb.begin();
+            sb.draw(new Texture("player1.png"), hider.getPosition().x * tileWidth,
+                    hider.getPosition().y * tileHeight, tileWidth, tileHeight);
+            sb.end();
+        }
+
     }
 
 
