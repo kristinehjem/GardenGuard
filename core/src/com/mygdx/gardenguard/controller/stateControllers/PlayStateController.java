@@ -17,7 +17,8 @@ public class PlayStateController extends Controller {
 
     public PlayStateController() {
         super();
-        this.isSeekerTurn = false;
+        this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
+        //this.isSeekerTurn = false;
         this.currentRound = 1;
     }
 
@@ -39,14 +40,14 @@ public class PlayStateController extends Controller {
 
     public void startTurn(){
         if (isSeekerTurn()){
-            for (PlayerModel player : super.players){
+            for (PlayerModel player : super.getPlayers()){
                 if (player instanceof SeekerModel){
-                    player.setSteps(15 - (2 * getCurrentRound())); //set steps for seeker to right amount of starting steps
+                    player.setSteps(15 ); //set steps for seeker to right amount of starting steps
                     break;
                 }
             }
         } else {
-            for (PlayerModel player : super.players){
+            for (PlayerModel player : super.getPlayers()){
                 if (player instanceof HiderModel){
                     player.setSteps(15 - (2 * getCurrentRound())); //set steps for seeker to right amount of starting steps
                 }
@@ -78,6 +79,7 @@ public class PlayStateController extends Controller {
                 startTurn();
             }
         }
+        System.out.println("you have ended your turn");
     }
 
     public List calculateScores(){
