@@ -40,7 +40,7 @@ public class PlayState extends State {
     private Sprite rightSprite = new Sprite(new Texture("rightButton.png"));
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint=new Vector3();
-    //private PlayerController controller;
+    //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
 
@@ -53,8 +53,9 @@ public class PlayState extends State {
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
+        this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
         //DUMMY HIDER FOR TESTING
-        this.hider = new HiderModel(new Vector2(8,8));
+        //this.hider = new HiderModel(new Vector2(8,8));
         //BUTTONS
         this.board = new Board();
         upSprite.setSize(tileWidth,tileHeight);
@@ -154,11 +155,11 @@ public class PlayState extends State {
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         if (gsm.getPlayer() instanceof SeekerModel) {
-            //renderStencilImage(sb);
             shadowingRender(sb);
 
         }
-        else {
+        else if (gsm.getPlayer() instanceof HiderModel){
+
             sb.begin();
             for (int y = 0; y < GardenGuard.numVertical; y++) {
                 for (int x = 0; x < GardenGuard.numHorisontal; x++) {
@@ -166,7 +167,7 @@ public class PlayState extends State {
                 }
             }
 
-            sb.draw(new Texture("player0.png"), gsm.getPlayer().getPosition().x * tileWidth,
+            sb.draw(new Texture("player1.png"), gsm.getPlayer().getPosition().x * tileWidth,
                     gsm.getPlayer().getPosition().y * tileHeight, (float) tileWidth, (float) tileHeight);
             sb.end();
         }
@@ -180,18 +181,15 @@ public class PlayState extends State {
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
         // TODO: kanskje ikke lage en new Texture hver gang? Føler det krever mer (med mindre vi disposer den hele tiden). Kan vel bare bruke den samme? (Jeg gjorde det i helicopter)
-        // sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x * tileWidth,super.gsm.getPlayer().getPosition().y * tileHeight, 50, 50);
-        /*Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         sb.end();
 
-        if(this.vision.contains(hider.getPosition())) {
+        //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
+        /*if(this.vision.contains(hider.getPosition())) {
             sb.begin();
             sb.draw(new Texture("player1.png"), hider.getPosition().x * tileWidth,
                     hider.getPosition().y * tileHeight, tileWidth, tileHeight);
             sb.end();
-        }
-
+        }*/
     }
 
 
@@ -211,53 +209,6 @@ public class PlayState extends State {
         // Hva er tanken med denne klassen?
     }
 
-    /*private void renderStencilImage(SpriteBatch sb){
-        // Clear the buffer
-        Gdx.gl.glClearDepthf(1.0f);
-        Gdx.gl.glClear(GL30.GL_DEPTH_BUFFER_BIT);
-
-        // Disable writing to frame buffer and
-        // Set up the depth test
-        Gdx.gl.glDepthFunc(GL20.GL_LESS);
-        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
-        Gdx.gl.glDepthMask(true);
-        Gdx.gl.glColorMask(false, false, false, true);
-        //Here add your mask shape rendering code i.e. rectangle
-        //triangle, or other polygonal shape mask
-
-        /*shapes.begin(ShapeRenderer.ShapeType.Filled);
-        shapes.setColor(1, 1, 1, 0.5f);
-        shapes.circle((float) (gsm.getPlayer().getPosition().x * tileWidth + tileWidth / 2.0),
-                (float) (gsm.getPlayer().getPosition().y * tileHeight + tileHeight / 2.0), (float) (tileWidth* 1.5));
-        shapes.end();
-
-        // Enable writing to the FrameBuffer
-        // and set up the texture to render with the mask
-        // applied
-        Gdx.gl.glColorMask(true, true, true, true);
-        Gdx.gl.glDepthMask(true);
-        Gdx.gl.glDepthFunc(GL20.GL_EQUAL);
-        Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
-        // Here add your texture rendering code
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_CONSTANT_ALPHA);
-        sb.begin();
-        for (int y = 0; y < GardenGuard.numVertical; y++) {
-            for (int x = 0; x < GardenGuard.numHorisontal; x++) {
-                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
-            }
-        }
-        sb.end();
-        // Ensure depth test is disabled so that depth
-        sb.begin();
-        sb.draw(new Texture("player0.png"), gsm.getPlayer().getPosition().x * tileWidth,
-                gsm.getPlayer().getPosition().y * tileHeight, (float) tileWidth, (float) tileHeight);
-        sb.end();
-        Gdx.gl.glDisable(GL20.GL_BLEND);
-        //Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
-
-
-    }*/
 
     private void shadowingRender(SpriteBatch sb) {
 
