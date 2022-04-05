@@ -38,7 +38,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         return playerID;
     }
 
-    protected void setSteps(int i) {
+    public void setSteps(int i) {
         this.steps = i;
     }
     public int getSteps() {

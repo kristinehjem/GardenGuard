@@ -11,6 +11,7 @@ import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.playerControllers.PlayerController;
 import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
+import com.mygdx.gardenguard.controller.stateControllers.PlayStateController;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
@@ -19,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayState extends State {
+    //TODO: legg til en ny knapp så spilleren kan si at turen deres er ferdig
 
     // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
+    private PlayStateController controller;
 
     private Board board;
     private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
@@ -34,6 +37,7 @@ public class PlayState extends State {
 
     public PlayState() {
         super();
+        this.controller = new PlayStateController();
         //cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         this.board = new Board();
         upSprite.setSize(tileWidth,tileHeight);
@@ -50,7 +54,7 @@ public class PlayState extends State {
 
     @Override
     public Controller getController() {
-        return null; // TODO: Skal denne egt. returnere en controller?
+        return controller;
     }
 
     @Override
@@ -64,6 +68,11 @@ public class PlayState extends State {
         if(Gdx.input.justTouched()) {
             //unprojects the camera (vet ikke hva det vil si, men klikkingen fungerer ikke uten det):
             cam.unproject(touchPoint.set(Gdx.input.getX(),Gdx.input.getY(),0));
+
+            //Sjekke om knappen for å slutte turen ble trykket
+            if (squareSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)){
+                controller.endTurn();
+            }
 
             // Prøver å gå opp:
             if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
