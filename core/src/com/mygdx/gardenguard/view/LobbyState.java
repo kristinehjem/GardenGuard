@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -36,6 +39,8 @@ public class LobbyState extends State{
     Collection<String> playerNames;
     private BitmapFont playerFont = new BitmapFont();
     private BitmapFont nameFont = new BitmapFont();
+    private BitmapFont pinFont = new BitmapFont();
+    private BitmapFont pinInfo = new BitmapFont();
     private Viewport viewport;
 
     public LobbyState(){
@@ -45,6 +50,8 @@ public class LobbyState extends State{
         this.playerNames = new ArrayList<>();
         playerFont.getData().setScale(3f);
         nameFont.getData().setScale(2.5f);
+        pinFont.getData().setScale(2f);
+        pinInfo.getData().setScale(1.5f);
         create();
     }
 
@@ -75,9 +82,12 @@ public class LobbyState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        //create();
+        final GlyphLayout layout1 = new GlyphLayout(pinFont, controller.getPin());
+        final GlyphLayout layout2 = new GlyphLayout(pinInfo, "Share game pin with your friends");
+        pinFont.draw(sb, layout1, (GardenGuard.WIDTH-layout1.width)/2, 740);
+        pinInfo.draw(sb, layout2, (GardenGuard.WIDTH-layout2.width)/2, 700);
         List<PlayerModel> players = controller.getPlayers();
-        playerFont.draw(sb, "Players", 180, 700);
+        playerFont.draw(sb, "Players", 180, 600);
         int i = 0;
         for (PlayerModel player: players) {
             int x_value = (80);
