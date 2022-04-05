@@ -13,16 +13,13 @@ public class HiderModel extends PlayerModel {
     public HiderModel(Vector2 position) {
         super(position);
         this.setSteps(15);
+        this.setIsFound(false);
         super.setIsSeeker(false);
     }
 
     //Ikke slett, trenger til database
     public HiderModel() {
-    }
 
-    @Override
-    public void gainPoints() {
-        this.setScore(10);
     }
 
     public Stack<Vector2> getPath() {

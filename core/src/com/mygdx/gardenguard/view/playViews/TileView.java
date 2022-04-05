@@ -17,6 +17,7 @@ public class TileView {
         this.tile = tile;
         setPicture(tile);
         tile.setTileView(this);
+
     }
 
     public void setPicture(Tile tile){
