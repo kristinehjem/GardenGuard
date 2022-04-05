@@ -16,6 +16,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.playerControllers.HiderController;
+import com.mygdx.gardenguard.controller.playerControllers.PlayerController;
+import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.HiderModel;
