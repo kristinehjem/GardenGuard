@@ -2,6 +2,7 @@ package com.mygdx.gardenguard;
 
 import androidx.annotation.NonNull;
 
+import com.badlogic.gdx.math.Vector2;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,8 +83,8 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void UpdatePositionInDB(String gamePin, String playerID, String value) {
-        gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
+    public void UpdatePositionInDB(String gamePin, String playerID, Vector2 position) {
+        gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(position);
     }
 
     @Override

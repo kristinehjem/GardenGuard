@@ -23,10 +23,12 @@ public abstract class Controller {
     }
 
     public void setPlayers(List<PlayerModel> players) {
-        this.players = players;
+        System.out.println("setting players in controller");
+        gsm.setPlayers(players);
+        //this.players = players;
     }
 
     public List<PlayerModel> getPlayers() {
-        return players;
+        return gsm.getPlayers();
     }
 }

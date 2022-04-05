@@ -29,7 +29,7 @@ import java.util.List;
 
 public class LobbyState extends State{
 
-    LobbyController controller;
+    private LobbyController controller;
     private Stage stage;
     Sprite sprite;
     Texture backround = new Texture("lobbyBackround.png");
@@ -55,6 +55,7 @@ public class LobbyState extends State{
             System.err.println("Controller is null");
             return null;
         } else {
+            System.out.println("controller is not null");
             return this.controller;
         }
     }
@@ -130,9 +131,10 @@ public class LobbyState extends State{
                 controller.setUsername(controller.getPlayer().getPlayerID());
             }
         }, "Enter username", "", "");
-        if (super.gsm.getPlayer() instanceof HiderModel) {
+        //TODO: ukommenter dette
+        /*if (super.gsm.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
-        }
+        }*/
         stage.addActor(startGame);
     }
 

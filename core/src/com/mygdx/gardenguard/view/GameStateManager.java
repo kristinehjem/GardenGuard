@@ -6,6 +6,7 @@ import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
+import java.util.List;
 import java.util.Stack;
 
 public class GameStateManager {
@@ -21,6 +22,7 @@ public class GameStateManager {
     private DataHolderClass dataholder;
     private String gamePin;
     private PlayerModel player;
+    private List<PlayerModel> players;
 
     public GameStateManager(){
         states = new Stack<State>();
@@ -60,7 +62,7 @@ public class GameStateManager {
         return dataholder;
     }
 
-    public void update(float dt) {
+    public void update(float dt) throws InterruptedException {
         states.peek().update(dt);
     }
 
@@ -78,5 +80,13 @@ public class GameStateManager {
 
     public void setPlayer(PlayerModel player) {
         this.player = player;
+    }
+
+    public void setPlayers(List<PlayerModel> players) {
+        this.players = players;
+    }
+
+    public List<PlayerModel> getPlayers() {
+        return this.players;
     }
 }
