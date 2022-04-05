@@ -42,15 +42,17 @@ public class GardenGuard extends ApplicationAdapter {
 		player.setPlayerID(gsm.getFBIC().CreatePlayerInDB(gamePin, player));
 		//super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
 		gsm.setGamePin(gamePin);
-		gsm.push(new GameOverState());*/
+		//gsm.push(new PlayState());*/
 
+		//gsm.setPin("hei");
+		//gsm.push(new GameOverState());
 		gsm.push(new MenuState());
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0, 0, 0, 0);
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		ScreenUtils.clear(0f, 0f, 0f, 0f);
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gsm.update(Gdx.graphics.getDeltaTime());
 		gsm.render(batch);

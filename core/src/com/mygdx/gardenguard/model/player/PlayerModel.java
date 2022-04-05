@@ -18,6 +18,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private String textureFile;
     protected boolean isSeeker;
     private String username;
+    protected boolean isFound;
 
     public PlayerModel(Vector2 position){
         this.position = position;
@@ -52,7 +53,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     public Vector2 getPosition() {return this.position;}
 
     public void setScore(int points) {
-        this.score += points;
+        this.score = points;
     }
     public int getScore() {
         return score;
@@ -68,8 +69,6 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         this.username = username;
     }
 
-    public abstract void gainPoints();
-
     public abstract Stack<Vector2> getPath();
 
     public abstract void pushPath(Vector2 position);
@@ -77,5 +76,15 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     public int compareTo(PlayerModel other) {
         return this.getScore() - other.getScore();
     }
+
+    public boolean isFound() {
+        return isFound;
+    }
+
+    public void setIsFound(boolean isFounded) {
+        this.isFound = isFounded;
+    }
+
+
 }
 
