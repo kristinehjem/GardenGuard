@@ -54,7 +54,11 @@ public class GardenGuard extends ApplicationAdapter {
 		ScreenUtils.clear(0f, 0f, 0f, 0f);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		gsm.update(Gdx.graphics.getDeltaTime());
+		try {
+			gsm.update(Gdx.graphics.getDeltaTime());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		gsm.render(batch);
 	}
 	

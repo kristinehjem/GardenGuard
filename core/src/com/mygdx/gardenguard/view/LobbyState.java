@@ -32,7 +32,7 @@ import java.util.List;
 
 public class LobbyState extends State{
 
-    LobbyController controller;
+    private LobbyController controller;
     private Stage stage;
     Sprite sprite;
     Texture backround = new Texture("lobbyBackround.png");
@@ -62,6 +62,7 @@ public class LobbyState extends State{
             System.err.println("Controller is null");
             return null;
         } else {
+            System.out.println("controller is not null");
             return this.controller;
         }
     }
@@ -85,8 +86,6 @@ public class LobbyState extends State{
         final GlyphLayout layout2 = new GlyphLayout(pinInfo, "Share game pin with your friends");
         pinFont.draw(sb, layout1, (GardenGuard.WIDTH-layout1.width)/2, 740);
         pinInfo.draw(sb, layout2, (GardenGuard.WIDTH-layout2.width)/2, 700);
-        //pinFont.draw(sb, controller.getPin(), (GardenGuard.WIDTH-pinFont.getBounds(String str).width)/2, 740);
-        //pinInfo.draw(sb, "Share game pin with your friends", 50, 700);
         List<PlayerModel> players = controller.getPlayers();
         playerFont.draw(sb, "Players", 180, 600);
         int i = 0;
@@ -142,9 +141,10 @@ public class LobbyState extends State{
                 controller.setUsername(controller.getPlayer().getPlayerID());
             }
         }, "Enter username", "", "");
-        if (super.gsm.getPlayer() instanceof HiderModel) {
+        //TODO: ukommenter dette
+        /*if (super.gsm.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
-        }
+        }*/
         stage.addActor(startGame);
     }
 

@@ -1,5 +1,6 @@
 package com.mygdx.gardenguard.API;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
@@ -23,7 +24,7 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void UpdatePositionInDB(String gamePin, String playerID, String value) {
+    public void UpdatePositionInDB(String gamePin, String playerID, Vector2 position) {
 
     }
 

@@ -15,6 +15,7 @@ public class HiderModel extends PlayerModel {
         this.setSteps(15);
         this.setIsFound(false);
         super.setIsSeeker(false);
+        this.path = new Stack<>();
     }
 
     //Ikke slett, trenger til database

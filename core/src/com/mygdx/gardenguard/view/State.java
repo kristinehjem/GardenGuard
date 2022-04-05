@@ -21,8 +21,8 @@ public abstract class State {
 
     public abstract Controller getController();
 
-    protected abstract void handleInput();
-    protected abstract void update(float dt);
+    protected abstract void handleInput() throws InterruptedException;
+    protected abstract void update(float dt) throws InterruptedException;
     protected abstract void render(SpriteBatch sb);
     protected abstract void dispose();
     protected abstract void create();
