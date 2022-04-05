@@ -103,7 +103,11 @@ public class MenuState extends State {
         create.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                menuController.handleCreate();
+                try {
+                    menuController.handleCreate();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         });

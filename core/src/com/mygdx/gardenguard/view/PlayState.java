@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -24,16 +22,11 @@ import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class PlayState extends State {
 
-    // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
-
     private Board board;
-
+    private PlayerController playerController;
     private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
     private int tileHeight = 53; // TODO: Prøv å bruk den nye referansen jeg lagde i board-klassen
     private Sprite upSprite = new Sprite(new Texture("upButton.png"));
@@ -42,7 +35,6 @@ public class PlayState extends State {
     private Sprite rightSprite = new Sprite(new Texture("rightButton.png"));
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint=new Vector3();
-    private PlayerController playerController;
     private BitmapFont showSteps;
     private String numberOfSteps;
     //Dummy test to find other players;
@@ -57,17 +49,13 @@ public class PlayState extends State {
     public PlayState() {
         super();
         this.board = new Board();
-        if (super.gsm.getPlayer() instanceof SeekerModel) {
-            this.playerController = new SeekerController((SeekerModel) super.gsm.getPlayer(), board);
-        } else if(super.gsm.getPlayer() instanceof HiderModel) {
-            this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), board);
-        } else {
-            System.out.print("Player is neither instance of SeekerModel nor HiderModel");
-        }
+        setPlayerController();
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
         this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
+        this.board = new Board();
+        this.setPlayerController();
         //DUMMY HIDER FOR TESTING
         //this.hider = new HiderModel(new Vector2(8,8));
         //BUTTONS
@@ -99,9 +87,19 @@ public class PlayState extends State {
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
     }
 
+    private void setPlayerController() {
+        if (super.gsm.getPlayer() instanceof SeekerModel) {
+            this.playerController = new SeekerController((SeekerModel) super.gsm.getPlayer(), this.board);
+        } else if (super.gsm.getPlayer() instanceof HiderModel) {
+            this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), this.board);
+        } else {
+            System.err.print("Player is neither instance of SeekerModel nor HiderModel");
+        }
+    }
+
     @Override
     public Controller getController() {
-        return null; // TODO: Skal denne egt. returnere en controller?
+        return this.playerController;
     }
 
     @Override
@@ -111,6 +109,7 @@ public class PlayState extends State {
             cam.unproject(touchPoint.set(Gdx.input.getX(),Gdx.input.getY(),0));
             // Flytter spilleren ut i fra knappetrykk
             if(upSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
+                System.out.println("up");
                 playerController.move("up");
             }
             if(downSprite.getBoundingRectangle().contains(touchPoint.x,touchPoint.y)) {
@@ -127,47 +126,36 @@ public class PlayState extends State {
     }
 
     @Override
-    protected void update(float dt) { // TODO: Jeg bruker ikke dt til noe. Skal jeg det?
+    protected void update(float dt) {
         handleInput();
     }
-    /*protected void update(float dt) {
-        controller.updatePosition();
-    }*/
-
 
     @Override
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
-
         }
         else if (gsm.getPlayer() instanceof HiderModel){
-
             sb.begin();
+            sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
                 for (int x = 0; x < GardenGuard.numHorisontal; x++) {
                     board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
                 }
             }
-
-            sb.draw(new Texture("player1.png"), gsm.getPlayer().getPosition().x * tileWidth,
-                    gsm.getPlayer().getPosition().y * tileHeight, (float) tileWidth, (float) tileHeight);
+            for (PlayerModel player: getController().getPlayers()) {
+                sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,player.getPosition().y * tileHeight, 50, 50);
+            }
             sb.end();
         }
         sb.begin();
         sb.setProjectionMatrix(cam.combined);
-        sb.enableBlending();
-        sb.setBlendFunction(GL20.GL_ONE, GL20.GL_ZERO);
         upSprite.draw(sb, 50);
         downSprite.draw(sb, 50);
         leftSprite.draw(sb, 50);
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
-        // TODO: kanskje ikke lage en new Texture hver gang? Føler det krever mer (med mindre vi disposer den hele tiden). Kan vel bare bruke den samme? (Jeg gjorde det i helicopter)
-        sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x * tileWidth,super.gsm.getPlayer().getPosition().y * tileHeight, 50, 50);
-        /*Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         create();
         showSteps.draw(sb, numberOfSteps, 10,GardenGuard.HEIGHT - 20);
         sb.end();
@@ -184,13 +172,6 @@ public class PlayState extends State {
 
     @Override
     protected void dispose() {
-        // Måtte fjerne disse da jeg heller lagde textursene inni spritene, siden da fantes ikke
-        // texturesene som varibaler lengre. Men som taxturwe lages new inni spriten, må vi
-        // fortsatt dispose da?
-        /*upTexture.dispose();
-        downTexture.dispose();
-        leftTexture.dispose();
-        rightTexture.dispose();*/
         showSteps.dispose();
     }
 
@@ -206,7 +187,7 @@ public class PlayState extends State {
 
 
     private void shadowingRender(SpriteBatch sb) {
-
+        sb.enableBlending();
         lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
         FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
 
@@ -234,8 +215,9 @@ public class PlayState extends State {
         sb.end();
 
         sb.begin();
-        sb.draw(new Texture("player0.png"), gsm.getPlayer().getPosition().x * tileWidth,
-                gsm.getPlayer().getPosition().y * tileHeight, (float) tileWidth, (float) tileHeight);
+        for (PlayerModel player: getController().getPlayers()) {
+            sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,player.getPosition().y * tileHeight, 50, 50);
+        }
         sb.end();
 
         sb.setProjectionMatrix(sb.getProjectionMatrix().idt());
@@ -245,6 +227,7 @@ public class PlayState extends State {
 
         sb.draw(frameBuffer.getColorBufferTexture(),-1,1,2,-2);
         sb.end();
+        sb.disableBlending();
     }
 
 }

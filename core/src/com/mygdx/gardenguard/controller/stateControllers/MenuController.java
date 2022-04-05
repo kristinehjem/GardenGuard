@@ -27,11 +27,11 @@ public class MenuController extends Controller {
         super.gsm.getFBIC().checkIfGameExists(gamePin, this);
         TimeUnit.SECONDS.sleep(1);
         if (getPinExist()) {
-            System.out.println("pin exists");
-            PlayerModel player = new HiderModel(new Vector2(3, 8)); // TODO: Når kommer vel alle hiderene oppå hverandre?
+            PlayerModel player = new HiderModel(new Vector2(0, 0));
             super.gsm.setPlayer(player);
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
-            setTexture();
+            TimeUnit.MILLISECONDS.sleep(500);
+            setTextureAndPosition();
             player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
             super.gsm.setGamePin(gamePin);
             super.gsm.push(new LobbyState());
@@ -42,24 +42,33 @@ public class MenuController extends Controller {
         }
     }
 
-    public void handleCreate() {
-        //alt som er kommentert ut kan kommenteres inn om man vil teste med to spillere
-        PlayerModel player = new SeekerModel(new Vector2(4, 7));
-        //PlayerModel player2 = new HiderModel(new Vector2(2, 3));
-        //player2.setTexture("player1.png");
+    public void handleCreate() throws InterruptedException {
+        PlayerModel player = new SeekerModel(new Vector2(0,0));
         super.gsm.setPlayer(player);
         String gamePin = super.gsm.getFBIC().CreateGameInDB();
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
-        setTexture();
+        TimeUnit.MILLISECONDS.sleep(2000);
+        setTextureAndPosition();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
-        //super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
         super.gsm.setGamePin(gamePin);
         super.gsm.set(new LobbyState());
     }
 
-    private void setTexture() {
+    private void setTextureAndPosition() {
         int numOfPlayers = super.getPlayers().size();
         super.gsm.getPlayer().setTexture("player" + String.valueOf(numOfPlayers) + ".png");
+        switch(numOfPlayers) {
+            case 0: super.gsm.getPlayer().setPosition(4,7);
+                    break;
+            case 1: super.gsm.getPlayer().setPosition(3,8);
+                    break;
+            case 2: super.gsm.getPlayer().setPosition(5,8);
+                    break;
+            case 3: super.gsm.getPlayer().setPosition(5,6);
+                    break;
+            case 4: super.gsm.getPlayer().setPosition(3,6);
+                    break;
+        }
     }
 
     public void setPinExist(boolean pinExist) {
