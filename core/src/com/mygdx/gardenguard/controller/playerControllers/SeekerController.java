@@ -43,10 +43,7 @@ public class SeekerController extends PlayerController {
 
                 super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(true));
                 super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(player.getScore() + 5));
-
-
             }
         }
     }
-
 }
