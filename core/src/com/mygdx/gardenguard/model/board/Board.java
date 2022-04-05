@@ -1,10 +1,7 @@
 package com.mygdx.gardenguard.model.board;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gardenguard.GardenGuard;
-import java.util.Arrays;
+
 import java.util.Random;
 
 public class Board {
@@ -15,12 +12,22 @@ public class Board {
     public Board() {
         for (int y = 0; y< GardenGuard.numVertical; y++) {
             for (int x=0; x<GardenGuard.numHorisontal; x++) {
-                //creating board without obstructions
+                // Hedge top for info
+                if(y==14){
+                    tiles[y][x] = new Tile(x,y, false);
+                    continue;
+                }
+                // Clean center
                 if((y==6 && x==3) || (y==7 && x==3) || (y==8 && x==3) || (y==6 && x==4) || (y==7 && x==4) || (y==8 && x==4) || (y==6 && x==5) || (y==7 && x==5) || (y==8 && x==5)){ // Note: Tallene til board/tiles går 0-8 og 0-14
                     tiles[y][x] = new Tile(x, y,true);
-                } else if((y==1 && x==4) || (y==2 && x==4) || (y==3 && x==4) || (y==2 && x==3) || (y==2 && x==5)) {
-                    tiles[y][x] = new Tile(x, y,false);
-                } else {
+                    continue;
+                }
+                // Hedges for up, down, right, left button
+                if((y==1 && x==4) || (y==2 && (x==3 || x==4 || x==5)) || (y==3 && x==4)){
+                    tiles[y][x] = new Tile(x,y, false);
+                    continue;
+                }
+                else {
                     Random random = new Random();
                     tiles[y][x] = new Tile(x, y,getRandomBoolean(random));
                 }

@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -17,8 +17,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.playerControllers.HiderController;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
-import com.mygdx.gardenguard.controller.playerControllers.PlayerController;
-import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
@@ -26,6 +24,7 @@ import com.mygdx.gardenguard.model.player.SeekerModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class PlayState extends State {
 
@@ -42,6 +41,8 @@ public class PlayState extends State {
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint=new Vector3();
     private PlayerController playerController;
+    private BitmapFont showSteps;
+    private String numberOfSteps;
     //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
@@ -49,6 +50,7 @@ public class PlayState extends State {
     // For rendering the seeker view
     private Texture light;
     private Sprite lightSprite;
+
 
     public PlayState() {
         super();
@@ -77,6 +79,18 @@ public class PlayState extends State {
         leftSprite.setPosition(GardenGuard.WIDTH/2-tileWidth-tileWidth/2-1,tileHeight*2-1);
         rightSprite.setPosition(GardenGuard.WIDTH/2+tileWidth/2-1,tileHeight*2);
         squareSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1, tileHeight*2);
+        // TODO: Kommenter ut/endre når merget med PlayerTurnController
+        // TODO: Reduser steps for hvert knappetrykk
+        /*
+        if(isSeeker == true){
+            this.numberOfSteps = "Steps left: " + String(SeekerModel.getSteps());
+        }
+        else {
+            this.numberOfSteps = "Steps left: " + String(HiderModel.getSteps());
+        }
+        */
+        // TODO: Fjern denne linjen når if-else setningen over fungerer
+        this.numberOfSteps = "Steps left: 15";
 
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
         this.player = new SeekerModel(new Vector2(1, 2));
@@ -149,6 +163,11 @@ public class PlayState extends State {
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
         // TODO: kanskje ikke lage en new Texture hver gang? Føler det krever mer (med mindre vi disposer den hele tiden). Kan vel bare bruke den samme? (Jeg gjorde det i helicopter)
+        sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x * tileWidth,super.gsm.getPlayer().getPosition().y * tileHeight, 50, 50);
+        /*Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
+        create();
+        showSteps.draw(sb, numberOfSteps, 10,GardenGuard.HEIGHT - 20);
         sb.end();
 
         //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
@@ -170,11 +189,17 @@ public class PlayState extends State {
         downTexture.dispose();
         leftTexture.dispose();
         rightTexture.dispose();*/
+        showSteps.dispose();
     }
 
     @Override
     protected void create() {
+        showSteps = new BitmapFont();
+        showSteps.setColor(Color.YELLOW);
+        showSteps.getData().setScale(2);
         // Hva er tanken med denne klassen?
+        // Herman: den er en abstrakt metode som en kan bruke for å lage ting som rendres, f.eks
+        // bruker jeg den i popupstate når jeg lager en Stage før jeg rendrer den
     }
 
 

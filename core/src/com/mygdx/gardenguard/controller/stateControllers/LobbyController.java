@@ -34,4 +34,8 @@ public class LobbyController extends Controller {
         super.gsm.getPlayer().setUsername(username);
         super.gsm.getFBIC().UpdateUsername(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), username);
     }
+
+    public String getPin() {
+        return super.gsm.getGamePin();
+    }
 }
