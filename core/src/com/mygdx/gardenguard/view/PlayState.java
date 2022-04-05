@@ -2,21 +2,35 @@ package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.model.board.Board;
+import com.mygdx.gardenguard.model.player.HiderModel;
+import com.mygdx.gardenguard.model.player.PlayerModel;
+import com.mygdx.gardenguard.model.player.SeekerModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class PlayState extends State {
 
     // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
 
     private Board board;
+
     private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
     private int tileHeight = 53; // TODO: Prøv å bruk den nye referansen jeg lagde i board-klassen
     private Sprite upSprite = new Sprite(new Texture("upButton.png"));
@@ -28,9 +42,24 @@ public class PlayState extends State {
     private BitmapFont showSteps;
     private String numberOfSteps;
 
+    //Dummy test to find other players;
+    private PlayerModel hider;
+    private Rectangle vision;
+
+    // For rendering the seeker view
+    private Texture light;
+    private Sprite lightSprite;
+
+
     public PlayState() {
         super();
-        //cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
+        //SHADOW FOR SEEKER
+        this.light = new Texture("oaaB1.png");
+        this.lightSprite = new Sprite(light);
+        this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
+        //DUMMY HIDER FOR TESTING
+        //this.hider = new HiderModel(new Vector2(8,8));
+        //BUTTONS
         this.board = new Board();
         upSprite.setSize(tileWidth,tileHeight);
         downSprite.setSize(tileWidth,tileHeight);
@@ -54,6 +83,10 @@ public class PlayState extends State {
         */
         // TODO: Fjern denne linjen når if-else setningen over fungerer
         this.numberOfSteps = "Steps left: 15";
+
+        /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
+        this.player = new SeekerModel(new Vector2(1, 2));
+        this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
     }
 
     @Override
@@ -119,6 +152,7 @@ public class PlayState extends State {
             // skritt (siden vi ikke rekker det), eller at det kanskje ikke gjør noe om man pusher
             // path til seeker, siden den gjør vel ikke noe med den koden uansett.
             super.gsm.getPlayer().pushPath(new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
+            this.vision.setPosition(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1);
         }
     }
 
@@ -126,18 +160,36 @@ public class PlayState extends State {
     protected void update(float dt) { // TODO: Jeg bruker ikke dt til noe. Skal jeg det?
         handleInput();
     }
+    /*protected void update(float dt) {
+        controller.updatePosition();
+
+    }*/
+
 
     @Override
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
-        sb.begin();
-        /*Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
-        for (int y=0;y<GardenGuard.numVertical;y++) {
-            for (int x=0; x<GardenGuard.numHorisontal; x++) {
-                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
-            }
+        if (gsm.getPlayer() instanceof SeekerModel) {
+            shadowingRender(sb);
+
         }
+        else if (gsm.getPlayer() instanceof HiderModel){
+
+            sb.begin();
+            for (int y = 0; y < GardenGuard.numVertical; y++) {
+                for (int x = 0; x < GardenGuard.numHorisontal; x++) {
+                    board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+                }
+            }
+
+            sb.draw(new Texture("player1.png"), gsm.getPlayer().getPosition().x * tileWidth,
+                    gsm.getPlayer().getPosition().y * tileHeight, (float) tileWidth, (float) tileHeight);
+            sb.end();
+        }
+        sb.begin();
+        sb.setProjectionMatrix(cam.combined);
+        sb.enableBlending();
+        sb.setBlendFunction(GL20.GL_ONE, GL20.GL_ZERO);
         upSprite.draw(sb, 50);
         downSprite.draw(sb, 50);
         leftSprite.draw(sb, 50);
@@ -150,7 +202,16 @@ public class PlayState extends State {
         create();
         showSteps.draw(sb, numberOfSteps, 10,GardenGuard.HEIGHT - 20);
         sb.end();
+
+        //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
+        /*if(this.vision.contains(hider.getPosition())) {
+            sb.begin();
+            sb.draw(new Texture("player1.png"), hider.getPosition().x * tileWidth,
+                    hider.getPosition().y * tileHeight, tileWidth, tileHeight);
+            sb.end();
+        }*/
     }
+
 
     @Override
     protected void dispose() {
@@ -173,4 +234,48 @@ public class PlayState extends State {
         // Herman: den er en abstrakt metode som en kan bruke for å lage ting som rendres, f.eks
         // bruker jeg den i popupstate når jeg lager en Stage før jeg rendrer den
     }
+
+
+    private void shadowingRender(SpriteBatch sb) {
+
+        lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
+        FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
+
+
+        frameBuffer.begin();
+
+        Gdx.gl.glClearColor(.2f,.2f,.2f,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        sb.setProjectionMatrix(cam.combined);
+        sb.setBlendFunction(GL20.GL_ONE,GL20.GL_ONE);
+        sb.begin();
+        lightSprite.draw(sb);
+        sb.end();
+
+        frameBuffer.end();
+
+        sb.setBlendFunction(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
+        sb.begin();
+        for (int y = 0; y < GardenGuard.numVertical; y++) {
+            for (int x = 0; x < GardenGuard.numHorisontal; x++) {
+                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+            }
+        }
+        sb.end();
+
+        sb.begin();
+        sb.draw(new Texture("player0.png"), gsm.getPlayer().getPosition().x * tileWidth,
+                gsm.getPlayer().getPosition().y * tileHeight, (float) tileWidth, (float) tileHeight);
+        sb.end();
+
+        sb.setProjectionMatrix(sb.getProjectionMatrix().idt());
+
+        sb.setBlendFunction( GL20.GL_ZERO,GL20.GL_SRC_COLOR);
+        sb.begin();
+
+        sb.draw(frameBuffer.getColorBufferTexture(),-1,1,2,-2);
+        sb.end();
+    }
+
 }

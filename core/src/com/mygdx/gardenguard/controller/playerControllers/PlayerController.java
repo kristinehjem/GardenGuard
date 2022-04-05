@@ -1,10 +1,11 @@
 package com.mygdx.gardenguard.controller.playerControllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.PlayerModel;
-import com.mygdx.gardenguard.model.board.Tile;
 
 /*
 * PlayerController skal ta seg av all logikk som har med hvordan spilleren beveger seg på bordet per nå.
@@ -12,7 +13,9 @@ import com.mygdx.gardenguard.model.board.Tile;
 
 public abstract class PlayerController extends Controller {
 
-    protected Board board;
+    protected Board board; //Må endre type til board
+    public final int tileWidth = GardenGuard.WIDTH / GardenGuard.numHorisontal;
+    public final int tileHeight = GardenGuard.HEIGHT / GardenGuard.numVertical;
 
 
     public PlayerController(Board board) {
@@ -22,8 +25,28 @@ public abstract class PlayerController extends Controller {
     public abstract PlayerModel getPlayer();
 
     public void updatePosition() {
-        // Logikken for flytting som nå ligger i PlayState burde flyttes hit
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            System.out.println("Gå til høyre \n");
+            moveRight();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+            System.out.println("Gå til venstre \n");
+            moveLeft();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            System.out.println("Gå opp \n");
+            moveUp();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            System.out.println("Gå ned \n");
+            moveDown();
+        }
+        if(getPlayer().getIsSeeker()) {
+            checkForPlayers();
+        }
     }
+
+    protected abstract void checkForPlayers();
 
     // Bytt til try catch hvis dette ikke fungerer: https://coderanch.com/t/649165/java/prevent-user-bounds-simple-array
     // Disse metodene implementeres hver for seg i hider og seeker, siden hider skal gå og lagre det i en stack, mens seeker bare skal gå

@@ -28,9 +28,15 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void UpdateScoreInDB(String target, String value) {
+    public void UpdateScoreInDB(String gamePin, String playerID, String value) {
+    }
+
+
+    @Override
+    public void UpdateIsFoundInDB(String gamePin, String playerID, String value) {
 
     }
+
 
     @Override
     public void checkIfGameExists(String gamePin, MenuController MC) {
