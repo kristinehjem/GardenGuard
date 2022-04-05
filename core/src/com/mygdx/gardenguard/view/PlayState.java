@@ -1,10 +1,17 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.gardenguard.GardenGuard;
@@ -36,9 +43,20 @@ public class PlayState extends State {
     private Sprite rightSprite = new Sprite(new Texture("rightButton.png"));
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint=new Vector3();
+    //Dummy test to find other players;
+    private PlayerModel hider;
+    private Rectangle vision;
+
+    // For rendering the seeker view
+    private Texture light;
+    private Sprite lightSprite;
 
     public PlayState() {
         super();
+        //SHADOW FOR SEEKER
+        this.light = new Texture("oaaB1.png");
+        this.lightSprite = new Sprite(light);
+        this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
         this.board = new Board();
         this.setPlayerController();
         upSprite.setSize(tileWidth,tileHeight);
@@ -51,6 +69,10 @@ public class PlayState extends State {
         leftSprite.setPosition(GardenGuard.WIDTH/2-tileWidth-tileWidth/2-1,tileHeight*2-1);
         rightSprite.setPosition(GardenGuard.WIDTH/2+tileWidth/2-1,tileHeight*2);
         squareSprite.setPosition(GardenGuard.WIDTH/2-tileWidth/2-1, tileHeight*2);
+
+        /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
+        this.player = new SeekerModel(new Vector2(1, 2));
+        this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
     }
 
     private void setPlayerController() {
@@ -85,8 +107,8 @@ public class PlayState extends State {
                 } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y + 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
                     int x = (int) super.gsm.getPlayer().getPosition().x;
                     int y = (int) super.gsm.getPlayer().getPosition().y + 1;
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(x, y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x), (int) super.gsm.getPlayer().getPosition().y + 1);
+                    super.gsm.getPlayer().setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
                 } else {
                     System.out.print("Can't move up because of hedge \n");
                 }
@@ -98,8 +120,8 @@ public class PlayState extends State {
                 } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y - 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
                     int x = (int) super.gsm.getPlayer().getPosition().x;
                     int y = (int) super.gsm.getPlayer().getPosition().y - 1;
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(x, y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x), (int) super.gsm.getPlayer().getPosition().y - 1);
+                    super.gsm.getPlayer().setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
                 }  else {
                     System.out.print("Can't move down because of hedge \n");
                 }
@@ -111,8 +133,8 @@ public class PlayState extends State {
                 } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y][(int) super.gsm.getPlayer().getPosition().x - 1].isWalkable()) {
                     int x = (int) super.gsm.getPlayer().getPosition().x - 1;
                     int y = (int) super.gsm.getPlayer().getPosition().y;
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(x, y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x - 1), (int) super.gsm.getPlayer().getPosition().y);
+                    super.gsm.getPlayer().setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
                 } else {
                     System.out.print("Can't move left because of hedge \n");
                 }
@@ -124,19 +146,19 @@ public class PlayState extends State {
                 } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y][(int) super.gsm.getPlayer().getPosition().x + 1].isWalkable()) {
                     int x = (int) super.gsm.getPlayer().getPosition().x + 1;
                     int y = (int) super.gsm.getPlayer().getPosition().y;
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(x, y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x + 1), (int) super.gsm.getPlayer().getPosition().y);
+                    super.gsm.getPlayer().setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
                 } else {
                     System.out.print("Can't move right because of hedge \n");
                 }
             }
-            TimeUnit.MILLISECONDS.sleep(500);
             // Pusher ny posisjon til path:
             // Nå pusher den uansett om det er hider eller seeker. Vet for øyeblikket ikke hvordan
             // jeg skal gjør det for bare hider. Men enten tenker jeg at vi dropper å kunne angre
             // skritt (siden vi ikke rekker det), eller at det kanskje ikke gjør noe om man pusher
             // path til seeker, siden den gjør vel ikke noe med den koden uansett.
             super.gsm.getPlayer().pushPath(new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
+            this.vision.setPosition(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1);
         }
     }
 
@@ -148,22 +170,41 @@ public class PlayState extends State {
     @Override
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
-        sb.begin();
-        for (int y=0;y<GardenGuard.numVertical;y++) {
-            for (int x=0; x<GardenGuard.numHorisontal; x++) {
-                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
-            }
+        if (gsm.getPlayer() instanceof SeekerModel) {
+            shadowingRender(sb);
         }
+        else if (gsm.getPlayer() instanceof HiderModel){
+            sb.begin();
+            for (int y = 0; y < GardenGuard.numVertical; y++) {
+                for (int x = 0; x < GardenGuard.numHorisontal; x++) {
+                    board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+                }
+            }
+            for (PlayerModel player: getController().getPlayers()) {
+                sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,player.getPosition().y * tileHeight, 50, 50);
+            }
+            sb.end();
+        }
+        sb.begin();
+        sb.setProjectionMatrix(cam.combined);
+        sb.enableBlending();
+        sb.setBlendFunction(GL20.GL_ONE, GL20.GL_ZERO);
         upSprite.draw(sb, 50);
         downSprite.draw(sb, 50);
         leftSprite.draw(sb, 50);
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
-        for (PlayerModel player: getController().getPlayers()) {
-            sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,player.getPosition().y * tileHeight, 50, 50);
-        }
         sb.end();
+
+        //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
+        /*if(this.vision.contains(hider.getPosition())) {
+            sb.begin();
+            sb.draw(new Texture("player1.png"), hider.getPosition().x * tileWidth,
+                    hider.getPosition().y * tileHeight, tileWidth, tileHeight);
+            sb.end();
+        }*/
     }
+
 
     @Override
     protected void dispose() {
@@ -180,4 +221,49 @@ public class PlayState extends State {
     protected void create() {
         // Hva er tanken med denne klassen?
     }
+
+
+    private void shadowingRender(SpriteBatch sb) {
+
+        lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
+        FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
+
+
+        frameBuffer.begin();
+
+        Gdx.gl.glClearColor(.2f,.2f,.2f,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        sb.setProjectionMatrix(cam.combined);
+        sb.setBlendFunction(GL20.GL_ONE,GL20.GL_ONE);
+        sb.begin();
+        lightSprite.draw(sb);
+        sb.end();
+
+        frameBuffer.end();
+
+        sb.setBlendFunction(GL20.GL_SRC_ALPHA,GL20.GL_ONE_MINUS_SRC_ALPHA);
+        sb.begin();
+        for (int y = 0; y < GardenGuard.numVertical; y++) {
+            for (int x = 0; x < GardenGuard.numHorisontal; x++) {
+                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+            }
+        }
+        sb.end();
+
+        sb.begin();
+        for (PlayerModel player: getController().getPlayers()) {
+            sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,player.getPosition().y * tileHeight, 50, 50);
+        }
+        sb.end();
+
+        sb.setProjectionMatrix(sb.getProjectionMatrix().idt());
+
+        sb.setBlendFunction( GL20.GL_ZERO,GL20.GL_SRC_COLOR);
+        sb.begin();
+
+        sb.draw(frameBuffer.getColorBufferTexture(),-1,1,2,-2);
+        sb.end();
+    }
+
 }

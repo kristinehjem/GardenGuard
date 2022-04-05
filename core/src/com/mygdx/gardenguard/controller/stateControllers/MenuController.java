@@ -42,11 +42,12 @@ public class MenuController extends Controller {
         }
     }
 
-    public void handleCreate() {
+    public void handleCreate() throws InterruptedException {
         PlayerModel player = new SeekerModel(new Vector2(0,0));
         super.gsm.setPlayer(player);
         String gamePin = super.gsm.getFBIC().CreateGameInDB();
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
+        TimeUnit.MILLISECONDS.sleep(2000);
         setTextureAndPosition();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);

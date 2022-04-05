@@ -10,12 +10,10 @@ import java.util.List;
 
 public abstract class Controller {
 
-    protected List<PlayerModel> players;
     protected GameStateManager gsm;
 
     public Controller() {
         this.gsm = GameStateManager.getInstance();
-        this.players = new ArrayList<>();
     }
 
     public PlayerModel getPlayer() {
@@ -25,7 +23,6 @@ public abstract class Controller {
     public void setPlayers(List<PlayerModel> players) {
         System.out.println("setting players in controller");
         gsm.setPlayers(players);
-        //this.players = players;
     }
 
     public List<PlayerModel> getPlayers() {

@@ -23,7 +23,7 @@ public class GameOverController extends Controller {
 
     public List<String> getScores() {
         List<PlayerModel> sortedPlayers = new ArrayList<>();
-        for (PlayerModel player : players) {
+        for (PlayerModel player : super.getPlayers()) {
             for (int i = 0; i < sortedPlayers.size(); i++) {
                 if (player.getScore() > sortedPlayers.get(i).getScore()) {
                     sortedPlayers.add(i, player);
@@ -40,7 +40,7 @@ public class GameOverController extends Controller {
             scores.add(player.getPlayerID() + ": " + player.getScore());
 
         }
-        System.out.println(players);
+        System.out.println(super.getPlayers());
         System.out.println(sortedPlayers);
         return scores;
     }

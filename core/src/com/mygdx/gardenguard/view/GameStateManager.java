@@ -6,6 +6,7 @@ import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -27,6 +28,7 @@ public class GameStateManager {
     public GameStateManager(){
         states = new Stack<State>();
         dataholder = new DataHolderClass();
+        players = new ArrayList<>();
     }
 
     public void push(State state){
@@ -83,6 +85,7 @@ public class GameStateManager {
     }
 
     public void setPlayers(List<PlayerModel> players) {
+        System.out.println("setting players in gamestatemanager");
         this.players = players;
     }
 

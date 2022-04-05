@@ -18,6 +18,8 @@ public class Board {
                 //creating board without obstructions
                 if((y==6 && x==3) || (y==7 && x==3) || (y==8 && x==3) || (y==6 && x==4) || (y==7 && x==4) || (y==8 && x==4) || (y==6 && x==5) || (y==7 && x==5) || (y==8 && x==5)){ // Note: Tallene til board/tiles går 0-8 og 0-14
                     tiles[y][x] = new Tile(x, y,true);
+                } else if((y==1 && x==4) || (y==2 && x==4) || (y==3 && x==4) || (y==2 && x==3) || (y==2 && x==5)) {
+                    tiles[y][x] = new Tile(x, y,false);
                 } else {
                     Random random = new Random();
                     tiles[y][x] = new Tile(x, y,getRandomBoolean(random));

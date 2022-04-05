@@ -29,7 +29,12 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void UpdateScoreInDB(String target, String value) {
+    public void UpdateScoreInDB(String gamePin, String playerID, String value) {
+
+    }
+
+    @Override
+    public void UpdateIsFoundInDB(String gamePin, String playerID, String value) {
 
     }
 
