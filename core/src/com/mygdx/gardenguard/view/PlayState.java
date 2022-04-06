@@ -52,7 +52,6 @@ public class PlayState extends State {
     private FitViewport viewport;
     private Stage stage;
 
-
     public PlayState() {
         super();
         this.board = new Board();
@@ -154,6 +153,10 @@ public class PlayState extends State {
         if (gameSwitch) {
             this.controller.pushNewState();
         }
+
+
+        //stage.draw();
+
 
 
         //stage.draw();
