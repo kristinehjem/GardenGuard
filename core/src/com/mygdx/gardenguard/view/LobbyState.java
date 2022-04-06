@@ -100,10 +100,10 @@ public class LobbyState extends State{
         }
         stage.act();
         stage.draw();
+        sb.end();
         if (gameSwitch == true) {
             this.controller.pushNewState();
         }
-        sb.end();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.mygdx.gardenguard.controller.stateControllers;
 
 import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.model.player.PlayerModel;
+import com.mygdx.gardenguard.view.GameOverState;
 import com.mygdx.gardenguard.view.GameStateManager;
 import com.mygdx.gardenguard.view.PlayState;
 

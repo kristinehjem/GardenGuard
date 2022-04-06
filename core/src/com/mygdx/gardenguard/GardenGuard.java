@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.gardenguard.API.FireBaseInterface;
+import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 import com.mygdx.gardenguard.view.GameOverState;
@@ -35,17 +36,13 @@ public class GardenGuard extends ApplicationAdapter {
 		gsm.setFBIC(_FBIC);
 
 		//testing game over state:
-		/*PlayerModel player = new SeekerModel(new Vector2(2, 3));
+		/*PlayerModel player = new HiderModel(new Vector2(2, 3));
 		gsm.setPlayer(player);
-		String gamePin = gsm.getFBIC().CreateGameInDB();
-		gsm.getFBIC().SetOnValueChangedListener(gsm.getDataholder(), gamePin);
-		player.setPlayerID(gsm.getFBIC().CreatePlayerInDB(gamePin, player));
+		gsm.getFBIC().SetOnValueChangedListener(gsm.getDataholder(), "-MzyhFtjakbSS4DGNEIm");
+		player.setPlayerID(gsm.getFBIC().CreatePlayerInDB("-MzyhFtjakbSS4DGNEIm", player));
 		//super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
-		gsm.setGamePin(gamePin);
-		//gsm.push(new PlayState());*/
-
-		//gsm.setPin("hei");
-		//gsm.push(new GameOverState());
+		gsm.setGamePin("-MzyhFtjakbSS4DGNEIm");
+		*/
 		gsm.push(new MenuState());
 	}
 

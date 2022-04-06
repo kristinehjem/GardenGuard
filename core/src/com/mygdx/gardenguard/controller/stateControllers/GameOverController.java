@@ -2,6 +2,7 @@ package com.mygdx.gardenguard.controller.stateControllers;
 
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.view.MenuState;
 
@@ -10,9 +11,11 @@ import java.util.List;
 
 public class GameOverController extends Controller {
 
+    private List<PlayerModel> sortedPlayers;
+
     public GameOverController() {
         super();
-
+        this.sortedPlayers = new ArrayList<>();
     }
 
     public void handleInput() {
@@ -22,7 +25,6 @@ public class GameOverController extends Controller {
 
 
     public List<String> getScores() {
-        List<PlayerModel> sortedPlayers = new ArrayList<>();
         for (PlayerModel player : super.getPlayers()) {
             for (int i = 0; i < sortedPlayers.size(); i++) {
                 if (player.getScore() > sortedPlayers.get(i).getScore()) {
@@ -37,11 +39,12 @@ public class GameOverController extends Controller {
         List<String> scores = new ArrayList<>();
         for (PlayerModel player : sortedPlayers) {
             System.out.println(player.getScore());
-            scores.add(player.getPlayerID() + ": " + player.getScore());
-
+            scores.add(player.getUsername() + ": " + player.getScore());
         }
-        System.out.println(super.getPlayers());
-        System.out.println(sortedPlayers);
         return scores;
+    }
+
+    public List<PlayerModel> getSortedPlayers(){
+        return this.sortedPlayers;
     }
 }

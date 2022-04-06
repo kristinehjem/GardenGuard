@@ -42,11 +42,13 @@ public class PlayState extends State {
     private Texture light;
     private Sprite lightSprite;
 
+    private boolean gameSwitch;
 
     public PlayState() {
         super();
         this.board = new Board();
         this.controller = new PlayStateController(this.board);
+        this.gameSwitch = false;
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -137,6 +139,9 @@ public class PlayState extends State {
         squareSprite.draw(sb, 50);
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         sb.end();
+        if (gameSwitch == true) {
+            this.controller.pushNewState();
+        }
 
         //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
         /*if(this.vision.contains(hider.getPosition())) {
@@ -159,7 +164,7 @@ public class PlayState extends State {
 
     @Override
     public void setGameSwitch(){
-
+        this.gameSwitch = true;
     }
 
 
