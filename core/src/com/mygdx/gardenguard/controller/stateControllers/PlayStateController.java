@@ -62,14 +62,14 @@ public class PlayStateController extends Controller {
         if (isSeekerTurn()) {
             for (PlayerModel player : super.getPlayers()){
                 if (player instanceof SeekerModel){
-                    player.setSteps(15); //set steps for seeker to right amount of starting steps
+                    player.setSteps(20); //set steps for seeker to right amount of starting steps
                     break;
                 }
             }
         } else {
             for (PlayerModel player : super.getPlayers()){
                 if (player instanceof HiderModel){
-                    player.setSteps(15 - (2 * getCurrentRound())); //set steps for hider to right amount of starting steps
+                    player.setSteps(15); //set steps for hider to right amount of starting steps
                 }
             }
             numOfHidersDone = 0;
@@ -79,15 +79,9 @@ public class PlayStateController extends Controller {
     public void endTurn(){
         if (isSeekerTurn()){
             setSeekerTurn(false);
-            setCurrentRound(getCurrentRound() + 1);
-            if (getCurrentRound() <= 5){ // TODO: Det er nå bare hardkodet inn 5 turns. Det er ikke så scalable elns
-                List<String> scores = calculateScores();
-                //TODO: show the scores in the popup
-                startTurn();
-            } else {
-                endGame();
+            endGame();
             }
-        } else {
+        else {
             numOfHidersDone++; // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
             if (numOfHidersDone >= super.getPlayers().size() - 1) {
                 setSeekerTurn(true);
