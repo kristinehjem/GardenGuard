@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.GameOverController;
+import com.mygdx.gardenguard.model.player.PlayerModel;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class GameOverState extends State {
     private final BitmapFont titleText;
     private Stage stage;
     private Viewport viewport;
+    private BitmapFont nameFont = new BitmapFont();
 
 
     public GameOverState() {
@@ -65,6 +67,15 @@ public class GameOverState extends State {
         int i = 0;
         for (String score : scores) {
             scoreText.draw(sb, score, (float) (GardenGuard.WIDTH) / 2 - 50, (float)GardenGuard.HEIGHT / 2 + scoreText.getLineHeight() * i++);
+        }
+        List<PlayerModel> players = controller.getPlayers();
+        int j = 0;
+        for (PlayerModel player: players) {
+            int x_value = (80);
+            int y_value = 500-(i*80);
+            nameFont.draw(sb, player.getUsername(),x_value, y_value);
+            sb.draw(new Texture(player.getTextureFile()), 10, y_value-40, 50, 50);
+            i += 1;
         }
         scoreText.getData().setScale(2,2);
         stage.act();

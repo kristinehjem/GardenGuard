@@ -12,7 +12,6 @@ public class GameOverController extends Controller {
 
     public GameOverController() {
         super();
-
     }
 
     public void handleInput() {
@@ -38,10 +37,7 @@ public class GameOverController extends Controller {
         for (PlayerModel player : sortedPlayers) {
             System.out.println(player.getScore());
             scores.add(player.getPlayerID() + ": " + player.getScore());
-
         }
-        System.out.println(super.getPlayers());
-        System.out.println(sortedPlayers);
         return scores;
     }
 }
