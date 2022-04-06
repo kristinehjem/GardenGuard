@@ -66,7 +66,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
     //function to set event listener to different objects in the database
     @Override
-    public void SetOngameSwitchChangedListener(final DataHolderClass dataholder, String gamePin) {
+    public void SetOnGameSwitchChangedListener(final DataHolderClass dataholder, String gamePin) {
         gameRef.child(gamePin).child("gameSwitch").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -125,6 +125,11 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void UpdateUsername(String gamePin, String playerID, String username) {
         gameRef.child(gamePin).child("players").child(playerID).child("username").setValue(username);
+    }
+
+    @Override
+    public void UpdateIsDoneInDB(String gamePin, String playerID, boolean isDone) {
+        gameRef.child(gamePin).child("players").child(playerID).child("isDone").setValue(isDone);
     }
 
     public void UpdateScoreInDB(String gamePin, String playerID, String value) {

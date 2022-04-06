@@ -18,12 +18,14 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     private String textureFile;
     protected boolean isSeeker;
     private String username;
+    private boolean isDone;
     protected boolean isFound;
 
     public PlayerModel(Vector2 position){
         this.position = position;
         this.score = 0;
         this.username = "";
+        this.isDone = false;
     }
 
     //ikke slett denne, trenger for database
@@ -69,6 +71,12 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         this.username = username;
     }
 
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public boolean getIsDone() { return this.isDone; }
+
     public abstract Stack<Vector2> getPath();
 
     public abstract void pushPath(Vector2 position);
@@ -80,7 +88,6 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     public boolean isFound() {
         return isFound;
     }
-
     public void setIsFound(boolean isFounded) {
         this.isFound = isFounded;
     }

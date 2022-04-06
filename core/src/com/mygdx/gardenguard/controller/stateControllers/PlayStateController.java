@@ -20,11 +20,10 @@ public class PlayStateController extends Controller {
     private PlayerController playerController;
     private Board board;
 
-
     public PlayStateController(Board board) {
         super();
         //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
-        this.isSeekerTurn = false;
+        this.isSeekerTurn = true;
         this.currentRound = 1;
         this.board = board;
         setPlayerController();
@@ -83,6 +82,8 @@ public class PlayStateController extends Controller {
             endGame();
             }
         else {
+            //forslag til kall til databasen:
+            //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
             numOfHidersDone++; // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
             if (numOfHidersDone >= super.getPlayers().size() - 1) {
                 setSeekerTurn(true);
