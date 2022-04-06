@@ -23,8 +23,8 @@ public class PlayStateController extends Controller {
 
     public PlayStateController(Board board) {
         super();
-        this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under. Denne linja brukes bare itl testing
-        //this.isSeekerTurn = false;
+        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under. Denne linja brukes bare itl testing
+        this.isSeekerTurn = false;
         this.currentRound = 1;
         this.board = board;
         setPlayerController();
