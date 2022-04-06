@@ -173,7 +173,7 @@ public class PlayState extends State {
     }
 
     @Override
-    public void gameSwitchTrue() {
+    public void setGameSwitch(){
 
     }
 

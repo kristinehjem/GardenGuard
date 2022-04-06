@@ -23,7 +23,7 @@ public class DataHolderClass {
     }
 
     public void updateGameSwitch() {
-        State state = this.gsm.getState();
-        state.gameSwitchTrue();
+        State state = GameStateManager.getInstance().getState();
+        state.setGameSwitch();
     }
 }

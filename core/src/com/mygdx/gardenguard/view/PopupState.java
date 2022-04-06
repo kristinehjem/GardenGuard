@@ -92,7 +92,7 @@ public class PopupState extends State{
     }
 
     @Override
-    public void gameSwitchTrue() {
+    public void setGameSwitch() {
 
     }
 

@@ -29,7 +29,7 @@ public abstract class Controller {
         return gsm.getPlayers();
     }
 
-    public void gameSwitchTrue() {
+    public void pushNewState() {
 
     }
 

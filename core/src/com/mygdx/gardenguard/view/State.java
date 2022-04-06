@@ -26,7 +26,7 @@ public abstract class State {
     protected abstract void render(SpriteBatch sb);
     protected abstract void dispose();
     protected abstract void create();
-    public abstract void gameSwitchTrue();
+    public abstract void setGameSwitch();
 }
 
 

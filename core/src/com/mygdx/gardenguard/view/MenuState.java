@@ -116,7 +116,7 @@ public class MenuState extends State {
     }
 
     @Override
-    public void gameSwitchTrue() {
+    public void setGameSwitch(){
 
     }
 
