@@ -16,15 +16,13 @@ public class PlayStateController extends Controller {
 
     private boolean isSeekerTurn;
     private boolean savedPos;
-    private int currentRound;
     private PlayerController playerController;
     private Board board;
 
     public PlayStateController(Board board) {
         super();
         //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
-        this.isSeekerTurn = true;
-        this.currentRound = 1;
+        this.isSeekerTurn = false;
         this.board = board;
         this.savedPos = false;
         setPlayerController();
