@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.PlayStateController;
@@ -34,6 +37,7 @@ public class PlayState extends State {
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
     private BitmapFont showSteps;
+    private boolean gameSwitch;
     //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
@@ -42,18 +46,23 @@ public class PlayState extends State {
     private Texture light;
     private Sprite lightSprite;
 
-    private boolean gameSwitch;
+    //CAMERA
+    private FitViewport viewport;
+    private Stage stage;
+
 
     public PlayState() {
         super();
         this.board = new Board();
         this.controller = new PlayStateController(this.board);
         this.gameSwitch = false;
+
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
         this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
 
+        //SPRITES TO MOVE AND END TURN; current
         upSprite.setSize(tileWidth, tileHeight);
         downSprite.setSize(tileWidth, tileHeight);
         leftSprite.setSize(tileWidth, tileHeight);
@@ -64,12 +73,14 @@ public class PlayState extends State {
         leftSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth - tileWidth / 2 - 1, tileHeight * 2 - 1);
         rightSprite.setPosition(GardenGuard.WIDTH / 2 + tileWidth / 2 - 1, tileHeight * 2);
         squareSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight * 2);
+        //FONT TO DRAW
         this.showSteps = new BitmapFont();
         showSteps.setColor(Color.YELLOW);
         showSteps.getData().setScale(2f);
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
         this.player = new SeekerModel(new Vector2(1, 2));
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
+        create();
     }
 
     @Override
@@ -138,10 +149,15 @@ public class PlayState extends State {
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
+        showSteps.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
         sb.end();
-        if (gameSwitch == true) {
+        if (gameSwitch) {
             this.controller.pushNewState();
         }
+
+
+        //stage.draw();
+
 
         //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
         /*if(this.vision.contains(hider.getPosition())) {
@@ -160,6 +176,9 @@ public class PlayState extends State {
 
     @Override
     protected void create() {
+        this.viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
+        this.stage = new Stage(viewport);
+        //Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -171,19 +190,16 @@ public class PlayState extends State {
     private void shadowingRender(SpriteBatch sb) {
         lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
         FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
-
         frameBuffer.begin();
-
         Gdx.gl.glClearColor(.2f, .2f, .2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         sb.setProjectionMatrix(cam.combined);
         sb.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
         sb.begin();
-        lightSprite.draw(sb);
+        if(controller.isSeekerTurn()) {lightSprite.draw(sb);}
         sb.end();
-
-        frameBuffer.end();
+        frameBuffer.end(viewport.getScreenX(), viewport.getScreenY(), (int) viewport.getScreenWidth(), (int) viewport.getScreenHeight());
 
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.begin();

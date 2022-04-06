@@ -3,6 +3,7 @@ package com.mygdx.gardenguard.controller.playerControllers;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.model.board.Board;
+import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
@@ -36,13 +37,14 @@ public class SeekerController extends PlayerController {
     }
 
     // Checks if a player is in view
+    // TODO: The object which uses this controller is a hider. Needs to be changed for score to work
     public void checkForPlayers() {
         List<PlayerModel> list_player = super.getPlayers();
-        for(PlayerModel other_players : list_player) {
-            if(getView().contains(other_players.getPosition()) || !other_players.isFound()) {
-
-                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(true));
-                super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), player.getPlayerID(), String.valueOf(player.getScore() + 5));
+        for(PlayerModel hiders : list_player) {
+            if (getView().contains(hiders.getPosition()) && !hiders.isFound() && !hiders.getIsSeeker()) {
+                player.setScore(player.getScore() + 5);
+                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), player.getPlayerID(), true);
+                super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), player.getPlayerID(), player.getScore());
             }
         }
     }
