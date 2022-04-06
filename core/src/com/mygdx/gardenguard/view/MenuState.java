@@ -1,11 +1,10 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -19,14 +18,11 @@ import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 
 public class MenuState extends State {
 
-    BitmapFont name, font;
-
     private Stage stage;
     private String inputPin;
     private MenuController menuController;
     private Viewport viewport;
     private BitmapFont info = new BitmapFont();
-    private String username;
 
     public MenuState(){
         super();

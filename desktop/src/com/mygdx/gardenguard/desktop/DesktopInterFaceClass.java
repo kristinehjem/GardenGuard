@@ -29,6 +29,11 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     }
 
     @Override
+    public void UpdateStepsInDB(String gamePin, String playerID, int value) {
+
+    }
+
+    @Override
     public void UpdateScoreInDB(String gamePin, String playerID, String value) {
     }
 

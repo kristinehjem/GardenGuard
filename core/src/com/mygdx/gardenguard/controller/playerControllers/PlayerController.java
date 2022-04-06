@@ -29,7 +29,6 @@ public abstract class PlayerController extends Controller {
 
     protected abstract void checkForPlayers();
 
-    // TODO: Dette ble mye super.gsm.getPlayer(). Kunne jeg lagret en lokal variabel med dette, og referert til den heller? Eller blir det feil når man lager flere instanser av klassen elns?
     public void move(String direction, boolean isSeekerTurn) {
         PlayerModel player = super.gsm.getPlayer();
 
@@ -38,14 +37,13 @@ public abstract class PlayerController extends Controller {
             case "up":
                 if(super.gsm.getPlayer().getPosition().y == 14) {
                     System.out.println("Player cannot move further up, out of bounds \n");
-                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y + 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
-                    int x = (int) super.gsm.getPlayer().getPosition().x;
-                    int y = (int) super.gsm.getPlayer().getPosition().y + 1;
-                    super.gsm.getPlayer().setPosition(x, y);
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x), (int) super.gsm.getPlayer().getPosition().y + 1);
+                } else if(board.getTiles()[(int) player.getPosition().y + 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
+                    int x = (int) player.getPosition().x;
+                    int y = (int) player.getPosition().y + 1;
+                    player.setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), player.getPlayerID(), new Vector2(player.getPosition().x, player.getPosition().y));
                     player.setSteps(player.getSteps() - 1);
-
+                    super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
                 } else {
                     System.out.print("Can't move up because of hedge \n");
                 }
@@ -53,13 +51,13 @@ public abstract class PlayerController extends Controller {
             case "down":
                 if(super.gsm.getPlayer().getPosition().y == 0) {
                     System.out.println("Player cannot move further down, out of bounds \n");
-                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y - 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
+                } else if(board.getTiles()[(int) player.getPosition().y - 1][(int) player.getPosition().x].isWalkable()) {
                     int x = (int) super.gsm.getPlayer().getPosition().x;
                     int y = (int) super.gsm.getPlayer().getPosition().y - 1;
-                    super.gsm.getPlayer().setPosition(x, y);
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x), (int) super.gsm.getPlayer().getPosition().y - 1);
+                    player.setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), player.getPlayerID(), new Vector2(player.getPosition().x, player.getPosition().y));
                     player.setSteps(player.getSteps() - 1);
+                    super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
                 } else {
                     System.out.print("Can't move down because of hedge \n");
                 }
@@ -67,13 +65,13 @@ public abstract class PlayerController extends Controller {
             case "left":
                 if(super.gsm.getPlayer().getPosition().x == 0) {
                     System.out.println("Player cannot move further left, out of bounds \n");
-                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y][(int) super.gsm.getPlayer().getPosition().x - 1].isWalkable()) {
+                } else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x - 1].isWalkable()) {
                     int x = (int) super.gsm.getPlayer().getPosition().x - 1;
                     int y = (int) super.gsm.getPlayer().getPosition().y;
-                    super.gsm.getPlayer().setPosition(x, y);
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x - 1), (int) super.gsm.getPlayer().getPosition().y);
+                    player.setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), player.getPlayerID(), new Vector2(player.getPosition().x, player.getPosition().y));
                     player.setSteps(player.getSteps() - 1);
+                    super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
                 } else {
                     System.out.print("Can't move left because of hedge \n");
                 }
@@ -81,13 +79,13 @@ public abstract class PlayerController extends Controller {
             case "right":
                 if(super.gsm.getPlayer().getPosition().x == 8) {
                     System.out.println("Player cannot move further right, out of bounds \n");
-                } else if(board.getTiles()[(int) super.gsm.getPlayer().getPosition().y][(int) super.gsm.getPlayer().getPosition().x + 1].isWalkable()) {
-                    int x = (int) super.gsm.getPlayer().getPosition().x + 1;
-                    int y = (int) super.gsm.getPlayer().getPosition().y;
-                    super.gsm.getPlayer().setPosition(x, y);
-                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), new Vector2(super.gsm.getPlayer().getPosition().x, super.gsm.getPlayer().getPosition().y));
-                    //super.gsm.getPlayer().setPosition((int) (super.gsm.getPlayer().getPosition().x + 1), (int) super.gsm.getPlayer().getPosition().y);
+                } else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x + 1].isWalkable()) {
+                    int x = (int) player.getPosition().x + 1;
+                    int y = (int) player.getPosition().y;
+                    player.setPosition(x, y);
+                    super.gsm.getFBIC().UpdatePositionInDB(super.gsm.getGamePin(), player.getPlayerID(), new Vector2(player.getPosition().x, player.getPosition().y));
                     player.setSteps(player.getSteps() - 1);
+                    super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
                 } else {
                     System.out.print("Can't move right because of hedge \n");
                 }
