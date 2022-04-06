@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
@@ -26,10 +27,11 @@ public class PopupState extends State{
     private PopupController popupController;
     private Viewport viewport;
 
-    public PopupState(){
+    public PopupState(String text){
         super();
-        this.text = "POPUP WINDOW \n hente noe tekst her";
+        this.text = text;
         this.popupController = new PopupController();
+        create();
     }
 
     @Override
@@ -51,10 +53,12 @@ public class PopupState extends State{
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        create();
+        sb.draw(bg, 30, 170, GardenGuard.WIDTH-60, GardenGuard.HEIGHT-340);
+        font = new BitmapFont();
+        font.getData().setScale(2f);
+        font.draw(sb, text, 100, 600);
         stage.act();
         stage.draw();
-        font.draw(sb, text, 150, 700);
         sb.end();
 
     }
@@ -70,15 +74,16 @@ public class PopupState extends State{
     @Override
     protected void create() {
         viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
+        //viewport.setScreenBounds(50, 200, 400, 200);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        stage.getBatch().begin();
-        stage.getBatch().draw(bg, 75, 75, GardenGuard.WIDTH - 150, GardenGuard.HEIGHT - 150);
-        stage.getBatch().end();
+        //stage.getBatch().begin();
+        //stage.getBatch().draw(bg, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
+        //stage.getBatch().end();
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button close = new TextButton("Close", mySkin, "small");
         close.setSize(100, 50);
-        close.setPosition(190, 100);
+        close.setPosition(190, 180);
         close.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -88,7 +93,6 @@ public class PopupState extends State{
             }
         });
         stage.addActor(close);
-        font = new BitmapFont();
     }
 
     public String getText() {
