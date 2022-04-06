@@ -11,6 +11,7 @@ import com.mygdx.gardenguard.view.GameStateManager;
 import com.mygdx.gardenguard.view.LobbyState;
 import com.mygdx.gardenguard.view.MenuState;
 import com.mygdx.gardenguard.view.PlayState;
+import com.mygdx.gardenguard.view.PopupState;
 
 import java.awt.Button;
 import java.util.concurrent.TimeUnit;
@@ -41,6 +42,7 @@ public class MenuController extends Controller {
         else {
             //real error handling
             System.err.println("pin not exist...End");
+            super.gsm.push(new PopupState("Pin does not exist. \n Please try again"));
         }
     }
 

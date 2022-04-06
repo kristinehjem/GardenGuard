@@ -63,44 +63,38 @@ public class PlayStateController extends Controller {
         if (isSeekerTurn()) {
             for (PlayerModel player : super.getPlayers()){
                 if (player instanceof SeekerModel){
-                    player.setSteps(15 ); //set steps for seeker to right amount of starting steps
+                    player.setSteps(20); //set steps for seeker to right amount of starting steps
                     break;
                 }
             }
         } else {
             for (PlayerModel player : super.getPlayers()){
                 if (player instanceof HiderModel){
-                    player.setSteps(15 - (2 * getCurrentRound())); //set steps for seeker to right amount of starting steps
+                    player.setSteps(15); //set steps for hider to right amount of starting steps
                 }
             }
             numOfHidersDone = 0;
         }
     }
 
-    private void endGame() {
-        List<String> scores = calculateScores();
-        gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
-    }
-
     public void endTurn(){
         if (isSeekerTurn()){
             setSeekerTurn(false);
-            setCurrentRound(getCurrentRound() + 1);
-            if (getCurrentRound() <= 5){
-                List<String> scores = calculateScores();
-                //TODO: show the scores in the popup
-                startTurn();
-            } else {
-                endGame();
+            endGame();
             }
-        } else {
-            numOfHidersDone++;
+        else {
+            numOfHidersDone++; // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
             if (numOfHidersDone >= super.getPlayers().size() - 1) {
                 setSeekerTurn(true);
                 startTurn();
             }
         }
-        System.out.println("you have ended your turn");
+        System.out.println("You have ended your turn \n");
+    }
+
+    private void endGame() {
+        List<String> scores = calculateScores();
+        gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
     }
 
     public List calculateScores(){
