@@ -148,5 +148,8 @@ public class LobbyState extends State{
         stage.addActor(startGame);
     }
 
-
+    @Override
+    public void gameSwitchTrue() {
+        this.controller.gameSwitchTrue();
+    }
 }

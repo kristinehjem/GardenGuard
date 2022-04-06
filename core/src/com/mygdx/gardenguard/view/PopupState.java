@@ -91,6 +91,11 @@ public class PopupState extends State{
         font = new BitmapFont();
     }
 
+    @Override
+    public void gameSwitchTrue() {
+
+    }
+
     public String getText() {
         return text;
     }

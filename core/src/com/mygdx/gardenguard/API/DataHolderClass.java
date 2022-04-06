@@ -22,8 +22,8 @@ public class DataHolderClass {
         state.getController().setPlayers(players);
     }
 
-    public void updateGameSwitch(boolean gameSwitch) {
+    public void updateGameSwitch() {
         State state = GameStateManager.getInstance().getState();
-        state.getController().setGameSwitch(gameSwitch);
+        state.gameSwitchTrue();
     }
 }

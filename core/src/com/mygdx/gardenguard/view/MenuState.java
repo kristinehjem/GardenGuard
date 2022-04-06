@@ -115,5 +115,10 @@ public class MenuState extends State {
         stage.addActor(create);
     }
 
+    @Override
+    public void gameSwitchTrue() {
+
+    }
+
 
 }

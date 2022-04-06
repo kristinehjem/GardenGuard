@@ -41,11 +41,7 @@ public class LobbyController extends Controller {
         return super.gsm.getGamePin();
     }
 
-    @Override
-    public void setGameSwitch(boolean gameSwitch) {
-        super.gameSwitch = gameSwitch;
-        if (super.getGameSwitch() == true) {
-            super.gsm.set(new PlayState());
-        }
+    public void gameSwitchTrue() {
+        super.gsm.set(new PlayState());
     }
 }

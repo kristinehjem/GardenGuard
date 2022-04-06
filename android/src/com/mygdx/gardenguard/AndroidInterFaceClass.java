@@ -70,9 +70,10 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         gameRef.child(gamePin).child("gameSwitch").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("value of gameswitch");
-                System.out.println(snapshot.getValue());
-                dataholder.updateGameSwitch((Boolean) snapshot.getValue());
+                if ((Boolean) snapshot.getValue() == true) {
+                    System.out.println("value of gameswitch is true");
+                    dataholder.updateGameSwitch();
+                }
             }
             //Log.d(TAG, "Value is: " + value);
             @Override

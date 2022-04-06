@@ -52,7 +52,6 @@ public class PlayState extends State {
         super();
         this.board = new Board();
         this.controller = new PlayStateController(this.board);
-        this.board = new Board();
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -171,6 +170,11 @@ public class PlayState extends State {
         showSteps = new BitmapFont();
         showSteps.setColor(Color.YELLOW);
         showSteps.getData().setScale(2);
+    }
+
+    @Override
+    public void gameSwitchTrue() {
+
     }
 
 
