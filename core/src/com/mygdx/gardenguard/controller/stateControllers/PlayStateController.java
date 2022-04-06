@@ -15,7 +15,7 @@ import java.util.List;
 public class PlayStateController extends Controller {
 
     private boolean isSeekerTurn;
-    private int numOfHidersDone;
+    private boolean savedPos;
     private int currentRound;
     private PlayerController playerController;
     private Board board;
@@ -26,6 +26,7 @@ public class PlayStateController extends Controller {
         this.isSeekerTurn = true;
         this.currentRound = 1;
         this.board = board;
+        this.savedPos = false;
         setPlayerController();
     }
 
@@ -50,30 +51,18 @@ public class PlayStateController extends Controller {
 
     public void setSeekerTurn(boolean seekerTurn) { isSeekerTurn = seekerTurn; }
 
-    public int getCurrentRound() {
-        return currentRound;
-    }
-
-    public void setCurrentRound(int currentRound) {
-        this.currentRound = currentRound;
-    }
-
-    public void startTurn() {
-        if (isSeekerTurn()) {
-            for (PlayerModel player : super.getPlayers()){
-                if (player instanceof SeekerModel){
-                    player.setSteps(20); //set steps for seeker to right amount of starting steps
-                    break;
-                }
+    public boolean allSavedPos() {
+        for (PlayerModel player : super.getPlayers()) {
+            if (!player.getIsDone()){
+                return false;
             }
-        } else {
-            for (PlayerModel player : super.getPlayers()){
-                if (player instanceof HiderModel){
-                    player.setSteps(15); //set steps for hider to right amount of starting steps
-                }
-            }
-            numOfHidersDone = 0;
         }
+        return true;
+    }
+
+    public void handleSavePosition() {
+        this.savedPos = true;
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
     }
 
     public void endTurn(){
@@ -84,10 +73,9 @@ public class PlayStateController extends Controller {
         else {
             //forslag til kall til databasen:
             //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
-            numOfHidersDone++; // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
-            if (numOfHidersDone >= super.getPlayers().size() - 1) {
+             // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
+            if (allSavedPos()) {
                 setSeekerTurn(true);
-                startTurn();
             }
         }
         System.out.println("You have ended your turn \n");
@@ -103,5 +91,9 @@ public class PlayStateController extends Controller {
 
         //TODO: calculate scores
         return scores;
+    }
+
+    public boolean getSavedPos() {
+        return savedPos;
     }
 }

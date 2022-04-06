@@ -75,6 +75,8 @@ public class PlayState extends State {
         this.showSteps = new BitmapFont();
         showSteps.setColor(Color.YELLOW);
         showSteps.getData().setScale(2f);
+
+        create();
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
         this.player = new SeekerModel(new Vector2(1, 2));
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
@@ -91,11 +93,9 @@ public class PlayState extends State {
         if (Gdx.input.justTouched()) {
             //unprojects the camera (vet ikke hva det vil si, men klikkingen fungerer ikke uten det):
             cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-            if ((gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn())){
-                if (squareSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-                    controller.endTurn();
-                } // Flytter spilleren ut i fra knappetrykk
-                else if (upSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
+            if ((gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn()) && !controller.getSavedPos() || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn())){
+                 // Flytter spilleren ut i fra knappetrykk
+                if (upSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
                     controller.move("up", controller.isSeekerTurn());
                 } else if (downSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
                     controller.move("down", controller.isSeekerTurn());
@@ -146,6 +146,9 @@ public class PlayState extends State {
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
+        create();
+        stage.act();
+        stage.draw();
         sb.end();
 
         //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
@@ -170,15 +173,17 @@ public class PlayState extends State {
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button endGame = new TextButton("Stop here", mySkin, "small");
-        endGame.setPosition(GardenGuard.WIDTH - 50, GardenGuard.HEIGHT-5);
-        endGame.setSize(GardenGuard.WIDTH / 4, GardenGuard.HEIGHT/12);
+        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
+        endGame.setSize(GardenGuard.WIDTH / 6, GardenGuard.HEIGHT/20);
         endGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //handle endTurn
+                controller.handleSavePosition();
+                System.out.println("set position pressed");
                 return true;
             }
         });
+        stage.addActor(endGame);
     }
 
     @Override
