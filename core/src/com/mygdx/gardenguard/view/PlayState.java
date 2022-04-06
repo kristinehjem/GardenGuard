@@ -26,8 +26,6 @@ import com.mygdx.gardenguard.model.player.SeekerModel;
 
 public class PlayState extends State {
 
-    // TODO: Når spilleren opprettes må posisjonen dens settes til rett sted (midten for ditto, og rundt midten for alle andre)
-
     private PlayStateController controller;
 
     private Board board;
@@ -62,20 +60,11 @@ public class PlayState extends State {
         this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
         this.board = new Board();
         this.setPlayerController();
-        if (super.gsm.getPlayer() instanceof SeekerModel) {
-            this.playerController = new SeekerController((SeekerModel) super.gsm.getPlayer(), board);
-        } else if (super.gsm.getPlayer() instanceof HiderModel) {
-            this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), board);
-        } else {
-            System.out.print("Player is neither instance of SeekerModel nor HiderModel");
-        }
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
         this.vision = new Rectangle(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1, 2, 2);
-        //DUMMY HIDER FOR TESTING
-        //this.hider = new HiderModel(new Vector2(8,8));
-        //BUTTONS
+
         upSprite.setSize(tileWidth, tileHeight);
         downSprite.setSize(tileWidth, tileHeight);
         leftSprite.setSize(tileWidth, tileHeight);
@@ -157,7 +146,6 @@ public class PlayState extends State {
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
-
             sb.begin();
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
@@ -179,8 +167,6 @@ public class PlayState extends State {
         squareSprite.draw(sb, 50);
         // TODO: kanskje ikke lage en new Texture hver gang? Føler det krever mer (med mindre vi disposer den hele tiden). Kan vel bare bruke den samme? (Jeg gjorde det i helicopter)
         sb.draw(new Texture(super.gsm.getPlayer().getTextureFile()), super.gsm.getPlayer().getPosition().x * tileWidth, super.gsm.getPlayer().getPosition().y * tileHeight, 50, 50);
-        /*Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);*/
         create();
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         sb.end();

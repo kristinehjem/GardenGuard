@@ -26,9 +26,7 @@ public class PlayStateController extends Controller {
         return isSeekerTurn;
     }
 
-    public void setSeekerTurn(boolean seekerTurn) {
-        isSeekerTurn = seekerTurn;
-    }
+    public void setSeekerTurn(boolean seekerTurn) { isSeekerTurn = seekerTurn; }
 
     public int getCurrentRound() {
         return currentRound;
@@ -38,8 +36,8 @@ public class PlayStateController extends Controller {
         this.currentRound = currentRound;
     }
 
-    public void startTurn(){
-        if (isSeekerTurn()){
+    public void startTurn() {
+        if (isSeekerTurn()) {
             for (PlayerModel player : super.getPlayers()){
                 if (player instanceof SeekerModel){
                     player.setSteps(15 ); //set steps for seeker to right amount of starting steps
