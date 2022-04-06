@@ -93,7 +93,7 @@ public class PlayState extends State {
         if (Gdx.input.justTouched()) {
             //unprojects the camera (vet ikke hva det vil si, men klikkingen fungerer ikke uten det):
             cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-            if ((gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn() && controller.allSavedPos()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn())){
+            if ((gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn() && controller.allSavedPos()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn() && !controller.getSavedPos())){
                  // Flytter spilleren ut i fra knappetrykk
                 if (upSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
                     controller.move("up", controller.isSeekerTurn());
@@ -172,7 +172,7 @@ public class PlayState extends State {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        Button endGame = new TextButton("Stop here", mySkin, "small");
+        Button endGame = new TextButton("Hide here", mySkin, "small");
         endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
         endGame.setSize(GardenGuard.WIDTH / 6, GardenGuard.HEIGHT/20);
         endGame.addListener(new InputListener() {
@@ -183,7 +183,9 @@ public class PlayState extends State {
                 return true;
             }
         });
-        stage.addActor(endGame);
+        if (super.gsm.getPlayer() instanceof HiderModel) {
+            stage.addActor(endGame);
+        }
     }
 
     @Override
