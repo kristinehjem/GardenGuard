@@ -3,6 +3,7 @@ package com.mygdx.gardenguard.controller.stateControllers;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
@@ -35,6 +36,7 @@ public class MenuController extends Controller {
             setTextureAndPosition();
             player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
             super.gsm.setGamePin(gamePin);
+            super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             super.gsm.push(new LobbyState());
         }
         else {
@@ -53,6 +55,7 @@ public class MenuController extends Controller {
         setTextureAndPosition();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);
+        super.gsm.getFBIC().CreateGameSwitchInDB(gamePin);
         super.gsm.set(new LobbyState());
     }
 

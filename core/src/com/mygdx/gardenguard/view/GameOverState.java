@@ -96,4 +96,9 @@ public class GameOverState extends State {
         });
         stage.addActor(endGame);
     }
+
+    @Override
+    public void setGameSwitch() {
+
+    }
 }

@@ -28,4 +28,9 @@ public abstract class Controller {
     public List<PlayerModel> getPlayers() {
         return gsm.getPlayers();
     }
+
+    public void pushNewState() {
+
+    }
+
 }

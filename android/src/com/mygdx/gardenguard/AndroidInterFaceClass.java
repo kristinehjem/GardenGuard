@@ -64,6 +64,26 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         });
     }
 
+    //function to set event listener to different objects in the database
+    @Override
+    public void SetOnGameSwitchChangedListener(final DataHolderClass dataholder, String gamePin) {
+        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if ((Boolean) snapshot.getValue() == true) {
+                    System.out.println("value of gameswitch is true");
+                    dataholder.updateGameSwitch();
+                }
+            }
+            //Log.d(TAG, "Value is: " + value);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
     public void DeleteGame(String gamePin) {
         gameRef.child(gamePin).removeValue();
     }
@@ -83,6 +103,16 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     }
 
     @Override
+    public void CreateGameSwitchInDB(String gamePin) {
+        gameRef.child(gamePin).child("gameSwitch").setValue(false);
+    }
+
+    @Override
+    public void UpdateGameSwitchInDB(String gamePin, boolean gameSwitch) {
+        gameRef.child(gamePin).child("gameSwitch").setValue(gameSwitch);
+    }
+
+    @Override
     public void UpdatePositionInDB(String gamePin, String playerID, Vector2 position) {
         gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(position);
     }
@@ -95,6 +125,11 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void UpdateUsername(String gamePin, String playerID, String username) {
         gameRef.child(gamePin).child("players").child(playerID).child("username").setValue(username);
+    }
+
+    @Override
+    public void UpdateIsDoneInDB(String gamePin, String playerID, boolean isDone) {
+        gameRef.child(gamePin).child("players").child(playerID).child("isDone").setValue(isDone);
     }
 
     public void UpdateScoreInDB(String gamePin, String playerID, String value) {

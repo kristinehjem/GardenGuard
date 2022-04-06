@@ -16,8 +16,10 @@ public class LobbyController extends Controller {
     }
 
     public void handleStart() {
-        super.gsm.set(new PlayState()); //fjern denne. brukes bare for testing
+        super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+        super.gsm.set(new PlayState());
         /*if (this.enoughPlayers()) {
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
             super.gsm.set(new PlayState());
         } else {
             System.err.println("not enough players");
@@ -37,5 +39,10 @@ public class LobbyController extends Controller {
 
     public String getPin() {
         return super.gsm.getGamePin();
+    }
+
+    @Override
+    public void pushNewState() {
+        super.gsm.set(new PlayState());
     }
 }

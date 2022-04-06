@@ -24,6 +24,21 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
+    public void CreateGameSwitchInDB(String gamePin) {
+
+    }
+
+    @Override
+    public void SetOnGameSwitchChangedListener(DataHolderClass dataholder, String gamePin) {
+
+    }
+
+    @Override
+    public void UpdateGameSwitchInDB(String gamePin, boolean gameSwitch) {
+
+    }
+
+    @Override
     public void UpdatePositionInDB(String gamePin, String playerID, Vector2 position) {
 
     }
@@ -50,6 +65,11 @@ public class CoreInterFaceClass implements FireBaseInterface {
 
     @Override
     public void UpdateUsername(String gamePin, String playerID, String username) {
+
+    }
+
+    @Override
+    public void UpdateIsDoneInDB(String gamePin, String playerID, boolean isDone) {
 
     }
 

@@ -14,6 +14,12 @@ public interface FireBaseInterface {
 
     public String CreatePlayerInDB(String gamePin, PlayerModel player);
 
+    public void CreateGameSwitchInDB(String gamePin);
+
+    public void SetOnGameSwitchChangedListener(final DataHolderClass dataholder, String gamePin);
+
+    public void UpdateGameSwitchInDB(String gamePin, boolean gameSwitch);
+
     public void UpdatePositionInDB(String gamePin, String playerID, Vector2 position);
 
     public void UpdateStepsInDB(String gamePin, String playerID, int value);
@@ -26,7 +32,9 @@ public interface FireBaseInterface {
 
     public void UpdateUsername(String gamePin, String playerID, String username);
 
-    void getScores(String gamePin);
+    public void UpdateIsDoneInDB(String gamePin, String playerID, boolean isDone);
+
+    public void getScores(String gamePin);
 
     public void DeleteGame(String gamePin);
 }

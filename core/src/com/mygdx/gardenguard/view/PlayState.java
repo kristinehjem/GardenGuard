@@ -57,7 +57,6 @@ public class PlayState extends State {
         super();
         this.board = new Board();
         this.controller = new PlayStateController(this.board);
-        this.board = new Board();
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -123,6 +122,9 @@ public class PlayState extends State {
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
+            FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
+            frameBuffer.begin();
+            frameBuffer.end();
             sb.begin();
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
@@ -136,6 +138,7 @@ public class PlayState extends State {
             sb.end();
         }
         sb.begin();
+        sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
         upSprite.draw(sb, 50);
         downSprite.draw(sb, 50);
@@ -178,9 +181,13 @@ public class PlayState extends State {
         });
     }
 
+    @Override
+    public void setGameSwitch(){
+
+    }
+
 
     private void shadowingRender(SpriteBatch sb) {
-        sb.enableBlending();
         lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
         FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
 
@@ -204,9 +211,6 @@ public class PlayState extends State {
                 board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }
         }
-        sb.end();
-
-        sb.begin();
         for (PlayerModel player: getController().getPlayers()) {
             sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,player.getPosition().y * tileHeight, 50, 50);
         }
@@ -219,7 +223,6 @@ public class PlayState extends State {
 
         sb.draw(frameBuffer.getColorBufferTexture(), -1, 1, 2, -2);
         sb.end();
-        sb.disableBlending();
     }
 
 }
