@@ -11,6 +11,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.PlayStateController;
@@ -34,6 +42,8 @@ public class PlayState extends State {
     private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
     private BitmapFont showSteps;
+    private Viewport viewport;
+    private Stage stage;
     //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
@@ -152,6 +162,20 @@ public class PlayState extends State {
 
     @Override
     protected void create() {
+        viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button endGame = new TextButton("Stop here", mySkin, "small");
+        endGame.setPosition(GardenGuard.WIDTH - 50, GardenGuard.HEIGHT-5);
+        endGame.setSize(GardenGuard.WIDTH / 4, GardenGuard.HEIGHT/12);
+        endGame.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                //handle endTurn
+                return true;
+            }
+        });
     }
 
 
