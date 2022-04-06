@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.GameOverController;
@@ -31,6 +32,7 @@ public class GameOverState extends State {
     private final BitmapFont titleText;
     private Stage stage;
     private Viewport viewport;
+    private List<PlayerModel> players;
 
 
     public GameOverState() {
@@ -40,8 +42,9 @@ public class GameOverState extends State {
         this.titleText = new BitmapFont();
         this.controller = new GameOverController();
         this.scores = controller.getScores();
-        titleText.getData().setScale(3,3);
+        titleText.getData().setScale(4,4);
         scoreText.getData().setScale(3,3);
+        players = controller.getSortedPlayers();
     }
 
     @Override
@@ -64,19 +67,19 @@ public class GameOverState extends State {
         sb.begin();
         sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         create();
-        titleText.draw(sb, "Game over", cam.position.x - ((float)GardenGuard.WIDTH / 4) + 20, 2 * (cam.position.y - titleText.getLineHeight()));
+        titleText.draw(sb, "Game over", cam.position.x - ((float)GardenGuard.WIDTH / 4) + 20, 2 * (cam.position.y - titleText.getLineHeight()/2));
         int i = 0;
         for (String score : scores) {
-            float x_value = (float) (GardenGuard.WIDTH) / 2 - 150;
-            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * i++;
+            float x_value = (float) (GardenGuard.WIDTH) / 2 - 100;
+            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * 2* i++;
             scoreText.draw(sb, score, x_value, y_value);
         }
-        List<PlayerModel> players = controller.getSortedPlayers();
         int j = 0;
-        for (PlayerModel player: players) {
-            float x_value = (float) (GardenGuard.WIDTH) / 2 - 200;
+        for (PlayerModel player: this.players) {
+            float x_value = (float) (GardenGuard.WIDTH) / 2 - 230;
+            //TODO: styling, blir litt rar høyde
             float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * j++;
-            sb.draw(new Texture(player.getTextureFile()), x_value, y_value, 50, 50);
+            sb.draw(new Texture(player.getTextureFile()), x_value, y_value, 60, 60);
             j += 1;
         }
         stage.act();

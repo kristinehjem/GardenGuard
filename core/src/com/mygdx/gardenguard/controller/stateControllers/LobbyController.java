@@ -18,7 +18,7 @@ public class LobbyController extends Controller {
 
     public void handleStart() {
         super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
-        super.gsm.set(new GameOverState());
+        super.gsm.set(new PlayState());
         /*if (this.enoughPlayers()) {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
             super.gsm.set(new PlayState());
@@ -44,6 +44,6 @@ public class LobbyController extends Controller {
 
     @Override
     public void pushNewState() {
-        super.gsm.set(new GameOverState());
+        super.gsm.set(new PlayState());
     }
 }
