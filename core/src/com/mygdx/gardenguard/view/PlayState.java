@@ -220,7 +220,7 @@ public class PlayState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 controller.handleSavePosition();
-                System.out.println("set position pressed");
+                controller.endTurn();
                 return true;
             }
         });
