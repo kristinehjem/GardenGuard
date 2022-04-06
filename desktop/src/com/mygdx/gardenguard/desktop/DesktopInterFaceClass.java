@@ -24,6 +24,21 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     }
 
     @Override
+    public void CreateGameSwitchInDB(String gamePin) {
+
+    }
+
+    @Override
+    public void SetOngameSwitchChangedListener(DataHolderClass dataholder, String gamePin) {
+
+    }
+
+    @Override
+    public void UpdateGameSwitchInDB(String gamePin, boolean gameSwitch) {
+
+    }
+
+    @Override
     public void UpdatePositionInDB(String gamePin, String playerID, Vector2 position) {
 
     }

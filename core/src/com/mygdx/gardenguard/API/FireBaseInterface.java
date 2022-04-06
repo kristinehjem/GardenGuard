@@ -14,6 +14,12 @@ public interface FireBaseInterface {
 
     public String CreatePlayerInDB(String gamePin, PlayerModel player);
 
+    public void CreateGameSwitchInDB(String gamePin);
+
+    public void SetOngameSwitchChangedListener(final DataHolderClass dataholder, String gamePin);
+
+    public void UpdateGameSwitchInDB(String gamePin, boolean gameSwitch);
+
     public void UpdatePositionInDB(String gamePin, String playerID, Vector2 position);
 
     public void UpdateStepsInDB(String gamePin, String playerID, int value);

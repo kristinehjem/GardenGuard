@@ -42,12 +42,14 @@ public class LobbyState extends State{
     private BitmapFont pinFont = new BitmapFont();
     private BitmapFont pinInfo = new BitmapFont();
     private Viewport viewport;
+    private boolean gameSwitch;
 
     public LobbyState(){
         super();
         controller = new LobbyController();
         sprite = new Sprite(backround);
         this.playerNames = new ArrayList<>();
+        this.gameSwitch = false;
         playerFont.getData().setScale(3f);
         nameFont.getData().setScale(2.5f);
         pinFont.getData().setScale(2f);
@@ -98,6 +100,9 @@ public class LobbyState extends State{
         }
         stage.act();
         stage.draw();
+        if (gameSwitch == true) {
+            this.controller.pushNewState();
+        }
         sb.end();
     }
 
@@ -148,5 +153,8 @@ public class LobbyState extends State{
         stage.addActor(startGame);
     }
 
-
+    @Override
+    public void setGameSwitch() {
+        this.gameSwitch = true;
+    }
 }

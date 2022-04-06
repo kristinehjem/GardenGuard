@@ -95,6 +95,11 @@ public class PopupState extends State{
         stage.addActor(close);
     }
 
+    @Override
+    public void setGameSwitch() {
+
+    }
+
     public String getText() {
         return text;
     }
