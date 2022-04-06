@@ -18,7 +18,7 @@ public class DataHolderClass {
     public void updatePlayers(List<PlayerModel> players){
         System.out.println("size of players in dataholderclass: ");
         System.out.println(players.size());
-        State state = this.gsm.getState();
+        State state = GameStateManager.getInstance().getState();
         state.getController().setPlayers(players);
     }
 
