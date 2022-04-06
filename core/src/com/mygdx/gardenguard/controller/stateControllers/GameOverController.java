@@ -36,7 +36,7 @@ public class GameOverController extends Controller {
         List<String> scores = new ArrayList<>();
         for (PlayerModel player : sortedPlayers) {
             System.out.println(player.getScore());
-            scores.add(player.getPlayerID() + ": " + player.getScore());
+            scores.add(player.getUsername() + ": " + player.getScore());
         }
         return scores;
     }

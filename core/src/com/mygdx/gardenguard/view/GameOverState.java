@@ -40,6 +40,9 @@ public class GameOverState extends State {
         this.titleText = new BitmapFont();
         this.controller = new GameOverController();
         this.scores = controller.getScores();
+        nameFont.getData().setScale(2.5f);
+        titleText.getData().setScale(3,3);
+        scoreText.getData().setScale(2,2);
     }
 
     @Override
@@ -63,21 +66,21 @@ public class GameOverState extends State {
         sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         create();
         titleText.draw(sb, "Game over", cam.position.x - ((float)GardenGuard.WIDTH / 4) + 20, 2 * (cam.position.y - titleText.getLineHeight()));
-        titleText.getData().setScale(3,3);
         int i = 0;
         for (String score : scores) {
-            scoreText.draw(sb, score, (float) (GardenGuard.WIDTH) / 2 - 50, (float)GardenGuard.HEIGHT / 2 + scoreText.getLineHeight() * i++);
+            float x_value = (float) (GardenGuard.WIDTH) / 2 - 150;
+            float y_value = (float) GardenGuard.HEIGHT / 2 + scoreText.getLineHeight() * i++;
+            scoreText.draw(sb, score, x_value, y_value);
         }
         List<PlayerModel> players = controller.getPlayers();
         int j = 0;
-        for (PlayerModel player: players) {
+        /*for (PlayerModel player: players) {
             int x_value = (80);
-            int y_value = 500-(i*80);
+            int y_value = 500-(j*80);
             nameFont.draw(sb, player.getUsername(),x_value, y_value);
             sb.draw(new Texture(player.getTextureFile()), 10, y_value-40, 50, 50);
-            i += 1;
-        }
-        scoreText.getData().setScale(2,2);
+            j += 1;
+        }*/
         stage.act();
         stage.draw();
         sb.end();
