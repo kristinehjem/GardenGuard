@@ -23,8 +23,8 @@ public class PlayStateController extends Controller {
 
     public PlayStateController(Board board) {
         super();
-        this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
-        //this.isSeekerTurn = false;
+        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
+        this.isSeekerTurn = false;
         this.currentRound = 1;
         this.board = board;
         setPlayerController();
@@ -33,6 +33,7 @@ public class PlayStateController extends Controller {
     private void setPlayerController() {
         if (super.gsm.getPlayer() instanceof SeekerModel) {
             this.playerController = new SeekerController((SeekerModel) super.gsm.getPlayer(), this.board);
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         } else if (super.gsm.getPlayer() instanceof HiderModel) {
             this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), this.board);
         } else {
