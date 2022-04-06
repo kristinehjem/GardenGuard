@@ -63,7 +63,9 @@ public class PlayState extends State {
         leftSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth - tileWidth / 2 - 1, tileHeight * 2 - 1);
         rightSprite.setPosition(GardenGuard.WIDTH / 2 + tileWidth / 2 - 1, tileHeight * 2);
         squareSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight * 2);
-
+        this.showSteps = new BitmapFont();
+        showSteps.setColor(Color.YELLOW);
+        showSteps.getData().setScale(2f);
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
         this.player = new SeekerModel(new Vector2(1, 2));
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
@@ -130,7 +132,6 @@ public class PlayState extends State {
         leftSprite.draw(sb, 50);
         rightSprite.draw(sb, 50);
         squareSprite.draw(sb, 50);
-        create();
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         sb.end();
 
@@ -146,14 +147,11 @@ public class PlayState extends State {
 
     @Override
     protected void dispose() {
-        showSteps.dispose();
+
     }
 
     @Override
     protected void create() {
-        showSteps = new BitmapFont();
-        showSteps.setColor(Color.YELLOW);
-        showSteps.getData().setScale(2);
     }
 
 
