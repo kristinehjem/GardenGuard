@@ -22,6 +22,8 @@ import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
+import java.util.List;
+
 
 public class PlayState extends State {
 
@@ -124,10 +126,8 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
+            showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
-            FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
-            frameBuffer.begin();
-            frameBuffer.end();
             sb.begin();
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
@@ -160,12 +160,6 @@ public class PlayState extends State {
 
 
         //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
-        /*if(this.vision.contains(hider.getPosition())) {
-            sb.begin();
-            sb.draw(new Texture("player1.png"), hider.getPosition().x * tileWidth,
-                    hider.getPosition().y * tileHeight, tileWidth, tileHeight);
-            sb.end();
-        }*/
     }
 
 
@@ -208,9 +202,11 @@ public class PlayState extends State {
                 board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }
         }
-        for (PlayerModel player: getController().getPlayers()) {
-            sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,player.getPosition().y * tileHeight, 50, 50);
-        }
+
+        sb.draw(new Texture(getController().getPlayer().getTextureFile()),
+                getController().getPlayer().getPosition().x * tileWidth,
+                getController().getPlayer().getPosition().y * tileHeight, 50, 50);
+
         sb.end();
 
         sb.setProjectionMatrix(sb.getProjectionMatrix().idt());
@@ -220,6 +216,17 @@ public class PlayState extends State {
 
         sb.draw(frameBuffer.getColorBufferTexture(), -1, 1, 2, -2);
         sb.end();
+    }
+
+    private void showOtherPlayers(SpriteBatch sb){
+        List<PlayerModel> list_player = controller.getPlayers();
+        for(PlayerModel hiders : list_player) {
+            if(!this.vision.contains(hiders.getPosition())) {break;}
+            sb.begin();
+            sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
+                    hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
+            sb.end();
+        }
     }
 
 }
