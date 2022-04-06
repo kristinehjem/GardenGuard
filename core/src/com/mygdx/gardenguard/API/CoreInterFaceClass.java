@@ -29,7 +29,7 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void SetOngameSwitchChangedListener(DataHolderClass dataholder, String gamePin) {
+    public void SetOnGameSwitchChangedListener(DataHolderClass dataholder, String gamePin) {
 
     }
 
@@ -65,6 +65,11 @@ public class CoreInterFaceClass implements FireBaseInterface {
 
     @Override
     public void UpdateUsername(String gamePin, String playerID, String username) {
+
+    }
+
+    @Override
+    public void UpdateIsDoneInDB(String gamePin, String playerID, boolean isDone) {
 
     }
 

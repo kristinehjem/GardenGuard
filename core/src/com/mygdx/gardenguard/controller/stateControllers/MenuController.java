@@ -36,7 +36,7 @@ public class MenuController extends Controller {
             setTextureAndPosition();
             player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
             super.gsm.setGamePin(gamePin);
-            super.gsm.getFBIC().SetOngameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
+            super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             super.gsm.push(new LobbyState());
         }
         else {
