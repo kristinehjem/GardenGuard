@@ -64,6 +64,25 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         });
     }
 
+    //function to set event listener to different objects in the database
+    @Override
+    public void SetOngameSwitchChangedListener(final DataHolderClass dataholder, String gamePin) {
+        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("value of gameswitch");
+                System.out.println(snapshot.getValue());
+                dataholder.updateGameSwitch((Boolean) snapshot.getValue());
+            }
+            //Log.d(TAG, "Value is: " + value);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
     public void DeleteGame(String gamePin) {
         gameRef.child(gamePin).removeValue();
     }
@@ -80,6 +99,16 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         player.setPlayerID(playerID);
         gameRef.child(gamePin).child("players").child(playerID).setValue(player);
         return playerID;
+    }
+
+    @Override
+    public void CreateGameSwitchInDB(String gamePin) {
+        gameRef.child(gamePin).child("gameSwitch").setValue(false);
+    }
+
+    @Override
+    public void UpdateGameSwitchInDB(String gamePin, boolean gameSwitch) {
+        gameRef.child(gamePin).child("gameSwitch").setValue(gameSwitch);
     }
 
     @Override

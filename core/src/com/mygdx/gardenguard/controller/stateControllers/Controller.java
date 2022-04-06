@@ -11,6 +11,7 @@ import java.util.List;
 public abstract class Controller {
 
     protected GameStateManager gsm;
+    protected boolean gameSwitch;
 
     public Controller() {
         this.gsm = GameStateManager.getInstance();
@@ -27,5 +28,13 @@ public abstract class Controller {
 
     public List<PlayerModel> getPlayers() {
         return gsm.getPlayers();
+    }
+
+    public void setGameSwitch(boolean gameSwitch) {
+        this.gameSwitch = gameSwitch;
+    }
+
+    public boolean getGameSwitch() {
+        return this.gameSwitch;
     }
 }
