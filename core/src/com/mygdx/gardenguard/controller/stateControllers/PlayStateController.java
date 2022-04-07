@@ -99,12 +99,15 @@ public class PlayStateController extends Controller {
 
 
     private void resetSteps() {
-        for (PlayerModel player : getPlayers()) {
+        for (PlayerModel player : super.getPlayers()) {
+            System.out.println(player);
             if(player instanceof SeekerModel) {
+                System.out.println("Set seekermodel steps");
                 player.setSteps(10);
                 gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), player.getSteps());
             }
             else if (player instanceof  HiderModel) {
+                System.out.println("Set seekermodel steps");
                 player.setSteps(18);
                 gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), player.getSteps());
             }
