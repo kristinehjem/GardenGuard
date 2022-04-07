@@ -80,7 +80,6 @@ public class PlayStateController extends Controller {
                 System.out.println("CHECK2");
             }
         }
-        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
     }
 
     public void handleRounds() {

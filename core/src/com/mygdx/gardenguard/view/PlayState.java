@@ -252,6 +252,7 @@ public class PlayState extends State {
             switchState = true;
         }
         this.controller.increaseRounds();
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
     }
 
 
