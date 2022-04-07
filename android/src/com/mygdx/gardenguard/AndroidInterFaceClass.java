@@ -74,7 +74,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                     System.out.println("value of gameswitch is true");
                     dataholder.updateGameSwitch();
                 }
-                else {
+                else if (!((Boolean) snapshot.getValue())){
                     dataholder.ifFalseSwitch();
                 }
             }
