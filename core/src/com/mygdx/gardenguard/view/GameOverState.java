@@ -116,4 +116,9 @@ public class GameOverState extends State {
     public void setGameSwitch() {
 
     }
+
+    @Override
+    public void setFalseSwitch() {
+
+    }
 }

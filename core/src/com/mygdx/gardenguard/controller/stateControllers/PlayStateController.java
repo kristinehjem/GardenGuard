@@ -68,7 +68,7 @@ public class PlayStateController extends Controller {
     public void checkSwitchTurn(){
         if (isSeekerTurn() && gsm.getPlayer().getIsSeeker() && gsm.getPlayer().getSteps() == 0){
             handleRounds();
-            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
             System.out.println("CHECK3");
         }
         else {

@@ -157,4 +157,9 @@ public class LobbyState extends State{
     public void setGameSwitch() {
         this.gameSwitch = true;
     }
+
+    @Override
+    public void setFalseSwitch() {
+
+    }
 }

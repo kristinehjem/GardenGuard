@@ -27,6 +27,7 @@ public abstract class State {
     protected abstract void dispose();
     protected abstract void create();
     public abstract void setGameSwitch();
+    public abstract void setFalseSwitch();
 }
 
 
