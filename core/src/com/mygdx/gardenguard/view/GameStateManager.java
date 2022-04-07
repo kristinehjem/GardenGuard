@@ -24,6 +24,7 @@ public class GameStateManager {
     private String gamePin;
     private PlayerModel player;
     private List<PlayerModel> players;
+    private int boardNr;
 
     public GameStateManager(){
         states = new Stack<State>();
@@ -91,5 +92,12 @@ public class GameStateManager {
 
     public List<PlayerModel> getPlayers() {
         return this.players;
+    }
+    public int getBoardNr() {
+        return boardNr;
+    }
+
+    public void setBoardNr(int boardNr) {
+        this.boardNr = boardNr;
     }
 }

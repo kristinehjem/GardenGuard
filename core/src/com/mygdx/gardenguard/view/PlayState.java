@@ -54,7 +54,7 @@ public class PlayState extends State {
 
     public PlayState() {
         super();
-        this.board = new Board();
+        this.board = new Board(super.gsm.getBoardNr());
         this.controller = new PlayStateController(this.board);
         this.gameSwitch = false;
 
