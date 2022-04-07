@@ -70,12 +70,9 @@ public class PlayState extends State {
         super();
         this.board = new Board();
         this.controller = new PlayStateController(this.board);
-<<<<<<< HEAD
         this.gameSwitch = false;
-
-=======
         this.switchState = false;
->>>>>>> b9e6183 (added round functionality and turns)
+
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -140,9 +137,9 @@ public class PlayState extends State {
             this.controller.pushNewState();
         }
         sb.end();
-        if (gameSwitch) {
+        /*if (gameSwitch) {
             this.controller.pushNewState();
-        }
+        }*/
 
     }
 
@@ -215,7 +212,7 @@ public class PlayState extends State {
         stage.addActor(left);
     }
 
-    @Override
+    /*@Override
     public void setGameSwitch(){
         this.gameSwitch = true;
         viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
@@ -235,10 +232,8 @@ public class PlayState extends State {
         if (super.gsm.getPlayer() instanceof HiderModel) {
             stage.addActor(endGame);
         }
-    }
+    }*/
 
-<<<<<<< HEAD
-=======
     @Override
     public void setGameSwitch(){
         System.out.println("CHECK1SWITCH");
@@ -249,7 +244,6 @@ public class PlayState extends State {
         this.controller.increaseRounds();
     }
 
->>>>>>> b9e6183 (added round functionality and turns)
 
     private void shadowingRender(SpriteBatch sb) {
         lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
