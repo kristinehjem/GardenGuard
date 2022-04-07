@@ -44,6 +44,7 @@ public class PlayState extends State {
     private BitmapFont showSteps;
     private Viewport viewport;
     private Stage stage;
+    private boolean switchState;
     //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
@@ -57,6 +58,7 @@ public class PlayState extends State {
         super();
         this.board = new Board();
         this.controller = new PlayStateController(this.board);
+        this.switchState = false;
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -114,6 +116,7 @@ public class PlayState extends State {
     @Override
     protected void update(float dt) {
         handleInput();
+        this.controller.checkSwitchTurn();
     }
 
     @Override
@@ -149,6 +152,9 @@ public class PlayState extends State {
         create();
         stage.act();
         stage.draw();
+        if (switchState) {
+            this.controller.pushNewState();
+        }
         sb.end();
 
         //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
@@ -174,12 +180,11 @@ public class PlayState extends State {
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button endGame = new TextButton("Hide here", mySkin, "small");
         endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
-        endGame.setSize(GardenGuard.WIDTH / 6, GardenGuard.HEIGHT/20);
+        endGame.setSize(GardenGuard.WIDTH / 6f, GardenGuard.HEIGHT/20f);
         endGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 controller.handleSavePosition();
-                controller.endTurn();
                 return true;
             }
         });
@@ -190,7 +195,11 @@ public class PlayState extends State {
 
     @Override
     public void setGameSwitch(){
-
+        this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+        if(this.controller.getRounds() < 5) {
+            switchState = true;
+        }
+        this.controller.increaseRounds();
     }
 
 
