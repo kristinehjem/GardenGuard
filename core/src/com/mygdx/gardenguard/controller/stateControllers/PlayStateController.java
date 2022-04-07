@@ -23,7 +23,7 @@ public class PlayStateController extends Controller {
     public PlayStateController(Board board) {
         super();
         //Velger hvem som skal starte, må alltids settes til false.
-        this.isSeekerTurn = true;
+        this.isSeekerTurn = false;
         this.board = board;
         this.savedPos = false;
         this.rounds = 1;
@@ -81,7 +81,6 @@ public class PlayStateController extends Controller {
             }
         }
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-        System.out.println("CHECK1");
     }
 
     public void handleRounds() {
