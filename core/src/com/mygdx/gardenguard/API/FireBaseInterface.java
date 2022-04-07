@@ -37,4 +37,6 @@ public interface FireBaseInterface {
     public void getScores(String gamePin);
 
     public void DeleteGame(String gamePin);
+
+    public void DeletePlayer(String gamePin, String playerID);
 }
