@@ -306,12 +306,14 @@ public class PlayState extends State {
 
     private void showOtherPlayers(SpriteBatch sb){
         List<PlayerModel> list_player = controller.getPlayers();
+        System.out.println(controller.getPlayers());
         for(PlayerModel hiders : list_player) {
-            if(!this.vision.contains(hiders.getPosition())) {break;}
-            sb.begin();
-            sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
-                    hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
-            sb.end();
+            if(this.vision.contains(hiders.getPosition())) {
+                sb.begin();
+                sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
+                        hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
+                sb.end();
+            }
         }
     }
 

@@ -67,17 +67,17 @@ public class PlayStateController extends Controller {
 
     public void checkSwitchTurn(){
         if (isSeekerTurn() && gsm.getPlayer().getIsSeeker() && gsm.getPlayer().getSteps() == 0){
-            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
-            System.out.println("CHECK3");
             resetSteps();
+            System.out.println("CHECK3");
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         }
         else {
             //forslag til kall til databasen:
             //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
              // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
             if (allSavedPos()) {
-                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
                 System.out.println("CHECK2");
+                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
             }
         }
     }
