@@ -247,13 +247,18 @@ public class PlayState extends State {
     @Override
     public void setGameSwitch(){
         System.out.println("CHECK1SWITCH");
-        this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+        if(!this.controller.isSeekerTurn()) {
+            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+        }
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
     }
 
     @Override
     public void setFalseSwitch() {
-        this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+        System.out.println("gameswitch is false");
+        if(this.controller.isSeekerTurn()) {
+            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+        }
         if(this.controller.getRounds() > 5) {
             switchState = true;
         }
