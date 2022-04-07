@@ -16,8 +16,6 @@ public class DataHolderClass {
     }
 
     public void updatePlayers(List<PlayerModel> players){
-        System.out.println("size of players in dataholderclass: ");
-        System.out.println(players.size());
         State state = GameStateManager.getInstance().getState();
         state.getController().setPlayers(players);
     }
@@ -27,8 +25,14 @@ public class DataHolderClass {
         state.setGameSwitch();
     }
 
+
     public void ifFalseSwitch() {
         State state = GameStateManager.getInstance().getState();
         state.setFalseSwitch();
     }
+
+    public void updateBoardNr(String boardNr) {
+        GameStateManager.getInstance().setBoardNr(Integer.valueOf(boardNr));
+    }
+
 }

@@ -21,7 +21,6 @@ public abstract class Controller {
     }
 
     public void setPlayers(List<PlayerModel> players) {
-        System.out.println("setting players in controller");
         gsm.setPlayers(players);
     }
 

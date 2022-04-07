@@ -22,8 +22,9 @@ public class PlayStateController extends Controller {
 
     public PlayStateController(Board board) {
         super();
-        //Velger hvem som skal starte, må alltids settes til false.
+        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
         this.isSeekerTurn = false;
+        this.currentRound = 1;
         this.board = board;
         this.savedPos = false;
         this.rounds = 1;
