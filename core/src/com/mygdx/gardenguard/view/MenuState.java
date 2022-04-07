@@ -2,6 +2,8 @@ package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,11 +25,13 @@ public class MenuState extends State {
     private MenuController menuController;
     private Viewport viewport;
     private BitmapFont info = new BitmapFont();
+    private BitmapFont header = new BitmapFont();
 
     public MenuState(){
         super();
         this.menuController = new MenuController();
         info.getData().setScale(3f);
+        header.getData().setScale(4f);
         create();
     }
 
@@ -50,7 +54,7 @@ public class MenuState extends State {
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        create();
+        header.draw(sb, "Garden Guard",GardenGuard.WIDTH/10, GardenGuard.HEIGHT-100);
         stage.act();
         stage.draw();
         sb.end();

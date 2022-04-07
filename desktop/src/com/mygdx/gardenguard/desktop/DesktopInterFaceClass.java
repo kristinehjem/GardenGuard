@@ -50,8 +50,8 @@ public class DesktopInterFaceClass implements FireBaseInterface {
 
     @Override
     public void UpdateScoreInDB(String gamePin, String playerID, int value) {
-    }
 
+    }
 
     @Override
     public void UpdateIsFoundInDB(String gamePin, String playerID, boolean value) {
@@ -73,7 +73,6 @@ public class DesktopInterFaceClass implements FireBaseInterface {
 
     }
 
-    ;
 
     @Override
     public void getScores(String gamePin) {
@@ -84,4 +83,10 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     public void DeleteGame(String gamePin) {
 
     }
+
+    @Override
+    public void DeletePlayer(String gamePin, String playerID) {
+
+    }
+
 }
