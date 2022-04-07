@@ -70,14 +70,17 @@ public class PlayStateController extends Controller {
             resetSteps();
             System.out.println("CHECK3");
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
+            super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
         }
         else {
             //forslag til kall til databasen:
             //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
              // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
             if (allSavedPos()) {
+                resetSteps();
                 System.out.println("CHECK2");
                 super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+                super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
             }
         }
     }
@@ -100,16 +103,13 @@ public class PlayStateController extends Controller {
 
     private void resetSteps() {
         for (PlayerModel player : super.getPlayers()) {
-            System.out.println(player);
             if(player instanceof SeekerModel) {
-                System.out.println("Set seekermodel steps");
-                player.setSteps(10);
-                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), player.getSteps());
+                System.out.println("Set hidermodel steps");
+                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), 15);
             }
             else if (player instanceof  HiderModel) {
                 System.out.println("Set seekermodel steps");
-                player.setSteps(18);
-                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), player.getSteps());
+                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), 18);
             }
         }
     }
