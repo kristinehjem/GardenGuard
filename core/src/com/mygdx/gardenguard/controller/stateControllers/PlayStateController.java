@@ -18,13 +18,15 @@ public class PlayStateController extends Controller {
     private boolean savedPos;
     private PlayerController playerController;
     private Board board;
+    private int rounds;
 
     public PlayStateController(Board board) {
         super();
-        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
-        this.isSeekerTurn = false;
+        //Velger hvem som skal starte, må alltids settes til false.
+        this.isSeekerTurn = true;
         this.board = board;
         this.savedPos = false;
+        this.rounds = 1;
         setPlayerController();
     }
 
@@ -63,28 +65,27 @@ public class PlayStateController extends Controller {
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
     }
 
-    public void endTurn(){
-        if (isSeekerTurn()){
-            setSeekerTurn(false);
-            endGame();
-            }
+    public void checkSwitchTurn(){
+        if (isSeekerTurn() && gsm.getPlayer().getIsSeeker() && gsm.getPlayer().getSteps() == 0){
+            handleRounds();
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+        }
         else {
             //forslag til kall til databasen:
             //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
              // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
             if (allSavedPos()) {
-                setSeekerTurn(true);
+                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
             }
         }
-        System.out.println("You have ended your turn \n");
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
     }
 
-    private void endGame() {
-        List<String> scores = calculateScores();
-        gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
+    public void handleRounds() {
+        resetSteps();
     }
 
-    public List calculateScores(){
+    public List<String> calculateScores(){
         List<String> scores = new ArrayList<>();
 
         //TODO: calculate scores
@@ -93,5 +94,34 @@ public class PlayStateController extends Controller {
 
     public boolean getSavedPos() {
         return savedPos;
+    }
+
+
+    private void resetSteps() {
+        for (PlayerModel player : getPlayers()) {
+            if(player instanceof SeekerModel) {
+                player.setSteps(10);
+                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), player.getSteps());
+            }
+            else if (player instanceof  HiderModel) {
+                player.setSteps(18);
+                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), player.getSteps());
+            }
+        }
+    }
+
+    public int getRounds() {
+        return this.rounds;
+    }
+
+    public void increaseRounds() {
+        this.rounds++;
+    }
+
+    @Override
+    public void pushNewState() {
+        //The same as endGame
+        List<String> scores = calculateScores();
+        gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
     }
 }

@@ -56,6 +56,7 @@ public class MenuController extends Controller {
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);
         super.gsm.getFBIC().CreateGameSwitchInDB(gamePin);
+        super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
         super.gsm.set(new LobbyState());
     }
 
