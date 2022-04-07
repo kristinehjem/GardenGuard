@@ -28,7 +28,7 @@ public class DesktopInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void CreateBoardNumberInDB(String gamePin, int boardNr) {
+    public void CreateBoardNumberInDB(String gamePin, String boardNr) {
     }
 
     @Override

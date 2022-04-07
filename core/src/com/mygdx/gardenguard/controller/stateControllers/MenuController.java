@@ -64,7 +64,7 @@ public class MenuController extends Controller {
         super.gsm.setBoardNr(boardNumber);
         System.out.println("boardnumber");
         System.out.println(boardNumber);
-        super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, boardNumber);
+        super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, String.valueOf(boardNumber));
         super.gsm.set(new LobbyState());
     }
 

@@ -86,7 +86,6 @@ public class GameStateManager {
     }
 
     public void setPlayers(List<PlayerModel> players) {
-        System.out.println("setting players in gamestatemanager");
         this.players = players;
     }
 

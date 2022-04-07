@@ -29,7 +29,7 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void CreateBoardNumberInDB(String gamePin, int boardNr) {
+    public void CreateBoardNumberInDB(String gamePin, String boardNr) {
 
     }
 

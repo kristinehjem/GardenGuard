@@ -16,7 +16,7 @@ public interface FireBaseInterface {
 
     public void CreateGameSwitchInDB(String gamePin);
 
-    public void CreateBoardNumberInDB(String gamePin, int boardNr);
+    public void CreateBoardNumberInDB(String gamePin, String boardNr);
 
     public void SetOnGameSwitchChangedListener(final DataHolderClass dataholder, String gamePin);
 
