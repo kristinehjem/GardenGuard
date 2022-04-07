@@ -118,6 +118,16 @@ public class LobbyState extends State{
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button exit = new TextButton("Exit", mySkin, "small");
+        exit.setSize(GardenGuard.WIDTH/8, GardenGuard.HEIGHT/20);
+        exit.setPosition(GardenGuard.WIDTH/20, GardenGuard.HEIGHT - 50);
+        exit.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                controller.handleExit();
+                return true;
+            }
+        });
         Button startGame = new TextButton("Start game", mySkin, "small");
         startGame.setSize(GardenGuard.WIDTH/4, GardenGuard.HEIGHT/12);
         startGame.setPosition((GardenGuard.WIDTH-GardenGuard.WIDTH/4)/2, GardenGuard.HEIGHT/8);
@@ -151,6 +161,7 @@ public class LobbyState extends State{
             startGame.setVisible(false);
         }*/
         stage.addActor(startGame);
+        stage.addActor(exit);
     }
 
     @Override
