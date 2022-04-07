@@ -95,13 +95,13 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
-        this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
+
     }
 
     @Override
     protected void update(float dt) {
-        handleInput();
         this.controller.checkSwitchTurn();
+        this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
     }
 
     @Override
