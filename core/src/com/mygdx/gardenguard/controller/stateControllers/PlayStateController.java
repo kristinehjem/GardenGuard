@@ -24,7 +24,6 @@ public class PlayStateController extends Controller {
         super();
         //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
         this.isSeekerTurn = false;
-        this.currentRound = 1;
         this.board = board;
         this.savedPos = false;
         this.rounds = 1;
