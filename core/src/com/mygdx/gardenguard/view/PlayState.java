@@ -204,6 +204,18 @@ public class PlayState extends State {
                 return true;
             }
         });
+        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button endGame = new TextButton("Hide here", mySkin, "small");
+        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
+        endGame.setSize(GardenGuard.WIDTH / 6f, GardenGuard.HEIGHT/20f);
+        endGame.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                controller.handleSavePosition();
+                return true;
+            }
+        });
+        stage.addActor(endGame);
         stage.addActor(up);
         stage.addActor(down);
         stage.addActor(right);
@@ -212,7 +224,6 @@ public class PlayState extends State {
 
     /*@Override
     public void setGameSwitch(){
-<<<<<<< HEAD
         this.gameSwitch = true;
         viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
         stage = new Stage(viewport);
