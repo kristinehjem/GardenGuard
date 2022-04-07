@@ -39,6 +39,7 @@ public class MenuController extends Controller {
             super.gsm.setGamePin(gamePin);
             super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             super.gsm.getFBIC().GetBoardNumber(GameStateManager.getInstance().getDataholder(), gamePin);
+            System.out.println(super.gsm.getBoardNr());
             super.gsm.push(new LobbyState());
         }
         else {
@@ -61,6 +62,8 @@ public class MenuController extends Controller {
         Random random = new Random();
         int boardNumber = random.nextInt(3);
         super.gsm.setBoardNr(boardNumber);
+        System.out.println("boardnumber");
+        System.out.println(boardNumber);
         super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, boardNumber);
         super.gsm.set(new LobbyState());
     }
