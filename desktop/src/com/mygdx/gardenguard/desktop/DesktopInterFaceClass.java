@@ -25,11 +25,19 @@ public class DesktopInterFaceClass implements FireBaseInterface {
 
     @Override
     public void CreateGameSwitchInDB(String gamePin) {
+    }
 
+    @Override
+    public void CreateBoardNumberInDB(String gamePin, String boardNr) {
     }
 
     @Override
     public void SetOnGameSwitchChangedListener(DataHolderClass dataholder, String gamePin) {
+
+    }
+
+    @Override
+    public void GetBoardNumber(DataHolderClass dataholder, String gamePin) {
 
     }
 
@@ -55,16 +63,6 @@ public class DesktopInterFaceClass implements FireBaseInterface {
 
     @Override
     public void UpdateIsFoundInDB(String gamePin, String playerID, boolean value) {
-
-    }
-
-    @Override
-    public void UpdateScoreInDB(String gamePin, String playerID, String value) {
-    }
-
-
-    @Override
-    public void UpdateIsFoundInDB(String gamePin, String playerID, String value) {
 
     }
 

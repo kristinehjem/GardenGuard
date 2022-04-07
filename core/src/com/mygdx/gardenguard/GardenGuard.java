@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.gardenguard.API.FireBaseInterface;
+import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
@@ -15,6 +16,8 @@ import com.mygdx.gardenguard.view.GameStateManager;
 import com.mygdx.gardenguard.view.MenuState;
 import com.mygdx.gardenguard.view.PlayState;
 
+import java.util.Random;
+
 public class GardenGuard extends ApplicationAdapter {
 	private GameStateManager gsm;
 	public static final int numVertical = 15;
@@ -22,6 +25,7 @@ public class GardenGuard extends ApplicationAdapter {
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 800;
 	private SpriteBatch batch;
+	private Board board;
 
 	FireBaseInterface _FBIC;
 
@@ -34,15 +38,6 @@ public class GardenGuard extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		gsm = GameStateManager.getInstance();
 		gsm.setFBIC(_FBIC);
-
-		//testing game over state:
-		/*PlayerModel player = new HiderModel(new Vector2(2, 3));
-		gsm.setPlayer(player);
-		gsm.getFBIC().SetOnValueChangedListener(gsm.getDataholder(), "-MzyhFtjakbSS4DGNEIm");
-		player.setPlayerID(gsm.getFBIC().CreatePlayerInDB("-MzyhFtjakbSS4DGNEIm", player));
-		//super.gsm.getFBIC().CreatePlayerInDB(gamePin, player2);
-		gsm.setGamePin("-MzyhFtjakbSS4DGNEIm");
-		*/
 		gsm.push(new MenuState());
 	}
 

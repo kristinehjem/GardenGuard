@@ -14,6 +14,7 @@ import com.mygdx.gardenguard.view.PlayState;
 import com.mygdx.gardenguard.view.PopupState;
 
 import java.awt.Button;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class MenuController extends Controller {
@@ -37,6 +38,8 @@ public class MenuController extends Controller {
             player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
             super.gsm.setGamePin(gamePin);
             super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
+            super.gsm.getFBIC().GetBoardNumber(GameStateManager.getInstance().getDataholder(), gamePin);
+            System.out.println(super.gsm.getBoardNr());
             super.gsm.push(new LobbyState());
         }
         else {
@@ -56,6 +59,12 @@ public class MenuController extends Controller {
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);
         super.gsm.getFBIC().CreateGameSwitchInDB(gamePin);
+        Random random = new Random();
+        int boardNumber = random.nextInt(3);
+        super.gsm.setBoardNr(boardNumber);
+        System.out.println("boardnumber");
+        System.out.println(boardNumber);
+        super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, String.valueOf(boardNumber));
         super.gsm.set(new LobbyState());
     }
 

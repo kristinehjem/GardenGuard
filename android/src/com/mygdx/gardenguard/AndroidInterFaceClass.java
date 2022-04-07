@@ -84,6 +84,22 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         });
     }
 
+    @Override
+    public void GetBoardNumber(DataHolderClass dataholder, String gamePin) {
+        gameRef.child(gamePin).child("boardNr").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataholder.updateBoardNr((String) snapshot.getValue());
+            }
+            //Log.d(TAG, "Value is: " + value);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
     public void DeleteGame(String gamePin) {
         gameRef.child(gamePin).removeValue();
     }
@@ -110,6 +126,11 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void CreateGameSwitchInDB(String gamePin) {
         gameRef.child(gamePin).child("gameSwitch").setValue(false);
+    }
+
+    @Override
+    public void CreateBoardNumberInDB(String gamePin, String boardNr) {
+        gameRef.child(gamePin).child("boardNr").setValue(boardNr);
     }
 
     @Override
