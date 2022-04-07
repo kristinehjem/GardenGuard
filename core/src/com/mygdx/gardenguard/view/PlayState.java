@@ -241,6 +241,7 @@ public class PlayState extends State {
 =======
     @Override
     public void setGameSwitch(){
+        System.out.println("CHECK1SWITCH");
         this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
         if(this.controller.getRounds() < 5) {
             switchState = true;
