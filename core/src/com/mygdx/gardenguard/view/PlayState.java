@@ -93,7 +93,7 @@ public class PlayState extends State {
         if (Gdx.input.justTouched()) {
             //unprojects the camera (vet ikke hva det vil si, men klikkingen fungerer ikke uten det):
             cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-            if ((gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn() && controller.allSavedPos()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn() && !controller.getSavedPos())){
+            if ((controller.getPlayer() instanceof SeekerModel && controller.isSeekerTurn()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn())){
                  // Flytter spilleren ut i fra knappetrykk
                 if (upSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
                     controller.move("up", controller.isSeekerTurn());
