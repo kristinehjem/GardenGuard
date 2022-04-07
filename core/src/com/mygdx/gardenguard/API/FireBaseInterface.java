@@ -24,9 +24,9 @@ public interface FireBaseInterface {
 
     public void UpdateStepsInDB(String gamePin, String playerID, int value);
 
-    public void UpdateScoreInDB(String gamePin, String playerID, String value);
+    public void UpdateScoreInDB(String gamePin, String playerID, int value);
 
-    public void UpdateIsFoundInDB(String gamePin, String playerID, String value);
+    public void UpdateIsFoundInDB(String gamePin, String playerID, boolean value);
 
     public void checkIfGameExists(String gamePin, MenuController MC);
 

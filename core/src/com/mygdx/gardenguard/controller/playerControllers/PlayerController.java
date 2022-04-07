@@ -91,6 +91,7 @@ public abstract class PlayerController extends Controller {
                 }
                 break;
             }
+            checkForPlayers();
         } else {
             //TODO: popup med "ikke din tur" elns
             System.out.println("You have no steps left");
