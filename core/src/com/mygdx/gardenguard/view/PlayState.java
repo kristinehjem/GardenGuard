@@ -79,6 +79,8 @@ public class PlayState extends State {
         this.showSteps = new BitmapFont();
         showSteps.setColor(Color.YELLOW);
         showSteps.getData().setScale(2f);
+
+        create();
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
         this.player = new SeekerModel(new Vector2(1, 2));
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
@@ -93,9 +95,7 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
-       if (Gdx.input.justTouched()) {
-            this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
-        }
+        this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
     }
 
     @Override
@@ -127,6 +127,7 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         showSteps.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        create();
         stage.act();
         stage.draw();
         sb.end();
@@ -213,15 +214,17 @@ public class PlayState extends State {
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button endGame = new TextButton("Stop here", mySkin, "small");
-        endGame.setPosition(GardenGuard.WIDTH - 50, GardenGuard.HEIGHT-5);
-        endGame.setSize(GardenGuard.WIDTH / 4, GardenGuard.HEIGHT/12);
+        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
+        endGame.setSize(GardenGuard.WIDTH / 6, GardenGuard.HEIGHT/20);
         endGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //handle endTurn
+                controller.handleSavePosition();
+                System.out.println("set position pressed");
                 return true;
             }
         });
+        stage.addActor(endGame);
     }
 
 
