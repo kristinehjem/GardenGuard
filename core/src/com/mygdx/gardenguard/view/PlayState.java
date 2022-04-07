@@ -53,6 +53,8 @@ public class PlayState extends State {
     private Vector3 touchPoint = new Vector3();
     private BitmapFont showSteps;
     private boolean gameSwitch;
+    private Viewport viewport;
+    private Stage stage;
     //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
@@ -62,8 +64,6 @@ public class PlayState extends State {
     private Sprite lightSprite;
 
     //CAMERA
-    private FitViewport viewport;
-    private Stage stage;
 
     public PlayState() {
         super();
@@ -208,6 +208,20 @@ public class PlayState extends State {
     @Override
     public void setGameSwitch(){
         this.gameSwitch = true;
+        viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button endGame = new TextButton("Stop here", mySkin, "small");
+        endGame.setPosition(GardenGuard.WIDTH - 50, GardenGuard.HEIGHT-5);
+        endGame.setSize(GardenGuard.WIDTH / 4, GardenGuard.HEIGHT/12);
+        endGame.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                //handle endTurn
+                return true;
+            }
+        });
     }
 
 
