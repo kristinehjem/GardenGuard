@@ -52,7 +52,7 @@ public class PlayState extends State {
     //private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
     private BitmapFont showSteps;
-    private boolean gameSwitch;
+
     private Viewport viewport;
     private Stage stage;
     private boolean switchState;
@@ -70,9 +70,7 @@ public class PlayState extends State {
         super();
         this.board = new Board();
         this.controller = new PlayStateController(this.board);
-        this.gameSwitch = false;
         this.switchState = false;
-
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -214,6 +212,7 @@ public class PlayState extends State {
 
     /*@Override
     public void setGameSwitch(){
+<<<<<<< HEAD
         this.gameSwitch = true;
         viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
         stage = new Stage(viewport);

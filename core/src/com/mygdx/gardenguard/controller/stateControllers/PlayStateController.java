@@ -53,7 +53,7 @@ public class PlayStateController extends Controller {
 
     public boolean allSavedPos() {
         for (PlayerModel player : super.getPlayers()) {
-            if (!player.getIsDone() && player.getIsSeeker()){
+            if (!player.getIsDone() && !player.getIsSeeker()){
                 return false;
             }
         }
