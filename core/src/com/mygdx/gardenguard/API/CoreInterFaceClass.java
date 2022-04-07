@@ -92,4 +92,10 @@ public class CoreInterFaceClass implements FireBaseInterface {
     public void DeleteGame(String gamePin) {
 
     }
+
+    @Override
+    public void DeletePlayer(String gamePin, String playerID) {
+
+    }
+
 }

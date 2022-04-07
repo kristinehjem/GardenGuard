@@ -85,7 +85,7 @@ public class Board {
                 {true, false, true, true, true, true, true, false, true}, // y = 2
                 {true, false, true, true, true, false, true, false, false}, // y = 3
                 {true, true, true, true, true, true, true, true, true}, // y = 4
-                {false, false, false, false, false, false, false, false, false}, // y = 5
+                {false, false, false, true, false, false, false, false, false}, // y = 5
                 {false, true, true, true, true, true, false, true, false}, // y = 6
                 {false, true, false, true, true, true, true, false, false, false}, // y = 7
                 {false, true, true, true, true, true, true, true, true}, // y = 8
@@ -112,7 +112,7 @@ public class Board {
                 {false, true, true, true, true, true, true, true, true}, // y = 8
                 {false, false, true, false, true, true, true, true, true}, // y = 9
                 {true, true, true, false, true, true, true, false, true}, // y = 10
-                {false, false, false, false, false, false, false, false, false}, // y = 11
+                {false, false, false, false, false, true, false, false, false}, // y = 11
                 {false, false, false, false, true, true, true, false, true}, // y = 12
                 {true, true, true, true, true, true, true, false, false}, // y = 13
                 {false, false, false, false, false, false, false, false, false} // y = 14

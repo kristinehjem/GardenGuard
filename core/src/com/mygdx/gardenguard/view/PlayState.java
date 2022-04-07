@@ -8,10 +8,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
@@ -23,6 +31,7 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
 import java.util.List;
+import java.util.Locale;
 
 
 public class PlayState extends State {
@@ -32,11 +41,15 @@ public class PlayState extends State {
     private Board board;
     private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
     private int tileHeight = 53; // TODO: Prøv å bruk den nye referansen jeg lagde i board-klassen
-    private Sprite upSprite = new Sprite(new Texture("upButton.png"));
-    private Sprite downSprite = new Sprite(new Texture("downButton.png"));
-    private Sprite leftSprite = new Sprite(new Texture("leftButton.png"));
-    private Sprite rightSprite = new Sprite(new Texture("rightButton.png"));
-    private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
+    private TextureRegion upText = new TextureRegion(new Texture("upButton.png"));
+    private TextureRegion downText = new TextureRegion(new Texture("downButton.png"));
+    private TextureRegion leftText = new TextureRegion(new Texture("leftButton.png"));
+    private TextureRegion rightText = new TextureRegion(new Texture("rightButton.png"));
+    private TextureRegionDrawable upDrawable = new TextureRegionDrawable(upText);
+    private TextureRegionDrawable downDrawable = new TextureRegionDrawable(downText);
+    private TextureRegionDrawable leftDrawable = new TextureRegionDrawable(leftText);
+    private TextureRegionDrawable rightDrawable = new TextureRegionDrawable(rightText);
+    //private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
     private BitmapFont showSteps;
     private boolean gameSwitch;
@@ -62,18 +75,6 @@ public class PlayState extends State {
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
         this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
-
-        //SPRITES TO MOVE AND END TURN; current
-        upSprite.setSize(tileWidth, tileHeight);
-        downSprite.setSize(tileWidth, tileHeight);
-        leftSprite.setSize(tileWidth, tileHeight);
-        rightSprite.setSize(tileWidth, tileHeight);
-        squareSprite.setSize(tileWidth, tileHeight);
-        upSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight * 3);
-        downSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight);
-        leftSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth - tileWidth / 2 - 1, tileHeight * 2 - 1);
-        rightSprite.setPosition(GardenGuard.WIDTH / 2 + tileWidth / 2 - 1, tileHeight * 2);
-        squareSprite.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight * 2);
         //FONT TO DRAW
         this.showSteps = new BitmapFont();
         showSteps.setColor(Color.YELLOW);
@@ -92,25 +93,7 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.justTouched()) {
-            //unprojects the camera (vet ikke hva det vil si, men klikkingen fungerer ikke uten det):
-            cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-            if ((gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn())){
-                if (squareSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-                    controller.endTurn();
-                } // Flytter spilleren ut i fra knappetrykk
-                else if (upSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-                    controller.move("up", controller.isSeekerTurn());
-                } else if (downSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-                    controller.move("down", controller.isSeekerTurn());
-                } else if (leftSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-                    controller.move("left", controller.isSeekerTurn());
-                } else if (rightSprite.getBoundingRectangle().contains(touchPoint.x, touchPoint.y)) {
-                    controller.move("right", controller.isSeekerTurn());
-                }
-            } else {
-                System.out.println("It is not your turn");
-            }
+       if (Gdx.input.justTouched()) {
             this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
         }
     }
@@ -142,27 +125,15 @@ public class PlayState extends State {
         sb.begin();
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
-        upSprite.draw(sb, 50);
-        downSprite.draw(sb, 50);
-        leftSprite.draw(sb, 50);
-        rightSprite.draw(sb, 50);
-        squareSprite.draw(sb, 50);
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         showSteps.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        stage.act();
+        stage.draw();
         sb.end();
         if (gameSwitch) {
             this.controller.pushNewState();
         }
 
-
-        //stage.draw();
-
-
-
-        //stage.draw();
-
-
-        //BRUKES TIL Å FINNE SPILLERE: MÅ ENDRES
     }
 
 
@@ -171,11 +142,67 @@ public class PlayState extends State {
 
     }
 
+    private boolean isTurn() {
+        return (gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn());
+    }
+
     @Override
     protected void create() {
         this.viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
         this.stage = new Stage(viewport);
-        //Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(stage);
+        Button up = new ImageButton(upDrawable);
+        up.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight * 3);
+        up.setSize(tileWidth, tileHeight);
+        Button down = new ImageButton(downDrawable);
+        down.setSize(tileWidth, tileHeight);
+        down.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight);
+        Button left = new ImageButton(leftDrawable);
+        left.setPosition(GardenGuard.WIDTH / 2 - tileWidth - tileWidth / 2 - 1, tileHeight * 2 - 1);
+        left.setSize(tileWidth, tileHeight);;
+        Button right = new ImageButton(rightDrawable);
+        right.setPosition(GardenGuard.WIDTH / 2 + tileWidth / 2 - 1, tileHeight * 2);
+        right.setSize(tileWidth, tileHeight);;
+        up.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (isTurn()) {
+                    controller.move("up", controller.isSeekerTurn());
+                }
+                return true;
+            }
+        });
+        down.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (isTurn()) {
+                    controller.move("down", controller.isSeekerTurn());
+                }
+                return true;
+            }
+        });
+        left.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (isTurn()) {
+                    controller.move("left", controller.isSeekerTurn());
+                }
+                return true;
+            }
+        });
+        right.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (isTurn()) {
+                    controller.move("right", controller.isSeekerTurn());
+                }
+                return true;
+            }
+        });
+        stage.addActor(up);
+        stage.addActor(down);
+        stage.addActor(right);
+        stage.addActor(left);
     }
 
     @Override
