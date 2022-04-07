@@ -25,9 +25,14 @@ public class DataHolderClass {
         state.setGameSwitch();
     }
 
+
+    public void ifFalseSwitch() {
+        State state = GameStateManager.getInstance().getState();
+        state.setFalseSwitch();
+    }
+
     public void updateBoardNr(String boardNr) {
         GameStateManager.getInstance().setBoardNr(Integer.valueOf(boardNr));
     }
-
 
 }

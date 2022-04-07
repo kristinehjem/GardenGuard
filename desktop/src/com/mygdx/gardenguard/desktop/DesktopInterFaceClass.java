@@ -81,7 +81,6 @@ public class DesktopInterFaceClass implements FireBaseInterface {
 
     }
 
-    ;
 
     @Override
     public void getScores(String gamePin) {

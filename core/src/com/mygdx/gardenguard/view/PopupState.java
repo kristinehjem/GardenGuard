@@ -100,6 +100,11 @@ public class PopupState extends State{
 
     }
 
+    @Override
+    public void setFalseSwitch() {
+
+    }
+
     public String getText() {
         return text;
     }

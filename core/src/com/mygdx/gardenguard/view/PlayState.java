@@ -52,7 +52,10 @@ public class PlayState extends State {
     //private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
     private BitmapFont showSteps;
-    private boolean gameSwitch;
+
+    private Viewport viewport;
+    private Stage stage;
+    private boolean switchState;
     //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
@@ -62,15 +65,12 @@ public class PlayState extends State {
     private Sprite lightSprite;
 
     //CAMERA
-    private FitViewport viewport;
-    private Stage stage;
 
     public PlayState() {
         super();
         this.board = new Board(super.gsm.getBoardNr());
         this.controller = new PlayStateController(this.board);
-        this.gameSwitch = false;
-
+        this.switchState = false;
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -79,6 +79,8 @@ public class PlayState extends State {
         this.showSteps = new BitmapFont();
         showSteps.setColor(Color.YELLOW);
         showSteps.getData().setScale(2f);
+
+        create();
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
         this.player = new SeekerModel(new Vector2(1, 2));
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
@@ -93,14 +95,13 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
-       if (Gdx.input.justTouched()) {
-            this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
-        }
+
     }
 
     @Override
     protected void update(float dt) {
-        handleInput();
+        this.controller.checkSwitchTurn();
+        this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
     }
 
     @Override
@@ -127,12 +128,16 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         showSteps.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        create();
         stage.act();
         stage.draw();
-        sb.end();
-        if (gameSwitch) {
+        if (switchState) {
             this.controller.pushNewState();
         }
+        sb.end();
+        /*if (gameSwitch) {
+            this.controller.pushNewState();
+        }*/
 
     }
 
@@ -199,15 +204,66 @@ public class PlayState extends State {
                 return true;
             }
         });
+        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button endGame = new TextButton("Hide here", mySkin, "small");
+        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
+        endGame.setSize(GardenGuard.WIDTH / 6f, GardenGuard.HEIGHT/20f);
+        endGame.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                controller.handleSavePosition();
+                return true;
+            }
+        });
+        stage.addActor(endGame);
         stage.addActor(up);
         stage.addActor(down);
         stage.addActor(right);
         stage.addActor(left);
     }
 
-    @Override
+    /*@Override
     public void setGameSwitch(){
         this.gameSwitch = true;
+        viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        Button endGame = new TextButton("Hide here", mySkin, "small");
+        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
+        endGame.setSize(GardenGuard.WIDTH / 6f, GardenGuard.HEIGHT/20f);
+        endGame.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                controller.handleSavePosition();
+                return true;
+            }
+        });
+        if (super.gsm.getPlayer() instanceof HiderModel) {
+            stage.addActor(endGame);
+        }
+    }*/
+
+    @Override
+    public void setGameSwitch(){
+        System.out.println("CHECK1SWITCH");
+        if(!this.controller.isSeekerTurn()) {
+            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+        }
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+    }
+
+    @Override
+    public void setFalseSwitch() {
+        System.out.println("gameswitch is false");
+        if(this.controller.isSeekerTurn()) {
+            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+        }
+        if(this.controller.getRounds() > 5) {
+            switchState = true;
+        }
+        this.controller.increaseRounds();
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
     }
 
 
@@ -250,12 +306,14 @@ public class PlayState extends State {
 
     private void showOtherPlayers(SpriteBatch sb){
         List<PlayerModel> list_player = controller.getPlayers();
+        System.out.println(controller.getPlayers());
         for(PlayerModel hiders : list_player) {
-            if(!this.vision.contains(hiders.getPosition())) {break;}
-            sb.begin();
-            sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
-                    hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
-            sb.end();
+            if(this.vision.contains(hiders.getPosition())) {
+                sb.begin();
+                sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
+                        hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
+                sb.end();
+            }
         }
     }
 
