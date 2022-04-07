@@ -213,7 +213,7 @@ public class PlayState extends State {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        Button endGame = new TextButton("Stop here", mySkin, "small");
+        Button endGame = new TextButton("Hide here", mySkin, "small");
         endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
         endGame.setSize(GardenGuard.WIDTH / 6, GardenGuard.HEIGHT/20);
         endGame.addListener(new InputListener() {
@@ -224,7 +224,9 @@ public class PlayState extends State {
                 return true;
             }
         });
-        stage.addActor(endGame);
+        if (super.gsm.getPlayer() instanceof HiderModel) {
+            stage.addActor(endGame);
+        }
     }
 
 
