@@ -13,6 +13,7 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 import com.mygdx.gardenguard.view.GameOverState;
 import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.view.LaunchState;
 import com.mygdx.gardenguard.view.MenuState;
 import com.mygdx.gardenguard.view.PlayState;
 
@@ -38,7 +39,7 @@ public class GardenGuard extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		gsm = GameStateManager.getInstance();
 		gsm.setFBIC(_FBIC);
-		gsm.push(new MenuState());
+		gsm.push(new LaunchState());
 	}
 
 	@Override

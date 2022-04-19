@@ -84,7 +84,6 @@ public class PlayState extends State {
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
         this.player = new SeekerModel(new Vector2(1, 2));
         this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
-        create();
     }
 
     @Override
