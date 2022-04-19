@@ -22,8 +22,8 @@ public class PlayStateController extends Controller {
 
     public PlayStateController(Board board) {
         super();
-        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
-        this.isSeekerTurn = false;
+        this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
+        //this.isSeekerTurn = false;
         this.board = board;
         this.savedPos = false;
         this.rounds = 1;
@@ -72,16 +72,14 @@ public class PlayStateController extends Controller {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
             super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
         }
-        else {
+        else if(allSavedPos() && !isSeekerTurn()){
             //forslag til kall til databasen:
             //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
              // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
-            if (allSavedPos()) {
-                resetSteps();
-                System.out.println("CHECK2");
-                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
-                super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-            }
+            resetSteps();
+            System.out.println("CHECK2");
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+            super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
         }
     }
 
@@ -103,13 +101,20 @@ public class PlayStateController extends Controller {
 
     private void resetSteps() {
         for (PlayerModel player : super.getPlayers()) {
+            //System.out.println(player +" "+ player.getSteps());
             if(player instanceof SeekerModel) {
                 System.out.println("Set hidermodel steps");
-                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), 15);
+                player.setSteps(15);
+                super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+                System.out.println(gsm.getPlayer().getSteps());
+                System.out.println(player.getSteps());
             }
             else if (player instanceof  HiderModel) {
                 System.out.println("Set seekermodel steps");
-                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), 18);
+                player.setSteps(20);
+                super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+                System.out.println(gsm.getPlayer().getSteps());
+                System.out.println(player.getSteps());
             }
         }
     }
@@ -120,7 +125,7 @@ public class PlayStateController extends Controller {
 
     public void increaseRounds() {
         this.rounds++;
-        System.out.println("CHECK1ROUNDS");
+        System.out.println("CHECK_FOR_ROUNDS");
     }
 
     @Override

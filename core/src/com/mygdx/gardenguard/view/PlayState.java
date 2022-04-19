@@ -257,9 +257,11 @@ public class PlayState extends State {
         System.out.println("gameswitch is false");
         if(this.controller.isSeekerTurn()) {
             this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
+            System.out.println("SWITCHED TO HIDER");
         }
         if(this.controller.getRounds() > 5) {
             switchState = true;
+            System.out.println("GAMEFINISHED");
         }
         this.controller.increaseRounds();
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
@@ -304,10 +306,10 @@ public class PlayState extends State {
     }
 
     private void showOtherPlayers(SpriteBatch sb){
-        List<PlayerModel> list_player = controller.getPlayers();
+        List<PlayerModel> list_player = super.gsm.getPlayers();
         System.out.println(controller.getPlayers());
         for(PlayerModel hiders : list_player) {
-            if(this.vision.contains(hiders.getPosition())) {
+            if(this.vision.contains(hiders.getPosition()) && !hider.getIsSeeker()) {
                 sb.begin();
                 sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
                         hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
