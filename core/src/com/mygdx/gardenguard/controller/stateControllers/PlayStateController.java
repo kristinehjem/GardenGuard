@@ -66,7 +66,8 @@ public class PlayStateController extends Controller {
     }
 
     public void checkSwitchTurn(){
-        if (isSeekerTurn() && gsm.getPlayer().getSteps() == 0){
+        if (isSeekerTurn() && ((gsm.getPlayer().getSteps() == 0 && gsm.getPlayer() instanceof SeekerModel)
+                || (super.gsm.getPlayer().getIsDone() && gsm.getPlayer() instanceof HiderModel))){
             resetSteps(gsm.getPlayer());
             System.out.println("CHECK3");
             if(gsm.getPlayer().getIsSeeker()) {
