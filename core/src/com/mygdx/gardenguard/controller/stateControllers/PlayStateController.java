@@ -67,7 +67,7 @@ public class PlayStateController extends Controller {
 
     public void checkSwitchTurn(){
         if (isSeekerTurn() && gsm.getPlayer().getIsSeeker() && gsm.getPlayer().getSteps() == 0){
-            resetSteps();
+            resetSteps(gsm.getPlayer());
             System.out.println("CHECK3");
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
             super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
@@ -76,15 +76,13 @@ public class PlayStateController extends Controller {
             //forslag til kall til databasen:
             //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
              // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
-            resetSteps();
+            resetSteps(gsm.getPlayer());
             System.out.println("CHECK2");
-            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+            if(gsm.getPlayer().getIsSeeker()) {
+                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+            }
             super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
         }
-    }
-
-    public void handleRounds() {
-        resetSteps();
     }
 
     public List<String> calculateScores(){
@@ -99,23 +97,20 @@ public class PlayStateController extends Controller {
     }
 
 
-    private void resetSteps() {
-        for (PlayerModel player : super.getPlayers()) {
-            //System.out.println(player +" "+ player.getSteps());
-            if(player instanceof SeekerModel) {
-                System.out.println("Set hidermodel steps");
-                player.setSteps(15);
-                super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
-                System.out.println(gsm.getPlayer().getSteps());
-                System.out.println(player.getSteps());
-            }
-            else if (player instanceof  HiderModel) {
-                System.out.println("Set seekermodel steps");
-                player.setSteps(20);
-                super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
-                System.out.println(gsm.getPlayer().getSteps());
-                System.out.println(player.getSteps());
-            }
+    private void resetSteps(PlayerModel player) {
+        if(player instanceof SeekerModel) {
+            System.out.println("Set hidermodel steps");
+            player.setSteps(15);
+            super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+            System.out.println(gsm.getPlayer().getSteps());
+            System.out.println(player.getSteps());
+        }
+        else if (player instanceof  HiderModel) {
+            System.out.println("Set seekermodel steps");
+            player.setSteps(20);
+            super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+            System.out.println(gsm.getPlayer().getSteps());
+            System.out.println(player.getSteps());
         }
     }
 

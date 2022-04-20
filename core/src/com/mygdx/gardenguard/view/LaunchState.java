@@ -20,7 +20,7 @@ public class LaunchState extends State{
     private float alpha;
     private boolean animationDone;
 
-    private static final float TIME_TO_FADE = 4f;
+    private static final float TIME_TO_FADE = 2f;
     private float timer = 0f;
     private boolean fadeIn;
 

@@ -64,8 +64,8 @@ public class MenuController extends Controller {
         Random random = new Random();
         int boardNumber = random.nextInt(3);
         super.gsm.setBoardNr(boardNumber);
-        System.out.println("boardnumber");
-        System.out.println(boardNumber);
+        System.out.println("boardnumber: "+ boardNumber +" "+ super.getPlayers());
+
         super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, String.valueOf(boardNumber));
 
         super.gsm.set(new LobbyState());
