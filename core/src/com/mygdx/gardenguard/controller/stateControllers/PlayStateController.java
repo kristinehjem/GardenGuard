@@ -22,8 +22,8 @@ public class PlayStateController extends Controller {
 
     public PlayStateController(Board board) {
         super();
-        this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
-        //this.isSeekerTurn = false;
+        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
+        this.isSeekerTurn = false;
         this.board = board;
         this.savedPos = false;
         this.rounds = 1;
@@ -102,8 +102,8 @@ public class PlayStateController extends Controller {
             System.out.println("Set hidermodel steps");
             player.setSteps(15);
             super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
-            System.out.println(gsm.getPlayer().getSteps());
-            System.out.println(player.getSteps());
+            //System.out.println(gsm.getPlayer().getSteps());
+            //System.out.println(player.getSteps());
         }
         else if (player instanceof  HiderModel) {
             System.out.println("Set seekermodel steps");
