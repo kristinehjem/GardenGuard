@@ -307,7 +307,7 @@ public class PlayState extends State {
         List<PlayerModel> list_player = super.gsm.getPlayers();
         System.out.println(controller.getPlayers());
         for(PlayerModel hiders : list_player) {
-            if(this.vision.contains(hiders.getPosition()) && hider instanceof SeekerModel) {
+            if(this.vision.contains(hiders.getPosition()) && hider instanceof HiderModel) {
                 sb.begin();
                 sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
                         hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
