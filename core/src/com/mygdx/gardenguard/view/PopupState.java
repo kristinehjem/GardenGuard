@@ -26,10 +26,16 @@ public class PopupState extends State{
     BitmapFont font;
     private PopupController popupController;
     private Viewport viewport;
+    private Texture picture;
 
     public PopupState(String text){
         super();
         this.text = text;
+        this.popupController = new PopupController();
+        create();
+    }
+    public PopupState(Texture texture) {
+        picture = texture;
         this.popupController = new PopupController();
         create();
     }
@@ -53,10 +59,15 @@ public class PopupState extends State{
     protected void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(bg, 30, 170, GardenGuard.WIDTH-60, GardenGuard.HEIGHT-340);
-        font = new BitmapFont();
-        font.getData().setScale(2f);
-        font.draw(sb, text, 100, 600);
+        if (picture != null) {
+            sb.draw(picture, 15, 60, 450, 720);
+        }
+        if (text != null) {
+            sb.draw(bg, 30, 170, GardenGuard.WIDTH-60, GardenGuard.HEIGHT-340);
+            font = new BitmapFont();
+            font.getData().setScale(2f);
+            font.draw(sb, text, 100, 600);
+        }
         stage.act();
         stage.draw();
         sb.end();
@@ -65,9 +76,14 @@ public class PopupState extends State{
 
     @Override
     protected void dispose() {
-        bg.dispose();
+        if (text != null) {
+            bg.dispose();
+            font.dispose();
+        }
+        if (picture != null) {
+            picture.dispose();
+        }
         stage.dispose();
-        font.dispose();
 
     }
 
@@ -83,7 +99,12 @@ public class PopupState extends State{
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button close = new TextButton("Close", mySkin, "small");
         close.setSize(100, 50);
-        close.setPosition(190, 180);
+        if (picture != null) {
+            close.setPosition(190, 10);
+        }
+        else {
+            close.setPosition(190, 180);
+        }
         close.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
