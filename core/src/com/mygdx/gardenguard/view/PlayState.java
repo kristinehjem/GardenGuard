@@ -130,6 +130,7 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         showSteps.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        showSteps.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
         create();
         stage.act();
         stage.draw();
@@ -256,7 +257,7 @@ public class PlayState extends State {
 
     @Override
     public void setFalseSwitch() {
-        System.out.println("gameswitch is false");
+        this.controller.increaseRounds();
         if(this.controller.isSeekerTurn()) {
             this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
             System.out.println("SWITCHED TO HIDER");
@@ -265,7 +266,6 @@ public class PlayState extends State {
             switchState = true;
             System.out.println("GAMEFINISHED");
         }
-        this.controller.increaseRounds();
     }
 
 

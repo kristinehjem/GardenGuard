@@ -26,7 +26,7 @@ public class PlayStateController extends Controller {
         this.isSeekerTurn = false;
         this.board = board;
         this.savedPos = false;
-        this.rounds = 1;
+        this.rounds = 0;
         setPlayerController();
     }
 
@@ -129,7 +129,6 @@ public class PlayStateController extends Controller {
 
     public void increaseRounds() {
         this.rounds++;
-        System.out.println("CHECK_FOR_ROUNDS"+ this.rounds);
     }
 
     @Override
