@@ -23,7 +23,6 @@ public class PlayStateController extends Controller {
         super();
         this.isSeekerTurn = false;
         this.board = board;
-        this.savedPos = false;
         this.rounds = 0;
         setPlayerController();
     }
@@ -62,7 +61,7 @@ public class PlayStateController extends Controller {
     }
 
     public void checkSwitchTurn(){
-        if(isSeekerTurn() && (gsm.getPlayer().getSteps() == 0  || gsm.getPlayer().getIsDone())) {
+        if(isSeekerTurn() && gsm.getPlayer().getSteps() == 0) {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         }
         else if(!isSeekerTurn() && allSavedPos()) {

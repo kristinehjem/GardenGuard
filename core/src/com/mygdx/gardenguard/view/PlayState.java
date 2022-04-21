@@ -230,13 +230,13 @@ public class PlayState extends State {
     public void setFalseSwitch() {
         System.out.println("gameswitch is false");
         this.controller.increaseScore();
+        this.controller.increaseRounds();
         if(this.controller.getRounds() > 5) {
             switchState = true;
             System.out.println("GAMEFINISHED");
         }
         System.out.println("increase rounds");
         System.out.println(controller.getRounds());
-        this.controller.increaseRounds();
         this.controller.setHiderTurn();
     }
 
