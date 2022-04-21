@@ -19,10 +19,14 @@ public class GameOverController extends Controller {
     }
 
     public void handleInput() {
-        super.gsm.getFBIC().DeleteGame(super.gsm.getGamePin());
-        gsm.set(new MenuState());
+        if (super.gsm.getPlayers().size() == 1) {
+            super.gsm.getFBIC().DeleteGame(super.gsm.getGamePin());
+        }
+        else {
+            super.gsm.getFBIC().DeletePlayer(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID());
+        }
+        super.gsm.set(new MenuState());
     }
-
 
     public List<String> getScores() {
         for (PlayerModel player : super.getPlayers()) {

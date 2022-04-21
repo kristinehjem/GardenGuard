@@ -60,16 +60,15 @@ public class MenuController extends Controller {
         setTextureAndPosition();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);
+        super.gsm.getFBIC().checkIfGameExists(gamePin, this);
         super.gsm.getFBIC().CreateGameSwitchInDB(gamePin);
         super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
 
         Random random = new Random();
         int boardNumber = random.nextInt(3);
         super.gsm.setBoardNr(boardNumber);
-        System.out.println("boardnumber: "+ boardNumber +" "+ super.getPlayers());
-
         super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, String.valueOf(boardNumber));
-
+        super.gsm.getFBIC().GetBoardNumber(GameStateManager.getInstance().getDataholder(), gamePin);
         super.gsm.set(new LobbyState());
     }
 

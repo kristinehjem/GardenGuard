@@ -21,6 +21,10 @@ import java.util.List;
 public class AndroidInterFaceClass implements FireBaseInterface {
     FirebaseDatabase database;
     DatabaseReference gameRef;
+    ValueEventListener gameRefListener;
+    ValueEventListener gameSwitchListener;
+    ValueEventListener boardNrListener;
+    ValueEventListener pinExistListener;
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
@@ -32,14 +36,14 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void SetOnValueChangedListener(final DataHolderClass dataholder, String gamePin) {
         //now we get notified when the object in gameRef changes
-        gameRef.child(gamePin).addValueEventListener(new ValueEventListener() {
+        this.gameRefListener = new ValueEventListener() {
             //read from the database
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<PlayerModel> players = new ArrayList<>();
                 //iterating through all the nodes
                 for (DataSnapshot snap : snapshot.child("players").getChildren()) {
-                    if ( (Boolean) snap.child("isSeeker").getValue()) {
+                    if ((boolean) snap.child("isSeeker").getValue()) {
                         SeekerModel player = snap.getValue(SeekerModel.class);
                         players.add(player);
                     } else {
@@ -49,44 +53,49 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 }
                 dataholder.updatePlayers(players);
             }
-                //Log.d(TAG, "Value is: " + value);
+            //Log.d(TAG, "Value is: " + value);
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        };
+        gameRef.child(gamePin).addValueEventListener(this.gameRefListener);
     }
 
     //function to set event listener to different objects in the database
     @Override
     public void SetOnGameSwitchChangedListener(final DataHolderClass dataholder, String gamePin) {
-        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(new ValueEventListener() {
+        this.gameSwitchListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if ((Boolean) snapshot.getValue() == true) {
-                    dataholder.updateGameSwitch();
-                }
-                else if ((Boolean) snapshot.getValue() == false){
-                    dataholder.ifFalseSwitch();
-                }
-            }
+                if (snapshot.getValue() != null) {
+                    if ((boolean) snapshot.getValue() == true) {
+                        dataholder.updateGameSwitch();
+                    }
+                    else if (!((boolean) snapshot.getValue())){
+                        dataholder.ifFalseSwitch();
+                    }
+            }}
             //Log.d(TAG, "Value is: " + value);
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        };
+        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(this.gameSwitchListener);
     }
 
     @Override
     public void GetBoardNumber(DataHolderClass dataholder, String gamePin) {
-        gameRef.child(gamePin).child("boardNr").addValueEventListener(new ValueEventListener() {
+        this.boardNrListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataholder.updateBoardNr((String) snapshot.getValue());
+                if (snapshot.getValue() != null) {
+                    dataholder.updateBoardNr((String) snapshot.getValue());
+                }
             }
             //Log.d(TAG, "Value is: " + value);
             @Override
@@ -94,10 +103,17 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        };
+        gameRef.child(gamePin).child("boardNr").addValueEventListener(this.boardNrListener);
     }
 
     public void DeleteGame(String gamePin) {
+        gameRef.removeEventListener(this.boardNrListener);
+        gameRef.removeEventListener(this.gameSwitchListener);
+        gameRef.removeEventListener(this.pinExistListener);
+        gameRef.removeEventListener(this.gameRefListener);
+        gameRef.child(gamePin).child("gameSwitch").removeValue();
+        gameRef.child(gamePin).child("boardNr");
         gameRef.child(gamePin).removeValue();
     }
 
@@ -105,6 +121,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     public void DeletePlayer(String gamePin, String playerID) {
         gameRef.child(gamePin).child("players").child(playerID).removeValue();
     }
+
 
     @Override
     public String CreateGameInDB() {
@@ -167,7 +184,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
     @Override
     public void checkIfGameExists(String gamePin, MenuController MC) {
-        gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        this.pinExistListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.child(gamePin).exists()) {
@@ -180,13 +197,13 @@ public class AndroidInterFaceClass implements FireBaseInterface {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+        gameRef.addListenerForSingleValueEvent(this.pinExistListener);
     }
 
     @Override
     public void getScores(String gamePin) {
         System.out.println(gameRef.child(gamePin).child("players").get());
         //gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
-
     }
 }
