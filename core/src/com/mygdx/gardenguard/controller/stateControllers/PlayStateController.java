@@ -87,6 +87,7 @@ public class PlayStateController extends Controller {
         else if (player instanceof HiderModel) {
             player.setSteps(18);
             super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+            super.gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), player.getPlayerID(), false);
         }
     }
 
@@ -96,8 +97,8 @@ public class PlayStateController extends Controller {
 
     public void increaseScore() {
         //player gets 20 points if it is not found
-        if (!playerController.getPlayer().getIsFound()) {
-            playerController.getPlayer().setScore(playerController.getPlayer().getScore() + 20);
+        if (!getPlayer().getIsFound() && getPlayer() instanceof HiderModel) {
+            getPlayer().setScore(getPlayer().getScore() + 20);
         }
     }
 

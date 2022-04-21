@@ -94,9 +94,11 @@ public class PlayState extends State {
     protected void update(float dt) {
         if (super.gsm.getPlayer() instanceof SeekerModel) {
             this.controller.checkSwitchTurn();
-            SeekerController seekerController = (SeekerController) this.controller.getPlayerController();
-            seekerController.updateView();
-            seekerController.checkForPlayers();
+            if (this.controller.isSeekerTurn()) {
+                SeekerController seekerController = (SeekerController) this.controller.getPlayerController();
+                seekerController.updateView();
+                seekerController.checkForPlayers();
+            }
         }
     }
 
@@ -278,12 +280,12 @@ public class PlayState extends State {
 
     private void showOtherPlayers(SpriteBatch sb){
         //Renders hiders if they are found
-        List<PlayerModel> list_player = super.gsm.getPlayers();
-        for(PlayerModel hider : list_player) {
-            if(hider.getIsFound()) {
+        for (PlayerModel player: getController().getPlayers()) {
+            if(player.getIsFound() && player instanceof HiderModel) {
+                System.out.println("PLAYER_FOUND");
                 sb.begin();
-                sb.draw(new Texture(hider.getTextureFile()), hider.getPosition().x * tileWidth,
-                        hider.getPosition().y * tileHeight, tileWidth, tileHeight);
+                sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,
+                        player.getPosition().y * tileHeight, tileWidth, tileHeight);
                 sb.end();
             }
         }
