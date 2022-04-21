@@ -113,7 +113,7 @@ public class MenuState extends State {
             }
         });
         tutorial.setSize(GardenGuard.WIDTH/2, GardenGuard.HEIGHT/12);
-        tutorial.setPosition((GardenGuard.WIDTH-GardenGuard.WIDTH/3)/2, GardenGuard.HEIGHT/4);
+        tutorial.setPosition((GardenGuard.WIDTH-GardenGuard.WIDTH/2)/2, GardenGuard.HEIGHT/6);
         tutorial.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
