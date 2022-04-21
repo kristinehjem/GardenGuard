@@ -57,9 +57,6 @@ public class PlayState extends State {
     private Viewport viewport;
     private Stage stage;
     private boolean switchState;
-    //Dummy test to find other players;
-    private PlayerModel hider;
-    private Rectangle vision;
 
     // For rendering the seeker view
     private Texture light;
@@ -109,6 +106,8 @@ public class PlayState extends State {
 
     @Override
     protected void render(SpriteBatch sb) {
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
