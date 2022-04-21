@@ -98,7 +98,7 @@ public class PlayStateController extends Controller {
         //playerController.getPlayer().setIsFound(gsm.getPlayer().getIsFound());
         System.out.println("GIR_POENG: "+ super.gsm.getPlayers());
         for(PlayerModel player : super.getPlayers()) {
-            if(player.getPlayerID().equals(super.gsm.getPlayer().getPlayerID()) && getPlayer() instanceof HiderModel) {
+            if(player.getPlayerID().equals(super.gsm.getPlayer().getPlayerID()) && getPlayer() instanceof HiderModel && !player.getIsFound()) {
                 getPlayer().setScore(getPlayer().getScore() + 20);
                 super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), getPlayer().getScore());
                 super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), false);
