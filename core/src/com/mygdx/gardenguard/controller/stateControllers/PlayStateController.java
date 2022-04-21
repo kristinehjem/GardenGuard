@@ -87,7 +87,6 @@ public class PlayStateController extends Controller {
         else if (player instanceof HiderModel) {
             player.setSteps(18);
             super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
-            super.gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), player.getPlayerID(), false);
         }
     }
 
@@ -96,10 +95,16 @@ public class PlayStateController extends Controller {
     }
 
     public void increaseScore() {
-        //player gets 20 points if it is not found
-        if (!getPlayer().getIsFound() && getPlayer() instanceof HiderModel) {
-            getPlayer().setScore(getPlayer().getScore() + 20);
+        //playerController.getPlayer().setIsFound(gsm.getPlayer().getIsFound());
+        System.out.println("GIR_POENG: "+ super.gsm.getPlayers());
+        for(PlayerModel player : super.getPlayers()) {
+            if(player.getPlayerID().equals(super.gsm.getPlayer().getPlayerID()) && getPlayer() instanceof HiderModel && !player.getIsFound()) {
+                getPlayer().setScore(getPlayer().getScore() + 20);
+                super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), getPlayer().getScore());
+                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), false);
+            }
         }
+        // player gets 20 points if it is not found
     }
 
     public void setSeekerTurn() {
@@ -109,6 +114,8 @@ public class PlayStateController extends Controller {
 
     public void setHiderTurn() {
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        increaseScore();
+        increaseRounds();
         resetSteps(gsm.getPlayer());
         isSeekerTurn = false;
     }
