@@ -1,17 +1,9 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
-import com.mygdx.gardenguard.API.Player;
-import com.mygdx.gardenguard.model.player.HiderModel;
-import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
-import com.mygdx.gardenguard.view.GameOverState;
-import com.mygdx.gardenguard.view.GameStateManager;
 import com.mygdx.gardenguard.view.MenuState;
 import com.mygdx.gardenguard.view.PlayState;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import com.mygdx.gardenguard.view.PopupState;
 
 public class LobbyController extends Controller {
 
@@ -20,14 +12,16 @@ public class LobbyController extends Controller {
     }
 
     public void handleStart() {
-        super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
-        super.gsm.set(new PlayState());
-        /*if (this.enoughPlayers()) {
+        //could be used for testing with only one player:
+        /*super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+        super.gsm.set(new PlayState());*/
+        if (this.enoughPlayers()) {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
             super.gsm.set(new PlayState());
         } else {
+            super.gsm.push(new PopupState("Not enough players \n Please try again \n when you are more players"));
             System.err.println("not enough players");
-        }*/
+        }
     }
 
     public void handleExit() {

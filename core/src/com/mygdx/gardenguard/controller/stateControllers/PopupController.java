@@ -9,6 +9,6 @@ public class PopupController extends Controller {
     }
 
     public void handleClose(){
-        super.gsm.set(new MenuState());
+        super.gsm.pop();
     }
 }
