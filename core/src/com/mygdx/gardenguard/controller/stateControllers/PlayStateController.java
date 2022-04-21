@@ -23,7 +23,6 @@ public class PlayStateController extends Controller {
         super();
         this.isSeekerTurn = false;
         this.board = board;
-        this.savedPos = false;
         this.rounds = 0;
         setPlayerController();
     }
