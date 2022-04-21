@@ -73,6 +73,10 @@ public class MenuController extends Controller {
         super.gsm.set(new LobbyState());
     }
 
+    public void handleTutorial() {
+        super.gsm.push(new PopupState("Tutorial", new Texture("grass.png")));
+    }
+
     private void setTextureAndPosition() {
         int numOfPlayers = super.getPlayers().size();
         super.gsm.getPlayer().setTexture("player" + String.valueOf(numOfPlayers) + ".png");

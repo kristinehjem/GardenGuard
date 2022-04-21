@@ -73,6 +73,7 @@ public class MenuState extends State {
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button join = new TextButton("Join game", mySkin, "small");
         Button create = new TextButton("Create game", mySkin, "small");
+        Button tutorial = new TextButton("Tutorial", mySkin, "small");
         join.setSize(GardenGuard.WIDTH/3, GardenGuard.HEIGHT/12);
         join.setPosition((GardenGuard.WIDTH-GardenGuard.WIDTH/3)/2, GardenGuard.HEIGHT/2);
         join.addListener(new InputListener() {
@@ -111,8 +112,18 @@ public class MenuState extends State {
                 return true;
             }
         });
+        tutorial.setSize(GardenGuard.WIDTH/2, GardenGuard.HEIGHT/12);
+        tutorial.setPosition((GardenGuard.WIDTH-GardenGuard.WIDTH/3)/2, GardenGuard.HEIGHT/4);
+        tutorial.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                menuController.handleTutorial();
+                return true;
+            }
+        });
         stage.addActor(join);
         stage.addActor(create);
+        stage.addActor(tutorial);
     }
 
     @Override

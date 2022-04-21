@@ -26,12 +26,16 @@ public class PopupState extends State{
     BitmapFont font;
     private PopupController popupController;
     private Viewport viewport;
+    private Texture picture;
 
     public PopupState(String text){
         super();
         this.text = text;
         this.popupController = new PopupController();
         create();
+    }
+    public PopupState(String text, Texture texture) {
+        picture = texture;
     }
 
     @Override
@@ -57,6 +61,9 @@ public class PopupState extends State{
         font = new BitmapFont();
         font.getData().setScale(2f);
         font.draw(sb, text, 100, 600);
+        if (picture != null) {
+            sb.draw(picture, 20, 20);
+        }
         stage.act();
         stage.draw();
         sb.end();
