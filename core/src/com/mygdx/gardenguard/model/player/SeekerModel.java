@@ -9,8 +9,8 @@ public class SeekerModel extends PlayerModel {
 
     public SeekerModel(Vector2 position) {
         super(position);
-        this.setSteps(10);
         super.setIsSeeker(true);
+        super.setIsFound(false);
     }
 
     //ikke slett, trenger til databasen

@@ -21,4 +21,9 @@ public class HiderController extends PlayerController {
     }
 
     protected void checkForPlayers() {}
+
+    public void foundByHider(HiderModel hider) {
+        hider.setIsFound(true);
+        gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
+    }
 }

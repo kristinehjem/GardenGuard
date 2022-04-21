@@ -15,18 +15,15 @@ import java.util.List;
 public class PlayStateController extends Controller {
 
     private boolean isSeekerTurn;
-    private boolean savedPos;
     private PlayerController playerController;
     private Board board;
     private int rounds;
 
     public PlayStateController(Board board) {
         super();
-        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
         this.isSeekerTurn = false;
         this.board = board;
-        this.savedPos = false;
-        this.rounds = 1;
+        this.rounds = 0;
         setPlayerController();
     }
 
@@ -36,6 +33,7 @@ public class PlayStateController extends Controller {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         } else if (super.gsm.getPlayer() instanceof HiderModel) {
             this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), this.board);
+            increaseRounds();
         } else {
             System.err.print("Player is neither instance of SeekerModel nor HiderModel");
         }
@@ -49,10 +47,9 @@ public class PlayStateController extends Controller {
         return isSeekerTurn;
     }
 
-    public void setSeekerTurn(boolean seekerTurn) { isSeekerTurn = seekerTurn; }
-
     public boolean allSavedPos() {
         for (PlayerModel player : super.getPlayers()) {
+            //returns false if player is not done and is a hider
             if (!player.getIsDone() && !player.getIsSeeker()){
                 return false;
             }
@@ -61,32 +58,18 @@ public class PlayStateController extends Controller {
     }
 
     public void handleSavePosition() {
-        this.savedPos = true;
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
+        super.gsm.getPlayer().setSteps(0);
+        super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), super.gsm.getPlayer().getSteps());
     }
 
     public void checkSwitchTurn(){
-        if (isSeekerTurn() && gsm.getPlayer().getIsSeeker() && gsm.getPlayer().getSteps() == 0){
-            resetSteps();
-            System.out.println("CHECK3");
+        if(isSeekerTurn() && gsm.getPlayer().getSteps() == 0) {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
-            super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
         }
-        else {
-            //forslag til kall til databasen:
-            //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
-             // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
-            if (allSavedPos()) {
-                resetSteps();
-                System.out.println("CHECK2");
-                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
-                super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-            }
+        else if(!isSeekerTurn() && allSavedPos()) {
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
         }
-    }
-
-    public void handleRounds() {
-        resetSteps();
     }
 
     public List<String> calculateScores(){
@@ -96,21 +79,14 @@ public class PlayStateController extends Controller {
         return scores;
     }
 
-    public boolean getSavedPos() {
-        return savedPos;
-    }
-
-
-    private void resetSteps() {
-        for (PlayerModel player : super.getPlayers()) {
-            if(player instanceof SeekerModel) {
-                System.out.println("Set hidermodel steps");
-                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), 15);
-            }
-            else if (player instanceof  HiderModel) {
-                System.out.println("Set seekermodel steps");
-                gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), 18);
-            }
+    private void resetSteps(PlayerModel player) {
+        if(player instanceof SeekerModel) {
+            player.setSteps(10);
+            super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+        }
+        else if (player instanceof HiderModel) {
+            player.setSteps(18);
+            super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
         }
     }
 
@@ -118,15 +94,44 @@ public class PlayStateController extends Controller {
         return this.rounds;
     }
 
+    public void increaseScore() {
+        //playerController.getPlayer().setIsFound(gsm.getPlayer().getIsFound());
+        System.out.println("GIR_POENG: "+ super.gsm.getPlayers());
+        for(PlayerModel player : super.getPlayers()) {
+            if(player.getPlayerID().equals(super.gsm.getPlayer().getPlayerID()) && getPlayer() instanceof HiderModel && !player.getIsFound()) {
+                getPlayer().setScore(getPlayer().getScore() + 20);
+                super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), getPlayer().getScore());
+                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), false);
+            }
+        }
+        // player gets 20 points if it is not found
+    }
+
+    public void setSeekerTurn() {
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        isSeekerTurn = true;
+    }
+
+    public void setHiderTurn() {
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        increaseScore();
+        increaseRounds();
+        resetSteps(gsm.getPlayer());
+        isSeekerTurn = false;
+    }
+
     public void increaseRounds() {
         this.rounds++;
-        System.out.println("CHECK1ROUNDS");
     }
 
     @Override
     public void pushNewState() {
-        //The same as endGame
-        List<String> scores = calculateScores();
-        gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
+        gsm.set(new GameOverState());
     }
+
+    public PlayerController getPlayerController() {
+        return this.playerController;
+    }
+
+
 }

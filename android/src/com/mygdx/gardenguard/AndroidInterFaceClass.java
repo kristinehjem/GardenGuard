@@ -43,7 +43,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 List<PlayerModel> players = new ArrayList<>();
                 //iterating through all the nodes
                 for (DataSnapshot snap : snapshot.child("players").getChildren()) {
-                    if (snap.child("isSeeker").getValue() == "true") {
+                    if ((boolean) snap.child("isSeeker").getValue()) {
                         SeekerModel player = snap.getValue(SeekerModel.class);
                         players.add(player);
                     } else {
@@ -77,8 +77,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                     else if (!((boolean) snapshot.getValue())){
                         dataholder.ifFalseSwitch();
                     }
-                }
-            }
+            }}
             //Log.d(TAG, "Value is: " + value);
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
