@@ -49,7 +49,6 @@ public class PlayState extends State {
     private TextureRegionDrawable downDrawable = new TextureRegionDrawable(downText);
     private TextureRegionDrawable leftDrawable = new TextureRegionDrawable(leftText);
     private TextureRegionDrawable rightDrawable = new TextureRegionDrawable(rightText);
-    //private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
     private BitmapFont showSteps;
 
@@ -88,7 +87,6 @@ public class PlayState extends State {
 
     @Override
     public Controller getController() {
-        //return this.playerController;
         return controller;
     }
 
@@ -99,7 +97,9 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-        this.controller.checkSwitchTurn();
+        if (super.gsm.getPlayer() instanceof SeekerModel) {
+            this.controller.checkSwitchTurn();
+        }
         this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
     }
 
@@ -221,48 +221,23 @@ public class PlayState extends State {
         stage.addActor(left);
     }
 
-    /*@Override
-    public void setGameSwitch(){
-        this.gameSwitch = true;
-        viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
-        stage = new Stage(viewport);
-        Gdx.input.setInputProcessor(stage);
-        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        Button endGame = new TextButton("Hide here", mySkin, "small");
-        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
-        endGame.setSize(GardenGuard.WIDTH / 6f, GardenGuard.HEIGHT/20f);
-        endGame.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                controller.handleSavePosition();
-                return true;
-            }
-        });
-        if (super.gsm.getPlayer() instanceof HiderModel) {
-            stage.addActor(endGame);
-        }
-    }*/
-
     @Override
     public void setGameSwitch(){
         System.out.println("CHECK1SWITCH");
-        if(!this.controller.isSeekerTurn()) {
-            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
-        }
+        this.controller.setSeekerTurn();
     }
 
     @Override
     public void setFalseSwitch() {
         System.out.println("gameswitch is false");
-        if(this.controller.isSeekerTurn()) {
-            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
-            System.out.println("SWITCHED TO HIDER");
-        }
+        this.controller.increaseScore();
         if(this.controller.getRounds() > 5) {
+            //this.controller.pushNewState(); ?? er ikke det lettere
             switchState = true;
             System.out.println("GAMEFINISHED");
         }
         this.controller.increaseRounds();
+        this.controller.setHiderTurn();
     }
 
 

@@ -15,17 +15,14 @@ import java.util.List;
 public class PlayStateController extends Controller {
 
     private boolean isSeekerTurn;
-    private boolean savedPos;
     private PlayerController playerController;
     private Board board;
     private int rounds;
 
     public PlayStateController(Board board) {
         super();
-        //this.isSeekerTurn = true; //Denne skal slettes til fordel for linja under
         this.isSeekerTurn = false;
         this.board = board;
-        this.savedPos = false;
         this.rounds = 1;
         setPlayerController();
     }
@@ -49,10 +46,9 @@ public class PlayStateController extends Controller {
         return isSeekerTurn;
     }
 
-    public void setSeekerTurn(boolean seekerTurn) { isSeekerTurn = seekerTurn; }
-
     public boolean allSavedPos() {
         for (PlayerModel player : super.getPlayers()) {
+            //returns false if player is not done and is a hider
             if (!player.getIsDone() && !player.getIsSeeker()){
                 return false;
             }
@@ -61,33 +57,15 @@ public class PlayStateController extends Controller {
     }
 
     public void handleSavePosition() {
-        this.savedPos = true;
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
     }
 
     public void checkSwitchTurn(){
-        if (isSeekerTurn() && ((gsm.getPlayer().getSteps() == 0 && gsm.getPlayer() instanceof SeekerModel)
-                || (super.gsm.getPlayer().getIsDone() && gsm.getPlayer() instanceof HiderModel))){
-            resetSteps(gsm.getPlayer());
-            if(gsm.getPlayer().getIsSeeker()) {
-                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
-                System.out.println("CHECK3");
-                handleRounds();
-            }
-            super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-
+        if(isSeekerTurn() && (gsm.getPlayer().getSteps() == 0  || gsm.getPlayer().getIsDone())) {
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         }
-        else if(allSavedPos() && !isSeekerTurn()){
-            if(playerController.getPlayer().getIsFound()) {
-                super.gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-            }
-            //forslag til kall til databasen:
-            //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
-             // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
-            System.out.println("CHECK2");
-            if(gsm.getPlayer().getIsSeeker()) {
-                super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
-            }
+        else if(!isSeekerTurn() && allSavedPos()) {
+            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
         }
     }
 
@@ -98,23 +76,15 @@ public class PlayStateController extends Controller {
         return scores;
     }
 
-    public boolean getSavedPos() {
-        return savedPos;
-    }
-
 
     private void resetSteps(PlayerModel player) {
         if(player instanceof SeekerModel) {
             player.setSteps(10);
             super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
-            //System.out.println(gsm.getPlayer().getSteps());
-            //System.out.println(player.getSteps());
         }
-        else if (player instanceof  HiderModel) {
+        else if (player instanceof HiderModel) {
             player.setSteps(18);
             super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
-            //System.out.println(gsm.getPlayer().getSteps());
-            //System.out.println(player.getSteps());
         }
     }
 
@@ -122,9 +92,23 @@ public class PlayStateController extends Controller {
         return this.rounds;
     }
 
-    public void handleRounds() {
-        if (playerController.getPlayer().getIsFound()) { return;}
-        playerController.getPlayer().setScore(playerController.getPlayer().getScore() + 20);
+    public void increaseScore() {
+        //player gets 20 points if it is not found
+        if (!playerController.getPlayer().getIsFound()) {
+            playerController.getPlayer().setScore(playerController.getPlayer().getScore() + 20);
+        }
+    }
+
+    public void setSeekerTurn() {
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        resetSteps(gsm.getPlayer());
+        isSeekerTurn = true;
+    }
+
+    public void setHiderTurn() {
+        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        resetSteps(gsm.getPlayer());
+        isSeekerTurn = false;
     }
 
     public void increaseRounds() {
