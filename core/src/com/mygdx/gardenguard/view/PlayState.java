@@ -54,7 +54,6 @@ public class PlayState extends State {
 
     private Viewport viewport;
     private Stage stage;
-    private boolean switchState;
     //Dummy test to find other players;
     private PlayerModel hider;
     private Rectangle vision;
@@ -69,7 +68,6 @@ public class PlayState extends State {
         super();
         this.board = new Board(super.gsm.getBoardNr());
         this.controller = new PlayStateController(this.board);
-        this.switchState = false;
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
@@ -130,14 +128,7 @@ public class PlayState extends State {
         create();
         stage.act();
         stage.draw();
-        if (switchState) {
-            this.controller.pushNewState();
-        }
         sb.end();
-        /*if (gameSwitch) {
-            this.controller.pushNewState();
-        }*/
-
     }
 
 
@@ -229,12 +220,9 @@ public class PlayState extends State {
 
     @Override
     public void setFalseSwitch() {
-        System.out.println("gameswitch is false");
         this.controller.increaseScore();
         if(this.controller.getRounds() > 5) {
-            //this.controller.pushNewState(); ?? er ikke det lettere
-            switchState = true;
-            System.out.println("GAMEFINISHED");
+            this.controller.pushNewState();
         }
         this.controller.increaseRounds();
         this.controller.setHiderTurn();
