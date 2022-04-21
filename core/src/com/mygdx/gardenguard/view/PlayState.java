@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
+import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.PlayStateController;
 import com.mygdx.gardenguard.model.board.Board;
@@ -74,7 +75,6 @@ public class PlayState extends State {
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
-        this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
         //FONT TO DRAW
         this.showSteps = new BitmapFont();
         showSteps.setColor(Color.YELLOW);
@@ -100,7 +100,11 @@ public class PlayState extends State {
     @Override
     protected void update(float dt) {
         this.controller.checkSwitchTurn();
-        this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
+        if(gsm.getPlayer() instanceof SeekerModel) {
+            SeekerController seekerController = (SeekerController) this.controller.getPlayerController();
+            seekerController.updateView();
+            seekerController.checkForPlayers();
+        }
     }
 
     @Override
@@ -306,19 +310,13 @@ public class PlayState extends State {
     private void showOtherPlayers(SpriteBatch sb){
         //Renders hiders if they are found
         List<PlayerModel> list_player = super.gsm.getPlayers();
-        System.out.println(controller.getPlayers());
-        for(PlayerModel hiders : list_player) {
-            if(this.vision.contains(hiders.getPosition()) && hiders instanceof HiderModel) {
-                hiders.setIsFound(true);
-                gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
-            }
-            if(hiders.getIsFound()) {
+        for(PlayerModel hider : list_player) {
+            if(hider.getIsFound()) {
                 sb.begin();
-                sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
-                        hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
+                sb.draw(new Texture(hider.getTextureFile()), hider.getPosition().x * tileWidth,
+                        hider.getPosition().y * tileHeight, tileWidth, tileHeight);
                 sb.end();
             }
         }
     }
-
 }

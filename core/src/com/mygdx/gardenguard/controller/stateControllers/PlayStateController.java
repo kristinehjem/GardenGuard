@@ -138,4 +138,10 @@ public class PlayStateController extends Controller {
         List<String> scores = calculateScores();
         gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
     }
+
+    public PlayerController getPlayerController() {
+        return this.playerController;
+    }
+
+
 }
