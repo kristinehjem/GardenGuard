@@ -45,6 +45,7 @@ public class GameOverState extends State {
         titleText.getData().setScale(4,4);
         scoreText.getData().setScale(3,3);
         players = controller.getSortedPlayers();
+        create();
     }
 
     @Override
@@ -66,21 +67,21 @@ public class GameOverState extends State {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        create();
-        titleText.draw(sb, "Game over", cam.position.x - ((float)GardenGuard.WIDTH / 4) + 20, 2 * (cam.position.y - titleText.getLineHeight()/2));
+        titleText.draw(sb, "Game over", (GardenGuard.WIDTH - 260)/2, 2 * (cam.position.y - titleText.getLineHeight()/2));
         int i = 0;
         for (String score : scores) {
-            float x_value = (float) (GardenGuard.WIDTH) / 2 - 100;
-            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * 2* i++;
+            float x_value = (float) (GardenGuard.WIDTH) / 2 - 150;
+            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * i;
             scoreText.draw(sb, score, x_value, y_value);
+            i++;
         }
         int j = 0;
         for (PlayerModel player: this.players) {
             float x_value = (float) (GardenGuard.WIDTH) / 2 - 230;
             //TODO: styling, blir litt rar høyde
-            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * j++;
+            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * j-50;
             sb.draw(new Texture(player.getTextureFile()), x_value, y_value, 60, 60);
-            j += 1;
+            j++;
         }
         stage.act();
         stage.draw();
