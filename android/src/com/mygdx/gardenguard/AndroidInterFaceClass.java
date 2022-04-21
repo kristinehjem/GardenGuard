@@ -36,7 +36,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void SetOnValueChangedListener(final DataHolderClass dataholder, String gamePin) {
         //now we get notified when the object in gameRef changes
-        gameRefListener = new ValueEventListener() {
+        this.gameRefListener = new ValueEventListener() {
             //read from the database
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -44,17 +44,12 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //iterating through all the nodes
                 for (DataSnapshot snap : snapshot.child("players").getChildren()) {
                     if (snap.child("isSeeker").getValue() == "true") {
-                        System.out.println("er en seeker");
                         SeekerModel player = snap.getValue(SeekerModel.class);
                         players.add(player);
                     } else {
-                        System.out.println("er en hider");
                         HiderModel player = snap.getValue(HiderModel.class);
                         players.add(player);
                     }
-                }
-                for (PlayerModel player: players) {
-                    System.out.println(player.getIsSeeker());
                 }
                 dataholder.updatePlayers(players);
             }
@@ -66,21 +61,22 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
         };
-        gameRef.child(gamePin).addValueEventListener(gameRefListener);
+        gameRef.child(gamePin).addValueEventListener(this.gameRefListener);
     }
 
     //function to set event listener to different objects in the database
     @Override
     public void SetOnGameSwitchChangedListener(final DataHolderClass dataholder, String gamePin) {
-        gameSwitchListener = new ValueEventListener() {
+        this.gameSwitchListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if ((Boolean) snapshot.getValue() == true) {
-                    System.out.println("value of gameswitch is true");
-                    dataholder.updateGameSwitch();
-                }
-                else if (!((Boolean) snapshot.getValue())){
-                    dataholder.ifFalseSwitch();
+                if (snapshot.getValue() != null) {
+                    if ((boolean) snapshot.getValue() == true) {
+                        dataholder.updateGameSwitch();
+                    }
+                    else if (!((boolean) snapshot.getValue())){
+                        dataholder.ifFalseSwitch();
+                    }
                 }
             }
             //Log.d(TAG, "Value is: " + value);
@@ -90,15 +86,17 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
         };
-        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(gameSwitchListener);
+        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(this.gameSwitchListener);
     }
 
     @Override
     public void GetBoardNumber(DataHolderClass dataholder, String gamePin) {
-        boardNrListener = new ValueEventListener() {
+        this.boardNrListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataholder.updateBoardNr((String) snapshot.getValue());
+                if (snapshot.getValue() != null) {
+                    dataholder.updateBoardNr((String) snapshot.getValue());
+                }
             }
             //Log.d(TAG, "Value is: " + value);
             @Override
@@ -107,14 +105,14 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
         };
-        gameRef.child(gamePin).child("boardNr").addValueEventListener(boardNrListener);
+        gameRef.child(gamePin).child("boardNr").addValueEventListener(this.boardNrListener);
     }
 
     public void DeleteGame(String gamePin) {
-        gameRef.removeEventListener(gameRefListener);
-        gameRef.removeEventListener(boardNrListener);
-        gameRef.removeEventListener(gameSwitchListener);
-        gameRef.removeEventListener(pinExistListener);
+        gameRef.removeEventListener(this.boardNrListener);
+        gameRef.removeEventListener(this.gameSwitchListener);
+        gameRef.removeEventListener(this.pinExistListener);
+        gameRef.removeEventListener(this.gameRefListener);
         gameRef.child(gamePin).child("gameSwitch").removeValue();
         gameRef.child(gamePin).child("boardNr");
         gameRef.child(gamePin).removeValue();
@@ -187,7 +185,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
     @Override
     public void checkIfGameExists(String gamePin, MenuController MC) {
-        pinExistListener = new ValueEventListener() {
+        this.pinExistListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.child(gamePin).exists()) {
@@ -201,13 +199,12 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
             }
         };
-        gameRef.addListenerForSingleValueEvent(pinExistListener);
+        gameRef.addListenerForSingleValueEvent(this.pinExistListener);
     }
 
     @Override
     public void getScores(String gamePin) {
         System.out.println(gameRef.child(gamePin).child("players").get());
         //gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
-
     }
 }

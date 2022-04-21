@@ -28,7 +28,6 @@ public class GameOverController extends Controller {
         super.gsm.set(new MenuState());
     }
 
-
     public List<String> getScores() {
         for (PlayerModel player : super.getPlayers()) {
             for (int i = 0; i < sortedPlayers.size(); i++) {
