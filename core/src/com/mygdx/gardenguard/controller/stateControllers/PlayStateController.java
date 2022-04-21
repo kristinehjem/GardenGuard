@@ -69,14 +69,18 @@ public class PlayStateController extends Controller {
         if (isSeekerTurn() && ((gsm.getPlayer().getSteps() == 0 && gsm.getPlayer() instanceof SeekerModel)
                 || (super.gsm.getPlayer().getIsDone() && gsm.getPlayer() instanceof HiderModel))){
             resetSteps(gsm.getPlayer());
-            System.out.println("CHECK3");
             if(gsm.getPlayer().getIsSeeker()) {
                 super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
+                System.out.println("CHECK3");
+                handleRounds();
             }
             super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
 
         }
         else if(allSavedPos() && !isSeekerTurn()){
+            if(playerController.getPlayer().isFound()) {
+                super.gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+            }
             //forslag til kall til databasen:
             //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
              // TODO: Men denne lagres vel bare lokalt? At hver player har en egen numOfHidersDone? Sånn at den vil aldri kunne overstige 1?
@@ -116,6 +120,11 @@ public class PlayStateController extends Controller {
 
     public int getRounds() {
         return this.rounds;
+    }
+
+    public void handleRounds() {
+        if (playerController.getPlayer().isFound()) { return;}
+        playerController.getPlayer().setScore(playerController.getPlayer().getScore() + 20);
     }
 
     public void increaseRounds() {

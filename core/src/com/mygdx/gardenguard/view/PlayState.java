@@ -304,10 +304,15 @@ public class PlayState extends State {
     }
 
     private void showOtherPlayers(SpriteBatch sb){
+        //Renders hiders if they are found
         List<PlayerModel> list_player = super.gsm.getPlayers();
         System.out.println(controller.getPlayers());
         for(PlayerModel hiders : list_player) {
-            if(this.vision.contains(hiders.getPosition()) && hider instanceof HiderModel) {
+            if(this.vision.contains(hiders.getPosition()) && hiders instanceof HiderModel) {
+                hiders.setIsFound(true);
+                gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
+            }
+            if(hiders.isFound()) {
                 sb.begin();
                 sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
                         hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
