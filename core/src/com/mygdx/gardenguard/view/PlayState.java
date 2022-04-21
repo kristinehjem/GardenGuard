@@ -117,7 +117,7 @@ public class PlayState extends State {
                 sb.setColor(Color.GRAY);
             }
             else {
-                sb.setColor(Color.CLEAR);
+                sb.setColor(Color.WHITE);
             }
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             sb.setProjectionMatrix(cam.combined);
