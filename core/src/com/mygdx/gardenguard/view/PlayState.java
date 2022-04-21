@@ -233,10 +233,7 @@ public class PlayState extends State {
         this.controller.increaseRounds();
         if(this.controller.getRounds() > 5) {
             switchState = true;
-            System.out.println("GAMEFINISHED");
         }
-        System.out.println("increase rounds");
-        System.out.println(controller.getRounds());
         this.controller.setHiderTurn();
     }
 
