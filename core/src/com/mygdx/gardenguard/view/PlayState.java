@@ -312,7 +312,7 @@ public class PlayState extends State {
                 hiders.setIsFound(true);
                 gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
             }
-            if(hiders.isFound()) {
+            if(hiders.getIsFound()) {
                 sb.begin();
                 sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
                         hiders.getPosition().y * tileHeight, tileWidth, tileHeight);

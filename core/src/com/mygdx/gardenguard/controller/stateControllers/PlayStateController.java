@@ -78,7 +78,7 @@ public class PlayStateController extends Controller {
 
         }
         else if(allSavedPos() && !isSeekerTurn()){
-            if(playerController.getPlayer().isFound()) {
+            if(playerController.getPlayer().getIsFound()) {
                 super.gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
             }
             //forslag til kall til databasen:
@@ -123,7 +123,7 @@ public class PlayStateController extends Controller {
     }
 
     public void handleRounds() {
-        if (playerController.getPlayer().isFound()) { return;}
+        if (playerController.getPlayer().getIsFound()) { return;}
         playerController.getPlayer().setScore(playerController.getPlayer().getScore() + 20);
     }
 

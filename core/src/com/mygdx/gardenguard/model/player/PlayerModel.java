@@ -85,13 +85,12 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         return this.getScore() - other.getScore();
     }
 
-    public boolean isFound() {
+    public boolean getIsFound() {
         return isFound;
     }
     public void setIsFound(boolean isFounded) {
         this.isFound = isFounded;
     }
-
 
 }
 
