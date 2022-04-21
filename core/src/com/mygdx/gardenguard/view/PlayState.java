@@ -113,6 +113,7 @@ public class PlayState extends State {
             showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
             sb.begin();
+            sb.setColor(Color.GRAY);
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
@@ -236,8 +237,6 @@ public class PlayState extends State {
 
     @Override
     public void setFalseSwitch() {
-        this.controller.increaseScore();
-        this.controller.increaseRounds();
         if(this.controller.getRounds() > 5) {
             switchState = true;
         }

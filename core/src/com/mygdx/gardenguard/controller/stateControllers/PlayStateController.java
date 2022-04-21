@@ -97,7 +97,7 @@ public class PlayStateController extends Controller {
 
     public void increaseScore() {
         //player gets 20 points if it is not found
-        if (!getPlayer().getIsFound() && getPlayer() instanceof HiderModel) {
+        if (!super.gsm.getPlayer().getIsFound() && getPlayer() instanceof HiderModel) {
             getPlayer().setScore(getPlayer().getScore() + 20);
         }
     }
@@ -109,6 +109,7 @@ public class PlayStateController extends Controller {
 
     public void setHiderTurn() {
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        increaseScore();
         resetSteps(gsm.getPlayer());
         isSeekerTurn = false;
     }
