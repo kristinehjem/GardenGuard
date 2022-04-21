@@ -128,8 +128,8 @@ public class PlayState extends State {
         sb.begin();
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
-        font.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
-        font.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Steps: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
+        font.draw(sb, gsm.getPlayer().getScore() + "p", GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
         if(controller.isSeekerTurn() && super.gsm.getPlayer() instanceof HiderModel) {
             font.setColor(Color.RED);
@@ -210,7 +210,7 @@ public class PlayState extends State {
         });
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button endGame = new TextButton("Hide here", mySkin, "small");
-        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
+        endGame.setPosition(GardenGuard.WIDTH, GardenGuard.HEIGHT-50);
         endGame.setSize(GardenGuard.WIDTH / 6f, GardenGuard.HEIGHT/20f);
         endGame.addListener(new InputListener() {
             @Override
