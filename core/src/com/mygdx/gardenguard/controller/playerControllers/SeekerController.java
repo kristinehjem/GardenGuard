@@ -43,7 +43,7 @@ public class SeekerController extends PlayerController {
         for(PlayerModel hider : list_player) {
             if (getView().contains(hider.getPosition()) && !hider.getIsFound() && !hider.getIsSeeker()) {
                 player.setScore(player.getScore() + 5);
-                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), player.getPlayerID(), true);
+                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), hider.getPlayerID(), true);
                 super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), player.getPlayerID(), player.getScore());
             }
         }

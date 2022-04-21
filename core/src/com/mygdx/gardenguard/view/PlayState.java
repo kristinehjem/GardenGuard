@@ -94,9 +94,11 @@ public class PlayState extends State {
     protected void update(float dt) {
         if (super.gsm.getPlayer() instanceof SeekerModel) {
             this.controller.checkSwitchTurn();
-            SeekerController seekerController = (SeekerController) this.controller.getPlayerController();
-            seekerController.updateView();
-            seekerController.checkForPlayers();
+            if (this.controller.isSeekerTurn()) {
+                SeekerController seekerController = (SeekerController) this.controller.getPlayerController();
+                seekerController.updateView();
+                seekerController.checkForPlayers();
+            }
         }
     }
 
