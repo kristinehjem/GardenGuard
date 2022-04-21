@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
+import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.PlayStateController;
 import com.mygdx.gardenguard.model.board.Board;
@@ -31,7 +32,6 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
 import java.util.List;
-import java.util.Locale;
 
 
 public class PlayState extends State {
@@ -49,16 +49,12 @@ public class PlayState extends State {
     private TextureRegionDrawable downDrawable = new TextureRegionDrawable(downText);
     private TextureRegionDrawable leftDrawable = new TextureRegionDrawable(leftText);
     private TextureRegionDrawable rightDrawable = new TextureRegionDrawable(rightText);
-    //private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
-    private BitmapFont showSteps;
+    private BitmapFont font;
 
     private Viewport viewport;
     private Stage stage;
     private boolean switchState;
-    //Dummy test to find other players;
-    private PlayerModel hider;
-    private Rectangle vision;
 
     // For rendering the seeker view
     private Texture light;
@@ -74,11 +70,10 @@ public class PlayState extends State {
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
-        this.vision = new Rectangle(gsm.getPlayer().getPosition().x -1, gsm.getPlayer().getPosition().y -1, 2, 2);
         //FONT TO DRAW
-        this.showSteps = new BitmapFont();
-        showSteps.setColor(Color.YELLOW);
-        showSteps.getData().setScale(2f);
+        this.font = new BitmapFont();
+        font.setColor(Color.YELLOW);
+        font.getData().setScale(2f);
 
         create();
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
@@ -88,7 +83,6 @@ public class PlayState extends State {
 
     @Override
     public Controller getController() {
-        //return this.playerController;
         return controller;
     }
 
@@ -99,18 +93,27 @@ public class PlayState extends State {
 
     @Override
     protected void update(float dt) {
-        this.controller.checkSwitchTurn();
-        this.vision.setPosition(gsm.getPlayer().getPosition().x - 1, gsm.getPlayer().getPosition().y - 1);
+        if (super.gsm.getPlayer() instanceof SeekerModel) {
+            this.controller.checkSwitchTurn();
+            if (this.controller.isSeekerTurn()) {
+                SeekerController seekerController = (SeekerController) this.controller.getPlayerController();
+                seekerController.updateView();
+                seekerController.checkForPlayers();
+            }
+        }
     }
 
     @Override
     protected void render(SpriteBatch sb) {
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
             showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
             sb.begin();
+            sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
                 for (int x = 0; x < GardenGuard.numHorisontal; x++) {
@@ -125,8 +128,14 @@ public class PlayState extends State {
         sb.begin();
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
-        showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
-        showSteps.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Steps: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
+        font.draw(sb, gsm.getPlayer().getScore() + "p", GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
+        if(controller.isSeekerTurn() && super.gsm.getPlayer() instanceof HiderModel) {
+            font.setColor(Color.RED);
+            font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 70);
+            font.setColor(Color.YELLOW);
+        }
         create();
         stage.act();
         stage.draw();
@@ -134,10 +143,6 @@ public class PlayState extends State {
             this.controller.pushNewState();
         }
         sb.end();
-        /*if (gameSwitch) {
-            this.controller.pushNewState();
-        }*/
-
     }
 
 
@@ -214,6 +219,9 @@ public class PlayState extends State {
                 return true;
             }
         });
+        if (super.gsm.getPlayer() instanceof SeekerModel) {
+            endGame.setVisible(false);
+        }
         stage.addActor(endGame);
         stage.addActor(up);
         stage.addActor(down);
@@ -221,50 +229,20 @@ public class PlayState extends State {
         stage.addActor(left);
     }
 
-    /*@Override
-    public void setGameSwitch(){
-        this.gameSwitch = true;
-        viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
-        stage = new Stage(viewport);
-        Gdx.input.setInputProcessor(stage);
-        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        Button endGame = new TextButton("Hide here", mySkin, "small");
-        endGame.setPosition(GardenGuard.WIDTH - 80, GardenGuard.HEIGHT-50);
-        endGame.setSize(GardenGuard.WIDTH / 6f, GardenGuard.HEIGHT/20f);
-        endGame.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                controller.handleSavePosition();
-                return true;
-            }
-        });
-        if (super.gsm.getPlayer() instanceof HiderModel) {
-            stage.addActor(endGame);
-        }
-    }*/
-
     @Override
     public void setGameSwitch(){
-        System.out.println("CHECK1SWITCH");
-        if(!this.controller.isSeekerTurn()) {
-            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
-        }
-        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        this.controller.setSeekerTurn();
     }
 
     @Override
     public void setFalseSwitch() {
-        System.out.println("gameswitch is false");
-        if(this.controller.isSeekerTurn()) {
-            this.controller.setSeekerTurn(!this.controller.isSeekerTurn());
-        }
+        this.controller.increaseScore();
+        this.controller.increaseRounds();
         if(this.controller.getRounds() > 5) {
             switchState = true;
         }
-        this.controller.increaseRounds();
-        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        this.controller.setHiderTurn();
     }
-
 
     private void shadowingRender(SpriteBatch sb) {
         lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
@@ -304,16 +282,17 @@ public class PlayState extends State {
     }
 
     private void showOtherPlayers(SpriteBatch sb){
-        List<PlayerModel> list_player = controller.getPlayers();
-        System.out.println(controller.getPlayers());
-        for(PlayerModel hiders : list_player) {
-            if(this.vision.contains(hiders.getPosition())) {
+        //Renders hiders if they are found
+        for(PlayerModel hider : super.gsm.getPlayers()) {
+            if(hider.getIsFound() && hider instanceof HiderModel) {
+                System.out.println("DRAW_HIDER "+ hider.getPosition().x +" : "+ hider.getPosition().y);
+                sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                sb.setProjectionMatrix(cam.combined);
                 sb.begin();
-                sb.draw(new Texture(hiders.getTextureFile()), hiders.getPosition().x * tileWidth,
-                        hiders.getPosition().y * tileHeight, tileWidth, tileHeight);
+                sb.draw(new Texture(hider.getTextureFile()), hider.getPosition().x * tileWidth,
+                        hider.getPosition().y * tileHeight, tileWidth, tileHeight);
                 sb.end();
             }
         }
     }
-
 }

@@ -31,6 +31,7 @@ public class MenuController extends Controller {
         TimeUnit.SECONDS.sleep(1);
         if (getPinExist()) {
             PlayerModel player = new HiderModel(new Vector2(0, 0));
+            player.setSteps(15);
             super.gsm.setPlayer(player);
             super.gsm.getFBIC().SetOnValueChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             TimeUnit.MILLISECONDS.sleep(500);
@@ -51,10 +52,11 @@ public class MenuController extends Controller {
 
     public void handleCreate() throws InterruptedException {
         PlayerModel player = new SeekerModel(new Vector2(0,0));
+        player.setSteps(10);
         super.gsm.setPlayer(player);
         String gamePin = super.gsm.getFBIC().CreateGameInDB();
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
         setTextureAndPosition();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);
@@ -64,8 +66,8 @@ public class MenuController extends Controller {
         Random random = new Random();
         int boardNumber = random.nextInt(3);
         super.gsm.setBoardNr(boardNumber);
-        System.out.println("boardnumber");
-        System.out.println(boardNumber);
+        System.out.println("boardnumber: "+ boardNumber +" "+ super.getPlayers());
+
         super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, String.valueOf(boardNumber));
 
         super.gsm.set(new LobbyState());

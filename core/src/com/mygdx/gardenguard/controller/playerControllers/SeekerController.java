@@ -25,10 +25,10 @@ public class SeekerController extends PlayerController {
         return this.view;
     }
 
-    private void updateView() {
+    public void updateView() {
         float x_pos = this.player.getPosition().x;
         float y_pos = this.player.getPosition().y;
-        this.view = new Rectangle(x_pos - tileWidth, y_pos - tileHeight, tileWidth * 2, tileHeight *2);
+        this.view = new Rectangle(x_pos -1f, y_pos - 1f,  2, 2);
     }
 
     @Override
@@ -39,11 +39,10 @@ public class SeekerController extends PlayerController {
     // Checks if a player is in view
     // TODO: The object which uses this controller is a hider. Needs to be changed for score to work
     public void checkForPlayers() {
-        List<PlayerModel> list_player = super.getPlayers();
-        for(PlayerModel hiders : list_player) {
-            if (getView().contains(hiders.getPosition()) && !hiders.isFound() && !hiders.getIsSeeker()) {
+        for(PlayerModel hider : super.gsm.getPlayers()) {
+            if (getView().contains(hider.getPosition()) && !hider.getIsFound() && !hider.getIsSeeker()) {
                 player.setScore(player.getScore() + 5);
-                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), player.getPlayerID(), true);
+                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), hider.getPlayerID(), true);
                 super.gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), player.getPlayerID(), player.getScore());
             }
         }
