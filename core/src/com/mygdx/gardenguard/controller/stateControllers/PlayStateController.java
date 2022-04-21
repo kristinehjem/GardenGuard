@@ -23,7 +23,8 @@ public class PlayStateController extends Controller {
         super();
         this.isSeekerTurn = false;
         this.board = board;
-        this.rounds = 1;
+        this.savedPos = false;
+        this.rounds = 0;
         setPlayerController();
     }
 
@@ -115,7 +116,6 @@ public class PlayStateController extends Controller {
 
     public void increaseRounds() {
         this.rounds++;
-        System.out.println("CHECK_FOR_ROUNDS"+ this.rounds);
     }
 
     @Override
@@ -124,4 +124,10 @@ public class PlayStateController extends Controller {
         List<String> scores = calculateScores();
         gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
     }
+
+    public PlayerController getPlayerController() {
+        return this.playerController;
+    }
+
+
 }
