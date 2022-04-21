@@ -113,7 +113,12 @@ public class PlayState extends State {
             showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
             sb.begin();
-            sb.setColor(Color.GRAY);
+            if(controller.isSeekerTurn()) {
+                sb.setColor(Color.GRAY);
+            }
+            else {
+                sb.setColor(Color.CLEAR);
+            }
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
