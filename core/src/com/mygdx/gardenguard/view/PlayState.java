@@ -132,9 +132,14 @@ public class PlayState extends State {
         font.draw(sb, "Steps: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         font.draw(sb, gsm.getPlayer().getScore() + "p", GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
-        if(controller.isSeekerTurn() && super.gsm.getPlayer() instanceof HiderModel) {
+        if(controller.isSeekerTurn()) {
             font.setColor(Color.RED);
             font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 70);
+            font.setColor(Color.YELLOW);
+        }
+        else {
+            font.setColor(Color.RED);
+            font.draw(sb, "Hiders turn", 180, GardenGuard.HEIGHT - 70);
             font.setColor(Color.YELLOW);
         }
         create();
@@ -162,17 +167,17 @@ public class PlayState extends State {
         this.stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         Button up = new ImageButton(upDrawable);
-        up.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight * 3);
+        up.setPosition(GardenGuard.WIDTH / 2f - tileWidth / 2f - 1, tileHeight * 3);
         up.setSize(tileWidth, tileHeight);
         Button down = new ImageButton(downDrawable);
         down.setSize(tileWidth, tileHeight);
-        down.setPosition(GardenGuard.WIDTH / 2 - tileWidth / 2 - 1, tileHeight);
+        down.setPosition(GardenGuard.WIDTH / 2f - tileWidth / 2f - 1, tileHeight);
         Button left = new ImageButton(leftDrawable);
-        left.setPosition(GardenGuard.WIDTH / 2 - tileWidth - tileWidth / 2 - 1, tileHeight * 2 - 1);
+        left.setPosition(GardenGuard.WIDTH / 2f - tileWidth - tileWidth / 2f - 1, tileHeight * 2 - 1);
         left.setSize(tileWidth, tileHeight);;
         Button right = new ImageButton(rightDrawable);
-        right.setPosition(GardenGuard.WIDTH / 2 + tileWidth / 2 - 1, tileHeight * 2);
-        right.setSize(tileWidth, tileHeight);;
+        right.setPosition(GardenGuard.WIDTH / 2f + tileWidth / 2f - 1, tileHeight * 2);
+        right.setSize(tileWidth, tileHeight);
         up.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
