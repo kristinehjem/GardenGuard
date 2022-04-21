@@ -109,13 +109,14 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
-            sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
             if(controller.isSeekerTurn()) {
-                sb.setBlendFunction(GL20.GL_ZERO, GL20.GL_SRC_COLOR);
+                sb.setColor(0, 0, 0, 0.5f);
+                sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             }
             else {
+                sb.setColor(0,0,0,1);
                 sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             }
             sb.begin();
@@ -135,6 +136,10 @@ public class PlayState extends State {
         font.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
+        if(controller.isSeekerTurn()) {
+            font.setColor(1,1,1,1);
+            font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 50);
+        }
         create();
         stage.act();
         stage.draw();
@@ -285,12 +290,13 @@ public class PlayState extends State {
 
     private void showOtherPlayers(SpriteBatch sb){
         //Renders hiders if they are found
-        for (PlayerModel player: getController().getPlayers()) {
-            if(player.getIsFound() && player instanceof HiderModel) {
-                System.out.println("PLAYER_FOUND: "+ player);
+        for(PlayerModel hider : super.gsm.getPlayers()) {
+            if(hider.getIsFound() && hider instanceof HiderModel) {
+                System.out.println("PLAYER_FOUND: "+ hider);
                 sb.begin();
-                sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,
-                        player.getPosition().y * tileHeight, tileWidth, tileHeight);
+                sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                sb.draw(new Texture(hider.getTextureFile()), hider.getPosition().x * tileWidth,
+                        hider.getPosition().y * tileHeight, tileWidth, tileHeight);
                 sb.end();
             }
         }
