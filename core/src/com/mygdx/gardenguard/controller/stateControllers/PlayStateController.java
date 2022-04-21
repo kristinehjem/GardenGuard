@@ -78,7 +78,6 @@ public class PlayStateController extends Controller {
         return scores;
     }
 
-
     private void resetSteps(PlayerModel player) {
         if(player instanceof SeekerModel) {
             player.setSteps(10);
@@ -88,6 +87,7 @@ public class PlayStateController extends Controller {
             player.setSteps(18);
             super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
             super.gsm.getFBIC().UpdateIsFoundInDB(super.gsm.getGamePin(), player.getPlayerID(), false);
+            increaseRounds();
         }
     }
 
