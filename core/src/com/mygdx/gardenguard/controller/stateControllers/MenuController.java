@@ -58,6 +58,7 @@ public class MenuController extends Controller {
         setTextureAndPosition();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);
+        super.gsm.getFBIC().checkIfGameExists(gamePin, this);
         super.gsm.getFBIC().CreateGameSwitchInDB(gamePin);
         super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
 
@@ -67,7 +68,7 @@ public class MenuController extends Controller {
         System.out.println("boardnumber");
         System.out.println(boardNumber);
         super.gsm.getFBIC().CreateBoardNumberInDB(gamePin, String.valueOf(boardNumber));
-
+        super.gsm.getFBIC().GetBoardNumber(GameStateManager.getInstance().getDataholder(), gamePin);
         super.gsm.set(new LobbyState());
     }
 

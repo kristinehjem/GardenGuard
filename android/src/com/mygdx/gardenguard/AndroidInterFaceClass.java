@@ -21,6 +21,10 @@ import java.util.List;
 public class AndroidInterFaceClass implements FireBaseInterface {
     FirebaseDatabase database;
     DatabaseReference gameRef;
+    ValueEventListener gameRefListener;
+    ValueEventListener gameSwitchListener;
+    ValueEventListener boardNrListener;
+    ValueEventListener pinExistListener;
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
@@ -32,7 +36,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     @Override
     public void SetOnValueChangedListener(final DataHolderClass dataholder, String gamePin) {
         //now we get notified when the object in gameRef changes
-        gameRef.child(gamePin).addValueEventListener(new ValueEventListener() {
+        gameRefListener = new ValueEventListener() {
             //read from the database
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -54,20 +58,21 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 }
                 dataholder.updatePlayers(players);
             }
-                //Log.d(TAG, "Value is: " + value);
+            //Log.d(TAG, "Value is: " + value);
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        };
+        gameRef.child(gamePin).addValueEventListener(gameRefListener);
     }
 
     //function to set event listener to different objects in the database
     @Override
     public void SetOnGameSwitchChangedListener(final DataHolderClass dataholder, String gamePin) {
-        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(new ValueEventListener() {
+        gameSwitchListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if ((Boolean) snapshot.getValue() == true) {
@@ -84,12 +89,13 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        };
+        gameRef.child(gamePin).child("gameSwitch").addValueEventListener(gameSwitchListener);
     }
 
     @Override
     public void GetBoardNumber(DataHolderClass dataholder, String gamePin) {
-        gameRef.child(gamePin).child("boardNr").addValueEventListener(new ValueEventListener() {
+        boardNrListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataholder.updateBoardNr((String) snapshot.getValue());
@@ -100,10 +106,17 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        };
+        gameRef.child(gamePin).child("boardNr").addValueEventListener(boardNrListener);
     }
 
     public void DeleteGame(String gamePin) {
+        gameRef.removeEventListener(gameRefListener);
+        gameRef.removeEventListener(boardNrListener);
+        gameRef.removeEventListener(gameSwitchListener);
+        gameRef.removeEventListener(pinExistListener);
+        gameRef.child(gamePin).child("gameSwitch").removeValue();
+        gameRef.child(gamePin).child("boardNr");
         gameRef.child(gamePin).removeValue();
     }
 
@@ -111,6 +124,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
     public void DeletePlayer(String gamePin, String playerID) {
         gameRef.child(gamePin).child("players").child(playerID).removeValue();
     }
+
 
     @Override
     public String CreateGameInDB() {
@@ -173,7 +187,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
 
     @Override
     public void checkIfGameExists(String gamePin, MenuController MC) {
-        gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        pinExistListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.child(gamePin).exists()) {
@@ -186,7 +200,8 @@ public class AndroidInterFaceClass implements FireBaseInterface {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+        gameRef.addListenerForSingleValueEvent(pinExistListener);
     }
 
     @Override
