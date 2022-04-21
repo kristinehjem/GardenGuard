@@ -222,13 +222,11 @@ public class PlayState extends State {
 
     @Override
     public void setGameSwitch(){
-        System.out.println("CHECK1SWITCH");
         this.controller.setSeekerTurn();
     }
 
     @Override
     public void setFalseSwitch() {
-        System.out.println("gameswitch is false");
         this.controller.increaseScore();
         this.controller.increaseRounds();
         if(this.controller.getRounds() > 5) {

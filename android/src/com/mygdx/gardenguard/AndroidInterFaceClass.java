@@ -40,17 +40,12 @@ public class AndroidInterFaceClass implements FireBaseInterface {
                 //iterating through all the nodes
                 for (DataSnapshot snap : snapshot.child("players").getChildren()) {
                     if ( (Boolean) snap.child("isSeeker").getValue()) {
-                        System.out.println("er en seeker");
                         SeekerModel player = snap.getValue(SeekerModel.class);
                         players.add(player);
                     } else {
-                        System.out.println("er en hider");
                         HiderModel player = snap.getValue(HiderModel.class);
                         players.add(player);
                     }
-                }
-                for (PlayerModel player: players) {
-                    System.out.println(player.getIsSeeker());
                 }
                 dataholder.updatePlayers(players);
             }
