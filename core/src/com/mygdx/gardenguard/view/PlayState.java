@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -32,7 +31,6 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 
 import java.util.List;
-import java.util.Locale;
 
 
 public class PlayState extends State {
@@ -52,7 +50,7 @@ public class PlayState extends State {
     private TextureRegionDrawable rightDrawable = new TextureRegionDrawable(rightText);
     //private Sprite squareSprite = new Sprite(new Texture("yellowSquare.png"));
     private Vector3 touchPoint = new Vector3();
-    private BitmapFont showSteps;
+    private BitmapFont font;
 
     private Viewport viewport;
     private Stage stage;
@@ -73,9 +71,9 @@ public class PlayState extends State {
         this.light = new Texture("oaaB1.png");
         this.lightSprite = new Sprite(light);
         //FONT TO DRAW
-        this.showSteps = new BitmapFont();
-        showSteps.setColor(Color.YELLOW);
-        showSteps.getData().setScale(2f);
+        this.font = new BitmapFont();
+        font.setColor(Color.YELLOW);
+        font.getData().setScale(2f);
 
         create();
         /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
@@ -128,9 +126,9 @@ public class PlayState extends State {
         sb.begin();
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
-        showSteps.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
-        showSteps.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
-        showSteps.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
         create();
         stage.act();
         stage.draw();
