@@ -157,9 +157,9 @@ public class LobbyState extends State{
             }
         }, "Enter username", "", "");
         //TODO: ukommenter dette
-        /*if (super.gsm.getPlayer() instanceof HiderModel) {
+        if (super.gsm.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
-        }*/
+        }
         stage.addActor(startGame);
         stage.addActor(exit);
     }
