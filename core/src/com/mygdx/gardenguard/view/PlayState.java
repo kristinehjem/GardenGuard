@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -111,14 +112,7 @@ public class PlayState extends State {
             shadowingRender(sb);
             showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
-            if(controller.isSeekerTurn()) {
-                sb.setColor(0, 0, 0, 0.5f);
-                sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            }
-            else {
-                sb.setColor(0,0,0,1);
-                sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            }
+            sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             sb.begin();
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
@@ -132,11 +126,12 @@ public class PlayState extends State {
             sb.end();
         }
         sb.begin();
+        sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
         font.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
-        if(controller.isSeekerTurn()) {
+        if(controller.isSeekerTurn() && super.gsm.getPlayer() instanceof HiderModel) {
             font.setColor(Color.RED);
             font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 50);
             font.setColor(Color.YELLOW);
@@ -293,9 +288,10 @@ public class PlayState extends State {
         //Renders hiders if they are found
         for(PlayerModel hider : super.gsm.getPlayers()) {
             if(hider.getIsFound() && hider instanceof HiderModel) {
-                System.out.println("PLAYER_FOUND: "+ hider);
-                sb.begin();
+                System.out.println("DRAW_HIDER "+ hider.getPosition().x +" : "+ hider.getPosition().y);
                 sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                sb.setProjectionMatrix(cam.combined);
+                sb.begin();
                 sb.draw(new Texture(hider.getTextureFile()), hider.getPosition().x * tileWidth,
                         hider.getPosition().y * tileHeight, tileWidth, tileHeight);
                 sb.end();

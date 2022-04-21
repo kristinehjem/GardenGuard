@@ -56,7 +56,7 @@ public class MenuController extends Controller {
         super.gsm.setPlayer(player);
         String gamePin = super.gsm.getFBIC().CreateGameInDB();
         super.gsm.getFBIC().SetOnValueChangedListener(super.gsm.getDataholder(), gamePin);
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
         setTextureAndPosition();
         player.setPlayerID(super.gsm.getFBIC().CreatePlayerInDB(gamePin, player));
         super.gsm.setGamePin(gamePin);

@@ -28,8 +28,7 @@ public class SeekerController extends PlayerController {
     public void updateView() {
         float x_pos = this.player.getPosition().x;
         float y_pos = this.player.getPosition().y;
-        System.out.println(x_pos+ " og "+y_pos);
-        this.view = new Rectangle(x_pos -1f, y_pos - 1f,  2, 2);
+        this.view = new Rectangle(x_pos -1f, y_pos - 1f,  3, 3);
     }
 
     @Override
