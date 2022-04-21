@@ -137,8 +137,9 @@ public class PlayState extends State {
         font.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
         if(controller.isSeekerTurn()) {
-            font.setColor(1,1,1,1);
+            font.setColor(Color.RED);
             font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 50);
+            font.setColor(Color.YELLOW);
         }
         create();
         stage.act();
