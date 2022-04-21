@@ -112,8 +112,8 @@ public class PlayState extends State {
             shadowingRender(sb);
             showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
-            sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             sb.begin();
+            sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
                 for (int x = 0; x < GardenGuard.numHorisontal; x++) {
@@ -133,7 +133,7 @@ public class PlayState extends State {
         font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
         if(controller.isSeekerTurn() && super.gsm.getPlayer() instanceof HiderModel) {
             font.setColor(Color.RED);
-            font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 50);
+            font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 70);
             font.setColor(Color.YELLOW);
         }
         create();

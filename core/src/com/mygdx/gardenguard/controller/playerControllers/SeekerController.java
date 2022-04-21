@@ -28,7 +28,7 @@ public class SeekerController extends PlayerController {
     public void updateView() {
         float x_pos = this.player.getPosition().x;
         float y_pos = this.player.getPosition().y;
-        this.view = new Rectangle(x_pos -1f, y_pos - 1f,  3, 3);
+        this.view = new Rectangle(x_pos -1f, y_pos - 1f,  2, 2);
     }
 
     @Override
@@ -39,7 +39,6 @@ public class SeekerController extends PlayerController {
     // Checks if a player is in view
     // TODO: The object which uses this controller is a hider. Needs to be changed for score to work
     public void checkForPlayers() {
-        super.gsm.getPlayers();
         for(PlayerModel hider : super.gsm.getPlayers()) {
             if (getView().contains(hider.getPosition()) && !hider.getIsFound() && !hider.getIsSeeker()) {
                 player.setScore(player.getScore() + 5);
