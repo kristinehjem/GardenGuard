@@ -212,6 +212,9 @@ public class PlayState extends State {
                 return true;
             }
         });
+        if (super.gsm.getPlayer() instanceof SeekerModel) {
+            endGame.setVisible(false);
+        }
         stage.addActor(endGame);
         stage.addActor(up);
         stage.addActor(down);
@@ -221,21 +224,19 @@ public class PlayState extends State {
 
     @Override
     public void setGameSwitch(){
-        System.out.println("CHECK1SWITCH");
         this.controller.setSeekerTurn();
     }
 
     @Override
     public void setFalseSwitch() {
-        System.out.println("gameswitch is false");
         this.controller.increaseScore();
+        this.controller.increaseRounds();
         if(this.controller.getRounds() > 5) {
             switchState = true;
             System.out.println("GAMEFINISHED");
         }
         System.out.println("increase rounds");
         System.out.println(controller.getRounds());
-        this.controller.increaseRounds();
         this.controller.setHiderTurn();
     }
 

@@ -156,7 +156,6 @@ public class LobbyState extends State{
                 controller.setUsername(controller.getPlayer().getPlayerID());
             }
         }, "Enter username", "", "");
-        //TODO: ukommenter dette
         if (super.gsm.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
         }

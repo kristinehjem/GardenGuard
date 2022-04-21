@@ -58,10 +58,12 @@ public class PlayStateController extends Controller {
 
     public void handleSavePosition() {
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
+        super.gsm.getPlayer().setSteps(0);
+        super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), super.gsm.getPlayer().getSteps());
     }
 
     public void checkSwitchTurn(){
-        if(isSeekerTurn() && (gsm.getPlayer().getSteps() == 0  || gsm.getPlayer().getIsDone())) {
+        if(isSeekerTurn() && gsm.getPlayer().getSteps() == 0) {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         }
         else if(!isSeekerTurn() && allSavedPos()) {
@@ -117,9 +119,7 @@ public class PlayStateController extends Controller {
 
     @Override
     public void pushNewState() {
-        //The same as endGame
-        List<String> scores = calculateScores();
-        gsm.set(new GameOverState()); //kanskje legge scores som en parameter i gameOverController for å være sikker på at oppdaterte scores vises?
+        gsm.set(new GameOverState());
     }
 
     public PlayerController getPlayerController() {
