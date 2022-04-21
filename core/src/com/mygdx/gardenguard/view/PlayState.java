@@ -109,8 +109,15 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         if (gsm.getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
+            sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             showOtherPlayers(sb);
         } else if (gsm.getPlayer() instanceof HiderModel) {
+            if(controller.isSeekerTurn()) {
+                sb.setBlendFunction(GL20.GL_ZERO, GL20.GL_SRC_COLOR);
+            }
+            else {
+                sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            }
             sb.begin();
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
@@ -124,7 +131,6 @@ public class PlayState extends State {
             sb.end();
         }
         sb.begin();
-        sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
         font.draw(sb, "Steps left: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         font.draw(sb, "Points: " + gsm.getPlayer().getScore(), GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
@@ -240,7 +246,6 @@ public class PlayState extends State {
         this.controller.setHiderTurn();
     }
 
-
     private void shadowingRender(SpriteBatch sb) {
         lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
         FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
@@ -282,7 +287,7 @@ public class PlayState extends State {
         //Renders hiders if they are found
         for (PlayerModel player: getController().getPlayers()) {
             if(player.getIsFound() && player instanceof HiderModel) {
-                System.out.println("PLAYER_FOUND");
+                System.out.println("PLAYER_FOUND: "+ player);
                 sb.begin();
                 sb.draw(new Texture(player.getTextureFile()), player.getPosition().x * tileWidth,
                         player.getPosition().y * tileHeight, tileWidth, tileHeight);
