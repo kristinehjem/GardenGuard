@@ -210,6 +210,9 @@ public class PlayState extends State {
                 return true;
             }
         });
+        if (super.gsm.getPlayer() instanceof SeekerModel) {
+            endGame.setVisible(false);
+        }
         stage.addActor(endGame);
         stage.addActor(up);
         stage.addActor(down);

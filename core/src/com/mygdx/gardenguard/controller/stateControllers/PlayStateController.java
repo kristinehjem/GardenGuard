@@ -99,9 +99,6 @@ public class PlayStateController extends Controller {
         }
     }
 
-    //super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-//resetSteps(gsm.getPlayer());
-//handleRounds();
     public void setSeekerTurn() {
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
         isSeekerTurn = true;
