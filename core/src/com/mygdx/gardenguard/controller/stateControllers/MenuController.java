@@ -41,7 +41,7 @@ public class MenuController extends Controller {
             super.gsm.getFBIC().SetOnGameSwitchChangedListener(GameStateManager.getInstance().getDataholder(), gamePin);
             super.gsm.getFBIC().GetBoardNumber(GameStateManager.getInstance().getDataholder(), gamePin);
             System.out.println(super.gsm.getBoardNr());
-            super.gsm.push(new LobbyState());
+            super.gsm.set(new LobbyState());
         }
         else {
             //real error handling

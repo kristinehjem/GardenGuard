@@ -76,9 +76,14 @@ public class PopupState extends State{
 
     @Override
     protected void dispose() {
-        bg.dispose();
+        if (text != null) {
+            bg.dispose();
+            font.dispose();
+        }
+        if (picture != null) {
+            picture.dispose();
+        }
         stage.dispose();
-        font.dispose();
 
     }
 

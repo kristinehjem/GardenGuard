@@ -1,5 +1,7 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
+import com.mygdx.gardenguard.view.MenuState;
+
 public class PopupController extends Controller {
 
     public PopupController(){
@@ -7,6 +9,6 @@ public class PopupController extends Controller {
     }
 
     public void handleClose(){
-        super.gsm.pop();
+        super.gsm.set(new MenuState());
     }
 }
