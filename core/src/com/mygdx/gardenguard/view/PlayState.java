@@ -247,6 +247,7 @@ public class PlayState extends State {
 
     @Override
     public void setFalseSwitch() {
+
         if(this.controller.getRounds() > 5) {
             switchState = true;
         }
