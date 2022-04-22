@@ -45,7 +45,7 @@ public class MenuController extends Controller {
         }
         else {
             System.err.println("pin not exist...End");
-            super.gsm.push(new PopupState("Pin does not exist. \n Please try again"));
+            super.gsm.set(new PopupState("Pin does not exist. \n Please try again"));
         }
     }
 
