@@ -39,8 +39,8 @@ public class PlayStateController extends Controller {
         }
     }
 
-    public void move(String direction, boolean isSeekerTurn) {
-        playerController.move(direction, isSeekerTurn);
+    public void move(String direction) {
+        playerController.move(direction);
     }
 
     public boolean isSeekerTurn() {

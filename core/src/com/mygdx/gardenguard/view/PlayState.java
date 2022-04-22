@@ -183,7 +183,7 @@ public class PlayState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (isTurn()) {
-                    controller.move("up", controller.isSeekerTurn());
+                    controller.move("up");
                 }
                 return true;
             }
@@ -192,7 +192,7 @@ public class PlayState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (isTurn()) {
-                    controller.move("down", controller.isSeekerTurn());
+                    controller.move("down");
                 }
                 return true;
             }
@@ -201,7 +201,7 @@ public class PlayState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (isTurn()) {
-                    controller.move("left", controller.isSeekerTurn());
+                    controller.move("left");
                 }
                 return true;
             }
@@ -210,7 +210,7 @@ public class PlayState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (isTurn()) {
-                    controller.move("right", controller.isSeekerTurn());
+                    controller.move("right");
                 }
                 return true;
             }

@@ -13,15 +13,15 @@ public class LobbyController extends Controller {
 
     public void handleStart() {
         //could be used for testing with only one player:
-        /*super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
-        super.gsm.set(new PlayState());*/
-        if (this.enoughPlayers()) {
+        super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+        super.gsm.set(new PlayState());
+        /*if (this.enoughPlayers()) {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
             super.gsm.set(new PlayState());
         } else {
             super.gsm.push(new PopupState("Not enough players \n Please try again \n when you are more players"));
             System.err.println("not enough players");
-        }
+        }*/
     }
 
     public void handleExit() {
