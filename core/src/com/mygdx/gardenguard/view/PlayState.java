@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -45,7 +44,6 @@ public class PlayState extends State {
     private TextureRegionDrawable downDrawable = new TextureRegionDrawable(downText);
     private TextureRegionDrawable leftDrawable = new TextureRegionDrawable(leftText);
     private TextureRegionDrawable rightDrawable = new TextureRegionDrawable(rightText);
-    private Vector3 touchPoint = new Vector3();
     private BitmapFont font;
 
     private Viewport viewport;
@@ -70,25 +68,21 @@ public class PlayState extends State {
         this.font = new BitmapFont();
         font.setColor(Color.YELLOW);
         font.getData().setScale(2f);
-
         create();
-        /*OLD CODE: CAN BE USED WHEN MOVING MOVEMENT TO CONTROLLER
-        this.player = new SeekerModel(new Vector2(1, 2));
-        this.controller = new SeekerController((SeekerModel) this.player, this.board);*/
     }
 
     @Override
     public Controller getController() {
+        if (controller == null) {
+            System.err.println("Controller is null");
+            return null;
+        }
         return controller;
     }
 
-    @Override
-    protected void handleInput() {
-
-    }
 
     @Override
-    protected void update(float dt) {
+    public void update(float dt) {
         if (super.gsm.getPlayer() instanceof SeekerModel) {
             this.controller.checkSwitchTurn();
             if (this.controller.isSeekerTurn()) {
@@ -100,7 +94,7 @@ public class PlayState extends State {
     }
 
     @Override
-    protected void render(SpriteBatch sb) {
+    public void render(SpriteBatch sb) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
@@ -236,7 +230,7 @@ public class PlayState extends State {
     }
 
     @Override
-    public void setGameSwitch(){
+    public void setTrueSwitch(){
         this.controller.setSeekerTurn();
     }
 

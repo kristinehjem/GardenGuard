@@ -1,7 +1,6 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,7 +24,6 @@ public class LaunchState extends State{
     private boolean fadeIn;
 
     public LaunchState() {
-
         create();
     }
 
@@ -35,12 +33,7 @@ public class LaunchState extends State{
     }
 
     @Override
-    protected void handleInput() throws InterruptedException {
-
-    }
-
-    @Override
-    protected void update(float dt) throws InterruptedException {
+    public void update(float dt) {
         //Function for fading, checks if fading in is true, then if animation is done
         if(animationDone) {
             gsm.push(new MenuState());
@@ -62,7 +55,7 @@ public class LaunchState extends State{
     }
 
     @Override
-    protected void render(SpriteBatch sb) {
+    public void render(SpriteBatch sb) {
     //Renders the launcing state
         Gdx.gl.glClearColor(0,0,0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -97,7 +90,7 @@ public class LaunchState extends State{
     }
 
     @Override
-    public void setGameSwitch() {
+    public void setTrueSwitch() {
 
     }
 

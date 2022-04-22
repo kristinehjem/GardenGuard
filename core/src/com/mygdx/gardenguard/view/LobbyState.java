@@ -27,10 +27,10 @@ import java.util.List;
 
 public class LobbyState extends State{
 
-    private LobbyController controller;
+    private LobbyController lobbyController;
     private Stage stage;
     Sprite sprite;
-    Texture backround = new Texture("lobbyBackround.png");
+    Texture background = new Texture("lobbyBackround.png");
     Collection<String> playerNames;
     private BitmapFont playerFont = new BitmapFont();
     private BitmapFont nameFont = new BitmapFont();
@@ -41,10 +41,10 @@ public class LobbyState extends State{
 
     public LobbyState(String username) {
         super();
-        controller = new LobbyController();
-        sprite = new Sprite(backround);
-        this.playerNames = new ArrayList<>();
-        this.gameSwitch = false;
+        lobbyController = new LobbyController();
+        sprite = new Sprite(background);
+        playerNames = new ArrayList<>();
+        gameSwitch = false;
         playerFont.getData().setScale(3f);
         nameFont.getData().setScale(2.5f);
         pinFont.getData().setScale(2f);
@@ -54,10 +54,10 @@ public class LobbyState extends State{
 
     public LobbyState(){
         super();
-        controller = new LobbyController();
-        sprite = new Sprite(backround);
-        this.playerNames = new ArrayList<>();
-        this.gameSwitch = false;
+        lobbyController = new LobbyController();
+        sprite = new Sprite(background);
+        playerNames = new ArrayList<>();
+        gameSwitch = false;
         playerFont.getData().setScale(3f);
         nameFont.getData().setScale(2.5f);
         pinFont.getData().setScale(2f);
@@ -65,47 +65,40 @@ public class LobbyState extends State{
         create();
         Gdx.input.getTextInput(new Input.TextInputListener() {
             @Override
-            public void input(String text) { controller.setUsername(text);
+            public void input(String text) { lobbyController.setUsername(text);
             }
 
             @Override
             public void canceled() {
-                controller.setUsername(controller.getPlayer().getPlayerID());
+                lobbyController.setUsername(lobbyController.getPlayer().getPlayerID());
             }
         }, "Enter username", "", "");
     }
 
     @Override
     public Controller getController() {
-        if (this.controller == null) {
+        if (lobbyController == null) {
             System.err.println("Controller is null");
             return null;
-        } else {
-            System.out.println("controller is not null");
-            return this.controller;
         }
+        return lobbyController;
     }
 
     @Override
-    protected void handleInput() {
-
-    }
-
-    @Override
-    protected void update(float dt) {
+    public void update(float dt) {
 
     }
 
     @Override
-    protected void render(SpriteBatch sb) {
+    public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(backround, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        final GlyphLayout layout1 = new GlyphLayout(pinFont, controller.getPin());
+        sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
+        final GlyphLayout layout1 = new GlyphLayout(pinFont, lobbyController.getPin());
         final GlyphLayout layout2 = new GlyphLayout(pinInfo, "Share game pin with your friends");
         pinFont.draw(sb, layout1, (GardenGuard.WIDTH-layout1.width)/2, 740);
         pinInfo.draw(sb, layout2, (GardenGuard.WIDTH-layout2.width)/2, 700);
-        List<PlayerModel> players = controller.getPlayers();
+        List<PlayerModel> players = lobbyController.getPlayers();
         playerFont.draw(sb, "Players", 180, 600);
         int i = 0;
         for (PlayerModel player: players) {
@@ -119,14 +112,14 @@ public class LobbyState extends State{
         stage.draw();
         sb.end();
         if (gameSwitch == true) {
-            this.controller.pushNewState();
+            lobbyController.pushNewState();
         }
     }
 
     @Override
     protected void dispose() {
         stage.dispose();
-        backround.dispose();
+        background.dispose();
     }
 
     @Override
@@ -141,7 +134,7 @@ public class LobbyState extends State{
         exit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                controller.handleExit();
+                lobbyController.handleExit();
                 return true;
             }
         });
@@ -152,7 +145,7 @@ public class LobbyState extends State{
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 try {
-                    controller.handleStart();
+                    lobbyController.handleStart();
                     System.out.println("start clicked");
                     return true;
                 } catch (Exception e){
@@ -171,7 +164,7 @@ public class LobbyState extends State{
     }
 
     @Override
-    public void setGameSwitch() {
+    public void setTrueSwitch() {
         this.gameSwitch = true;
     }
 

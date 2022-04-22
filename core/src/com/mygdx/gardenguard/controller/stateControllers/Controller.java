@@ -1,7 +1,7 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
 import com.mygdx.gardenguard.model.player.PlayerModel;
-import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.GameStateManager;
 import java.util.List;
 
 public abstract class Controller {

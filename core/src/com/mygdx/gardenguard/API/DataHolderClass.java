@@ -1,10 +1,9 @@
 package com.mygdx.gardenguard.API;
 
-import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.GameStateManager;
 import com.mygdx.gardenguard.view.State;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataHolderClass {
@@ -22,7 +21,7 @@ public class DataHolderClass {
 
     public void updateGameSwitch() {
         State state = GameStateManager.getInstance().getState();
-        state.setGameSwitch();
+        state.setTrueSwitch();
     }
 
 

@@ -15,8 +15,8 @@ public class Tile {
         this.walkable = walkable;
         width = GardenGuard.WIDTH / GardenGuard.numHorisontal;
         height = GardenGuard.HEIGHT / GardenGuard.numVertical;
-        this.posX = x;
-        this.posY = y;
+        posX = x;
+        posY = y;
         tileView = new TileView(this);
     }
 

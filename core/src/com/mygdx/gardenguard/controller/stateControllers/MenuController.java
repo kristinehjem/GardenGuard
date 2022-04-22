@@ -1,19 +1,13 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
-import com.mygdx.gardenguard.view.GameStateManager;
+import com.mygdx.gardenguard.GameStateManager;
 import com.mygdx.gardenguard.view.LobbyState;
-import com.mygdx.gardenguard.view.MenuState;
-import com.mygdx.gardenguard.view.PlayState;
 import com.mygdx.gardenguard.view.PopupState;
-
-import java.awt.Button;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
