@@ -40,7 +40,7 @@ public class GameStateManager {
     }
 
     public void set(State state){
-        states.pop().dispose();
+        states.pop();
         states.push(state);
     }
 
@@ -70,6 +70,10 @@ public class GameStateManager {
 
     public State getState() {
         return states.peek();
+    }
+
+    public State getPrevState() {
+        return states.elementAt(states.size()-2);
     }
 
     public void render(SpriteBatch sb){
