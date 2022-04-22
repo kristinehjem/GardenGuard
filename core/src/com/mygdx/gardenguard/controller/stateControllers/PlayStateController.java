@@ -108,8 +108,12 @@ public class PlayStateController extends Controller {
                 hider.setScore(super.getPlayer().getScore());
                 System.out.println("GAIN_POINTS_CHECK");
                 //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
-                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), false);
 
+
+            }
+            else {
+                //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
+                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), false);
             }
         }
     }
