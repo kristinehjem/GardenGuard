@@ -55,14 +55,16 @@ public class PlayStateController extends Controller {
 
     public void handleSavePosition() {
         //SET PLAYER TO DONE AND STEPS TO ZERO
+        super.getPlayer().setIsDone(true);
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
-        super.gsm.getPlayer().setSteps(0);
+        super.getPlayer().setSteps(0);
         super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), super.gsm.getPlayer().getSteps());
     }
 
     public void checkSwitchTurn(){
         //TRIGGERS SWITCH TURNS IF CONDITIONS ARE MADE FOR FINISHING A ROUND
         if(isSeekerTurn() && gsm.getPlayer().getSteps() == 0) {
+            super.getPlayer().setIsDone(true);
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         }
         else if(!isSeekerTurn() && allSavedPos()) {
@@ -112,13 +114,13 @@ public class PlayStateController extends Controller {
 
     public void setHiderTurn() {
         //CHANGE FROM SEEKER TURN TO HIDER TURN AND RESOLVE STEPS, POINTS, ROUNDS, AND RESET VARIAVBLE LIKE ISDONE
-        if (this.rounds != 0) {
+        if (super.getPlayer().getIsDone() == true) {
             super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
             resetSteps(gsm.getPlayer());
             increaseScore();
+            increaseRounds();
             isSeekerTurn = false;
         }
-        increaseRounds();
     }
 
     public void increaseRounds() {
