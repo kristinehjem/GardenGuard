@@ -30,7 +30,6 @@ public class PlayStateController extends Controller {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         } else if (super.gsm.getPlayer() instanceof HiderModel) {
             this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), this.board);
-            increaseRounds();
         } else {
             System.err.print("Player is neither instance of SeekerModel nor HiderModel");
         }
@@ -113,11 +112,13 @@ public class PlayStateController extends Controller {
 
     public void setHiderTurn() {
         //CHANGE FROM SEEKER TURN TO HIDER TURN AND RESOLVE STEPS, POINTS, ROUNDS, AND RESET VARIAVBLE LIKE ISDONE
-        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-        resetSteps(gsm.getPlayer());
-        increaseScore();
+        if (this.rounds != 0) {
+            super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+            resetSteps(gsm.getPlayer());
+            increaseScore();
+            isSeekerTurn = false;
+        }
         increaseRounds();
-        isSeekerTurn = false;
     }
 
     public void increaseRounds() {
