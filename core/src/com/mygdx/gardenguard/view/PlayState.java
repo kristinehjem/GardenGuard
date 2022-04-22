@@ -143,7 +143,6 @@ public class PlayState extends State {
             font.draw(sb, "Hiders turn", 180, GardenGuard.HEIGHT - 70);
             font.setColor(Color.YELLOW);
         }
-        create();
         stage.act();
         stage.draw();
         if (switchState) {
