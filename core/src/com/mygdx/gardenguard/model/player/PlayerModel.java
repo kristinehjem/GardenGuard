@@ -28,7 +28,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
         this.isDone = false;
     }
 
-    //ikke slett denne, trenger for database
+    //Only used by firebase
     public PlayerModel() {}
 
     public void setTexture(String textureFile) { this.textureFile = textureFile;};
@@ -74,12 +74,7 @@ public abstract class PlayerModel implements Comparable<PlayerModel> {
     public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
-
     public boolean getIsDone() { return this.isDone; }
-
-    public abstract Stack<Vector2> getPath();
-
-    public abstract void pushPath(Vector2 position);
 
     public int compareTo(PlayerModel other) {
         return this.getScore() - other.getScore();

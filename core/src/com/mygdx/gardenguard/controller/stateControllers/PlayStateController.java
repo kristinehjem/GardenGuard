@@ -9,9 +9,6 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 import com.mygdx.gardenguard.view.GameOverState;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PlayStateController extends Controller {
 
     private boolean isSeekerTurn;
@@ -23,7 +20,7 @@ public class PlayStateController extends Controller {
         super();
         this.isSeekerTurn = false;
         this.board = board;
-        this.rounds = 0;
+        this.rounds = 1;
         setPlayerController();
     }
 
@@ -33,21 +30,20 @@ public class PlayStateController extends Controller {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         } else if (super.gsm.getPlayer() instanceof HiderModel) {
             this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), this.board);
-            increaseRounds();
         } else {
             System.err.print("Player is neither instance of SeekerModel nor HiderModel");
         }
     }
 
-    public void move(String direction, boolean isSeekerTurn) {
-        playerController.move(direction, isSeekerTurn);
+    public void move(String direction) {
+        playerController.move(direction);
     }
 
     public boolean isSeekerTurn() {
         return isSeekerTurn;
     }
 
-    public boolean allSavedPos() {
+    private boolean allSavedPos() {
         for (PlayerModel player : super.getPlayers()) {
             //returns false if player is not done and is a hider
             if (!player.getIsDone() && !player.getIsSeeker()){
@@ -59,26 +55,21 @@ public class PlayStateController extends Controller {
 
     public void handleSavePosition() {
         //SET PLAYER TO DONE AND STEPS TO ZERO
+        super.getPlayer().setIsDone(true);
         super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
-        super.gsm.getPlayer().setSteps(0);
+        super.getPlayer().setSteps(0);
         super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), super.gsm.getPlayer().getSteps());
     }
 
     public void checkSwitchTurn(){
         //TRIGGERS SWITCH TURNS IF CONDITIONS ARE MADE FOR FINISHING A ROUND
         if(isSeekerTurn() && gsm.getPlayer().getSteps() == 0) {
+            super.getPlayer().setIsDone(true);
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
         }
         else if(!isSeekerTurn() && allSavedPos()) {
             super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
         }
-    }
-
-    public List<String> calculateScores(){
-        List<String> scores = new ArrayList<>();
-
-        //TODO: calculate scores
-        return scores;
     }
 
     private void resetSteps(PlayerModel player) {
@@ -103,13 +94,10 @@ public class PlayStateController extends Controller {
             if (hider instanceof HiderModel &&
                     getPlayer().getPlayerID().equals(hider.getPlayerID()) &&
                     !hider.getIsFound()) {
-
-                super.getPlayer().setScore(super.getPlayer().getScore() + 12);
-                hider.setScore(super.getPlayer().getScore());
-                System.out.println("GAIN_POINTS_CHECK");
-                //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
-
-
+                    super.getPlayer().setScore(super.getPlayer().getScore() + 12);
+                    super.gsm.getFBIC().UpdateScoreInDB(super.gsm.getGamePin(), super.getPlayer().getPlayerID(), super.getPlayer().getScore());
+                    System.out.println("GAIN_POINTS_CHECK");
+                    //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
             }
             else {
                 //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
@@ -126,11 +114,13 @@ public class PlayStateController extends Controller {
 
     public void setHiderTurn() {
         //CHANGE FROM SEEKER TURN TO HIDER TURN AND RESOLVE STEPS, POINTS, ROUNDS, AND RESET VARIAVBLE LIKE ISDONE
-        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
-        resetSteps(gsm.getPlayer());
-        increaseScore();
-        increaseRounds();
-        isSeekerTurn = false;
+        if (super.getPlayer().getIsDone() == true) {
+            super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+            resetSteps(gsm.getPlayer());
+            increaseScore();
+            increaseRounds();
+            isSeekerTurn = false;
+        }
     }
 
     public void increaseRounds() {

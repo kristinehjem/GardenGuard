@@ -26,7 +26,6 @@ public class GardenGuard extends ApplicationAdapter {
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 800;
 	private SpriteBatch batch;
-	private Board board;
 
 	FireBaseInterface _FBIC;
 
