@@ -9,9 +9,6 @@ import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
 import com.mygdx.gardenguard.view.GameOverState;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PlayStateController extends Controller {
 
     private boolean isSeekerTurn;
@@ -47,7 +44,7 @@ public class PlayStateController extends Controller {
         return isSeekerTurn;
     }
 
-    public boolean allSavedPos() {
+    private boolean allSavedPos() {
         for (PlayerModel player : super.getPlayers()) {
             //returns false if player is not done and is a hider
             if (!player.getIsDone() && !player.getIsSeeker()){
@@ -74,13 +71,6 @@ public class PlayStateController extends Controller {
         }
     }
 
-    public List<String> calculateScores(){
-        List<String> scores = new ArrayList<>();
-
-        //TODO: calculate scores
-        return scores;
-    }
-
     private void resetSteps(PlayerModel player) {
         //RESETS STEPS FOR BOTH ROLES
         if(player instanceof SeekerModel) {
@@ -103,13 +93,10 @@ public class PlayStateController extends Controller {
             if (hider instanceof HiderModel &&
                     getPlayer().getPlayerID().equals(hider.getPlayerID()) &&
                     !hider.getIsFound()) {
-
-                super.getPlayer().setScore(super.getPlayer().getScore() + 12);
-                hider.setScore(super.getPlayer().getScore());
-                System.out.println("GAIN_POINTS_CHECK");
-                //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
-
-
+                    super.getPlayer().setScore(super.getPlayer().getScore() + 12);
+                    super.gsm.getFBIC().UpdateScoreInDB(super.gsm.getGamePin(), super.getPlayer().getPlayerID(), super.getPlayer().getScore());
+                    System.out.println("GAIN_POINTS_CHECK");
+                    //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
             }
             else {
                 //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
