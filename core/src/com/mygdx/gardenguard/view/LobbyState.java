@@ -39,6 +39,19 @@ public class LobbyState extends State{
     private Viewport viewport;
     private boolean gameSwitch;
 
+    public LobbyState(String username) {
+        super();
+        controller = new LobbyController();
+        sprite = new Sprite(backround);
+        this.playerNames = new ArrayList<>();
+        this.gameSwitch = false;
+        playerFont.getData().setScale(3f);
+        nameFont.getData().setScale(2.5f);
+        pinFont.getData().setScale(2f);
+        pinInfo.getData().setScale(1.5f);
+        create();
+    }
+
     public LobbyState(){
         super();
         controller = new LobbyController();
@@ -50,6 +63,16 @@ public class LobbyState extends State{
         pinFont.getData().setScale(2f);
         pinInfo.getData().setScale(1.5f);
         create();
+        Gdx.input.getTextInput(new Input.TextInputListener() {
+            @Override
+            public void input(String text) { controller.setUsername(text);
+            }
+
+            @Override
+            public void canceled() {
+                controller.setUsername(controller.getPlayer().getPlayerID());
+            }
+        }, "Enter username", "", "");
     }
 
     @Override
@@ -140,16 +163,6 @@ public class LobbyState extends State{
                 }
             };
         });
-        Gdx.input.getTextInput(new Input.TextInputListener() {
-            @Override
-            public void input(String text) { controller.setUsername(text);
-            }
-
-            @Override
-            public void canceled() {
-                controller.setUsername(controller.getPlayer().getPlayerID());
-            }
-        }, "Enter username", "", "");
         if (super.gsm.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
         }
