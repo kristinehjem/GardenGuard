@@ -132,7 +132,7 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
         font.draw(sb, "Steps: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
         font.draw(sb, gsm.getPlayer().getScore() + "p", GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
-        font.draw(sb, "Round: " + this.controller.getRounds(), 200, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Round: " + this.controller.getRounds() + "/5", 200, GardenGuard.HEIGHT - 20);
         if(controller.isSeekerTurn()) {
             font.setColor(Color.RED);
             font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 70);
@@ -243,8 +243,7 @@ public class PlayState extends State {
 
     @Override
     public void setFalseSwitch() {
-
-        if(this.controller.getRounds() > 5) {
+        if(this.controller.getRounds() > 4) {
             switchState = true;
         }
         this.controller.setHiderTurn();
