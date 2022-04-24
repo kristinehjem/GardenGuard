@@ -1,8 +1,6 @@
 package com.mygdx.gardenguard.API;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.gardenguard.API.DataHolderClass;
-import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
