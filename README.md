@@ -20,7 +20,7 @@ To run the program you press cmd+alt+del and pray to higher powers that nothing 
 ## Overview of project structure <a name="Overview"></a>
 Following is an overview of the most important files in our project. Branches with dotted lines (...) 
 indicates other files/repositories within the branch. They have been omitted to simplify the 
-overall structure.
+overall structure. Especially the directories of API, controller, model and view in the core-directory contains several java-files which we have coded. The GardenGuard.java and GameStateManager.java are kept outside of the MVC-pattern in core, and this is discussed more thoroughly in the implementation document. The assets-directory contains pictures used in our application.
 
 ```
 GardenGuard
@@ -50,17 +50,15 @@ GardenGuard
 │             ├── view
 │             │    ├── playViews
 │             │    │    └── ...
-│             │    └── GameStateManager.java
-│             │    └── ... 
+│             │    └── ...
+│             ├── GameStateManager.java
 │             ├── GardenGuard.java
 │             └── ...
 ├── desktop
-│   ├── java
-│   │    └── com.mygdx.GardenGuard
-│   │         └── ...
-│   └── assets
-│        ├── skin
-│        └── ...
+│   └── java
+│        └── com.mygdx.GardenGuard
+│             ├── DesktopInterFaceClass.java
+│             └── DesktopLauncher.java
 ├── gradle/wrapper
 │   └── ...
 ├── README.md
