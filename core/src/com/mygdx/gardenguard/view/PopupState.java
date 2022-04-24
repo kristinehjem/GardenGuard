@@ -19,10 +19,10 @@ import com.mygdx.gardenguard.controller.stateControllers.PopupController;
 public class PopupState extends State{
 
     private Stage stage;
-    Texture bg = new Texture("oransje.jpg");
+    private Texture bg = new Texture("oransje.jpg");
 
     private String text;
-    BitmapFont font;
+    private BitmapFont font;
     private PopupController popupController;
     private Viewport viewport;
     private Texture picture;
@@ -41,21 +41,20 @@ public class PopupState extends State{
 
     @Override
     public Controller getController() {
-        return this.popupController;
+        if (popupController == null) {
+            System.err.println("Controller is null");
+            return null;
+        }
+        return popupController;
     }
 
     @Override
-    protected void handleInput() {
+    public void update(float dt) {
 
     }
 
     @Override
-    protected void update(float dt) {
-
-    }
-
-    @Override
-    protected void render(SpriteBatch sb) {
+    public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         if (picture != null) {
@@ -88,12 +87,8 @@ public class PopupState extends State{
     @Override
     protected void create() {
         viewport = new FitViewport(GardenGuard.WIDTH, GardenGuard.HEIGHT, cam);
-        //viewport.setScreenBounds(50, 200, 400, 200);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        //stage.getBatch().begin();
-        //stage.getBatch().draw(bg, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        //stage.getBatch().end();
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button close = new TextButton("Close", mySkin, "small");
         close.setSize(100, 50);
@@ -115,20 +110,12 @@ public class PopupState extends State{
     }
 
     @Override
-    public void setGameSwitch() {
+    public void setTrueSwitch() {
 
     }
 
     @Override
     public void setFalseSwitch() {
 
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 }

@@ -84,11 +84,6 @@ public class CoreInterFaceClass implements FireBaseInterface {
     }
 
     @Override
-    public void getScores(String gamePin) {
-
-    }
-
-    @Override
     public void DeleteGame(String gamePin) {
 
     }

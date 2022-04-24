@@ -12,19 +12,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.GameOverController;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 
-import java.security.Guard;
 import java.util.List;
 
 
 public class GameOverState extends State {
 
-    private GameOverController controller;
+    private GameOverController gameOverController;
 
     private final List<String> scores;
     private final Texture background;
@@ -40,30 +38,30 @@ public class GameOverState extends State {
         this.background = new Texture("GameOverStateBackground.png");
         this.scoreText = new BitmapFont();
         this.titleText = new BitmapFont();
-        this.controller = new GameOverController();
-        this.scores = controller.getScores();
+        this.gameOverController = new GameOverController();
+        this.scores = gameOverController.getScores();
         titleText.getData().setScale(4,4);
         scoreText.getData().setScale(3,3);
-        players = controller.getSortedPlayers();
+        players = gameOverController.getSortedPlayers();
         create();
     }
 
     @Override
     public Controller getController() {
-        return controller;
+        if (gameOverController == null) {
+            System.err.println("Controller is null");
+            return null;
+        }
+        return gameOverController;
     }
 
     @Override
-    protected void handleInput() {
-    }
-
-    @Override
-    protected void update(float dt) {
+    public void update(float dt) {
 
     }
 
     @Override
-    protected void render(SpriteBatch sb) {
+    public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
@@ -78,7 +76,6 @@ public class GameOverState extends State {
         int j = 0;
         for (PlayerModel player: this.players) {
             float x_value = (float) (GardenGuard.WIDTH) / 2 - 230;
-            //TODO: styling, blir litt rar høyde
             float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * j-50;
             sb.draw(new Texture(player.getTextureFile()), x_value, y_value, 60, 60);
             j++;
@@ -106,7 +103,7 @@ public class GameOverState extends State {
         endGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                controller.handleInput();
+                gameOverController.handleInput();
                 return true;
             }
         });
@@ -114,7 +111,7 @@ public class GameOverState extends State {
     }
 
     @Override
-    public void setGameSwitch() {
+    public void setTrueSwitch() {
 
     }
 

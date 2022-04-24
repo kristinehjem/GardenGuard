@@ -1,9 +1,10 @@
-package com.mygdx.gardenguard.view;
+package com.mygdx.gardenguard;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.gardenguard.API.DataHolderClass;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.model.player.PlayerModel;
+import com.mygdx.gardenguard.view.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +57,8 @@ public class GameStateManager {
         return gamePin;
     }
 
-    public void setGamePin(String pin) {
-        this.gamePin = pin;
+    public void setGamePin(String gamePin) {
+        this.gamePin = gamePin;
     }
 
     public DataHolderClass getDataholder() {

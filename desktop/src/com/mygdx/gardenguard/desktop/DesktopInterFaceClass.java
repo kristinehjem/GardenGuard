@@ -2,7 +2,6 @@ package com.mygdx.gardenguard.desktop;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.gardenguard.API.DataHolderClass;
-import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.API.FireBaseInterface;
 import com.mygdx.gardenguard.controller.stateControllers.MenuController;
 import com.mygdx.gardenguard.model.player.PlayerModel;
@@ -78,12 +77,6 @@ public class DesktopInterFaceClass implements FireBaseInterface {
 
     @Override
     public void UpdateIsDoneInDB(String gamePin, String playerID, boolean isDone) {
-
-    }
-
-
-    @Override
-    public void getScores(String gamePin) {
 
     }
 

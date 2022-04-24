@@ -2,8 +2,6 @@ package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -40,18 +38,14 @@ public class MenuState extends State {
         return this.menuController;
     }
 
+
     @Override
-    protected void handleInput() {
+    public void update(float dt) {
 
     }
 
     @Override
-    protected void update(float dt) {
-
-    }
-
-    @Override
-    protected void render(SpriteBatch sb) {
+    public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         header.draw(sb, "Garden Guard",GardenGuard.WIDTH/10, GardenGuard.HEIGHT-100);
@@ -127,7 +121,7 @@ public class MenuState extends State {
     }
 
     @Override
-    public void setGameSwitch(){
+    public void setTrueSwitch(){
 
     }
 

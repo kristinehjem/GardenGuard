@@ -1,8 +1,6 @@
 package com.mygdx.gardenguard.controller.stateControllers;
 
 
-import com.badlogic.gdx.Gdx;
-import com.mygdx.gardenguard.API.Player;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.view.MenuState;
 
