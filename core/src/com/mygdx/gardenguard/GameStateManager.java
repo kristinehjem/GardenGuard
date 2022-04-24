@@ -57,8 +57,8 @@ public class GameStateManager {
         return gamePin;
     }
 
-    public void setGamePin(String pin) {
-        this.gamePin = pin;
+    public void setGamePin(String gamePin) {
+        this.gamePin = gamePin;
     }
 
     public DataHolderClass getDataholder() {

@@ -38,8 +38,6 @@ public interface FireBaseInterface {
 
     public void UpdateIsDoneInDB(String gamePin, String playerID, boolean isDone);
 
-    public void getScores(String gamePin);
-
     public void DeleteGame(String gamePin);
 
     public void DeletePlayer(String gamePin, String playerID);

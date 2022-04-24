@@ -94,7 +94,7 @@ public class PlayStateController extends Controller {
             if (hider instanceof HiderModel &&
                     getPlayer().getPlayerID().equals(hider.getPlayerID()) &&
                     !hider.getIsFound()) {
-                    super.getPlayer().setScore(super.getPlayer().getScore() + 12);
+                    super.getPlayer().setScore(super.getPlayer().getScore() + 10);
                     super.gsm.getFBIC().UpdateScoreInDB(super.gsm.getGamePin(), super.getPlayer().getPlayerID(), super.getPlayer().getScore());
                     System.out.println("GAIN_POINTS_CHECK");
                     //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE

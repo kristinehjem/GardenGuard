@@ -72,7 +72,7 @@ public class AndroidInterFaceClass implements FireBaseInterface {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
                     if ((boolean) snapshot.getValue() == true) {
-                        dataholder.updateGameSwitch();
+                        dataholder.ifTrueSwitch();
                     }
                     else if (!((boolean) snapshot.getValue())){
                         dataholder.ifFalseSwitch();
@@ -201,9 +201,4 @@ public class AndroidInterFaceClass implements FireBaseInterface {
         gameRef.addListenerForSingleValueEvent(this.pinExistListener);
     }
 
-    @Override
-    public void getScores(String gamePin) {
-        System.out.println(gameRef.child(gamePin).child("players").get());
-        //gameRef.child(gamePin).child("players").child(playerID).child("position").setValue(value);
-    }
 }

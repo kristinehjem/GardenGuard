@@ -76,7 +76,6 @@ public class GameOverState extends State {
         int j = 0;
         for (PlayerModel player: this.players) {
             float x_value = (float) (GardenGuard.WIDTH) / 2 - 230;
-            //TODO: styling, blir litt rar høyde
             float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * j-50;
             sb.draw(new Texture(player.getTextureFile()), x_value, y_value, 60, 60);
             j++;
