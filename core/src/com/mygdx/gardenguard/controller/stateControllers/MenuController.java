@@ -66,7 +66,7 @@ public class MenuController extends Controller {
     }
 
     public void handleTutorial() {
-        super.gsm.push(new PopupState(new Texture("tutorial1.png")));
+        super.gsm.push(new PopupState(new Texture("tutorial.png")));
     }
 
     private void setTextureAndPosition() {
