@@ -12,42 +12,44 @@ public class LobbyController extends Controller {
     }
 
     public void handleStart() {
-        if (this.enoughPlayers()) {
-            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
-            super.gsm.set(new PlayState());
+        gsm.getFBIC().UpdateGameSwitchInDB(gsm.getGamePin(), true);
+        gsm.set(new PlayState());
+        /*if (this.enoughPlayers()) {
+            gsm.getFBIC().UpdateGameSwitchInDB(gsm.getGamePin(), true);
+            gsm.set(new PlayState());
         } else {
             super.gsm.push(new PopupState("Not enough players \n Please try again \n when you are more players"));
-        }
+        }*/
     }
 
     public void handleExit() {
-        if (super.gsm.getPlayer() instanceof SeekerModel) {
-            super.gsm.getFBIC().DeleteGame(super.gsm.getGamePin());
-            super.gsm.set(new MenuState());
+        if (getPlayer() instanceof SeekerModel) {
+            gsm.getFBIC().DeleteGame(gsm.getGamePin());
+            gsm.set(new MenuState());
         }
         else {
-            super.gsm.getFBIC().DeletePlayer(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID());
-            super.gsm.set(new MenuState());
+            gsm.getFBIC().DeletePlayer(gsm.getGamePin(), gsm.getPlayer().getPlayerID());
+            gsm.set(new MenuState());
         }
     }
 
     private boolean enoughPlayers() {
-        if (super.getPlayers().size() > 1) {
+        if (getPlayers().size() > 1) {
             return true;
         } return false;
     }
 
     public void setUsername(String username) {
-        super.gsm.getPlayer().setUsername(username);
-        super.gsm.getFBIC().UpdateUsername(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), username);
+        getPlayer().setUsername(username);
+        gsm.getFBIC().UpdateUsername(gsm.getGamePin(), getPlayer().getPlayerID(), username);
     }
 
     public String getPin() {
-        return super.gsm.getGamePin();
+        return gsm.getGamePin();
     }
 
     @Override
     public void pushNewState() {
-        super.gsm.set(new PlayState());
+        gsm.set(new PlayState());
     }
 }

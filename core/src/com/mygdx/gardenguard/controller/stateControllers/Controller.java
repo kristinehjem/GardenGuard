@@ -28,4 +28,8 @@ public abstract class Controller {
 
     }
 
+    public int getBoardNr() {
+        return gsm.getBoardNr();
+    }
+
 }

@@ -2,7 +2,6 @@ package com.mygdx.gardenguard.controller.stateControllers;
 
 import com.mygdx.gardenguard.view.LobbyState;
 import com.mygdx.gardenguard.view.MenuState;
-import com.mygdx.gardenguard.view.State;
 
 public class PopupController extends Controller {
 
@@ -11,11 +10,11 @@ public class PopupController extends Controller {
     }
 
     public void handleClose(){
-        if (super.gsm.getPrevState() instanceof LobbyState) {
-            super.gsm.set(new LobbyState("username"));
+        if (gsm.getPrevState() instanceof LobbyState) {
+            gsm.set(new LobbyState("username"));
         }
-        if (super.gsm.getPrevState() instanceof MenuState) {
-            super.gsm.set(new MenuState());
+        if (gsm.getPrevState() instanceof MenuState) {
+            gsm.set(new MenuState());
         }
     }
 }
