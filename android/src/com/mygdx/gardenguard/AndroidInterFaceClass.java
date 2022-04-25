@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AndroidInterFaceClass implements FireBaseInterface {
-    FirebaseDatabase database;
-    DatabaseReference gameRef;
-    ValueEventListener gameRefListener;
-    ValueEventListener gameSwitchListener;
-    ValueEventListener boardNrListener;
-    ValueEventListener pinExistListener;
+    private FirebaseDatabase database;
+    private DatabaseReference gameRef;
+    private ValueEventListener gameRefListener;
+    private ValueEventListener gameSwitchListener;
+    private ValueEventListener boardNrListener;
+    private ValueEventListener pinExistListener;
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
