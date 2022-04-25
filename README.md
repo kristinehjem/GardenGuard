@@ -9,7 +9,7 @@
 ## Information <a name="Information"></a>
 This repository is made by Ingrid Frøyland Gomo, Kristine Hjemgård, Sven Herman Holmsen, 
 Sondre Westby Liestøl, Elen Katrine Paulsen and Beate Maria Kanutte Simonsen. 
-The project is a result of the course TDT4240 Software Architecture, and the goal was to create a multiplayer game.
+The project is a result of the course TDT4240 Software Architecture, and the goal was to create an online multiplayer game.
 Our game is called __Garden Guard__, which is inspired by a game similar to hide-and-seek.
 
 ## User manual <a name="Howto"></a>
@@ -26,7 +26,7 @@ Picture 1 | Picture 2
 :------------:|:------------------:
 <img src="/readme_images/1_install.png" width="150" /> | <img src="/readme_images/2_installed.png" width="250" />
 
-Next, locate the downloaded game in the emulator and click the download to start the game. Navigate to the navbar and click on the settings icon which can be seen in picture 3. Move to the "Apps and notifications" in the settings view in picture 4. Then, touch the "App info" which is shown in picture 5. Picture 6 shows this directory, and the libGDX file with the name Garden Guard. Touch the file and then click "Open" to start running the game.
+Next, locate the downloaded game in the emulator. This can be done by first navigating to the navbar and clicking on the settings icon which can be seen in picture 3. Move to the "Apps and notifications" in the settings view in picture 4. Then, touch the "App info" which is shown in picture 5. Picture 6 shows this directory, and the libGDX file with the name Garden Guard. Touch the file and then click "Open" to start running the game.
 
 Picture 3 | Picture 4 | Picture 5 | Picture 6 
 :------------:|:------------------:|:---------:|:---------:
