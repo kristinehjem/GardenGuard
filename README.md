@@ -20,12 +20,17 @@ To run this game one would need Android Studios. In addition one would need an A
 ### Running the game
 Following is an instruction to run the game for the emulator Pixel 3a API 29. 
 
-Download the APK-file from the repository or from the assignment delivery on Blackboard. Drag the APK-file over to the emulator in Android Studio. A view similar to picture_1 will pop up. Then, when the download is finished, a notification will be shown as seen in picture_2.
+Download the APK-file from the repository or from the assignment delivery on Blackboard. Drag the APK-file over to the emulator in Android Studio. A view similar to picture 1 will pop up. Then, when the download is finished, a notification will be shown as seen in picture 2.
 
+Picture 1 | Picture 2
+:------------:|:------------------:
+<img src="/readme_images/1_install.png" width="150" /> | <img src="/readme_images/2_installed.png" width="250" />
 
-Next, locate the downloaded game in the emulator and click the download to start the game. Navigate to the navbar and click on the settings icon which can be seen in picture_3. Move to the "Apps and notifications" in the settings view in picture_4. Then, tap the "App info" which is shown in picture_5. Picture_6 shows this directory, and the libGDX file with the name Garden Guard. Touch the file and then click "Open" to start running the game.
+Next, locate the downloaded game in the emulator and click the download to start the game. Navigate to the navbar and click on the settings icon which can be seen in picture 3. Move to the "Apps and notifications" in the settings view in picture 4. Then, touch the "App info" which is shown in picture 5. Picture 6 shows this directory, and the libGDX file with the name Garden Guard. Touch the file and then click "Open" to start running the game.
 
-
+Picture 3 | Picture 4 | Picture 5 | Picture 6 
+:------------:|:------------------:|:---------:|:---------:
+<img src="/readme_images/3_navbar_marked.png" width="150" /> | <img src="/readme_images/4_settings_marked.png" width="150" /> | <img src="/readme_images/5_appsANDnotfications_marked.png" width="150" /> | <img src="/readme_images/6_apps_marked.png" width="150" />
 
 ## Overview of project structure <a name="Overview"></a>
 Following is an overview of the most important files in our project. Branches with dotted lines (...) 
