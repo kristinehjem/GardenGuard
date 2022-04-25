@@ -57,7 +57,7 @@ public class Board {
                 {true, false, false, true, true, true, true, false, false, false}, // y = 7 - player start position
                 {true, true, true, true, true, true, true, false, false}, // y = 8 - player start position
                 {true, false, true, true, true, true, true, true, true}, // y = 9
-                {false, false, true, true, true, true, true, true, true}, // y = 10
+                {true, false, true, true, true, true, true, true, true}, // y = 10
                 {true, false, true, false, false, true, false, false, false}, // y = 11
                 {true, false, false, true, true, false, true, true, true}, // y = 12
                 {true, false, true, true, true, true, true, true, true}, // y = 13
@@ -72,7 +72,7 @@ public class Board {
                 {true, false, true, false, false, true, true, false, true}, // y = 1 - buttons
                 {true, false, true, false, true, false, true, false, true}, // y = 2 - buttons
                 {true, false, true, true, false, false, true, true, true}, // y = 3 - buttons
-                {false, false, true, true, true, true, true, true, true}, // y = 4
+                {true, false, true, true, true, true, true, true, true}, // y = 4
                 {true, true, true, true, true, true, true, true, true}, // y = 5
                 {true, false, true, true, true, true, false, true, false}, // y = 6 - player start position
                 {true, false, false, true, true, true, true, false, false, false}, // y = 7 - player start position

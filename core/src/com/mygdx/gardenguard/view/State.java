@@ -10,10 +10,8 @@ import com.mygdx.gardenguard.controller.stateControllers.Controller;
 public abstract class State {
 
     protected OrthographicCamera cam;
-    protected GameStateManager gsm;
 
     protected State(){
-        this.gsm = GameStateManager.getInstance();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, GardenGuard.WIDTH, GardenGuard.HEIGHT);
     }

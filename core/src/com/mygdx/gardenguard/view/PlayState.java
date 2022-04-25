@@ -24,7 +24,6 @@ import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.playerControllers.SeekerController;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
 import com.mygdx.gardenguard.controller.stateControllers.PlayStateController;
-import com.mygdx.gardenguard.model.board.Board;
 import com.mygdx.gardenguard.model.player.HiderModel;
 import com.mygdx.gardenguard.model.player.PlayerModel;
 import com.mygdx.gardenguard.model.player.SeekerModel;
@@ -33,9 +32,8 @@ public class PlayState extends State {
 
     private PlayStateController controller;
 
-    private Board board;
-    private int tileWidth = 53; // TODO: Dette burde sikkert implementeres i Tile-klassen. Og: Det hadde vært mye lettere om tilsene var like høy som brede (dvs. at bakgrunnens horisontale streker var like tynne spm de vertikale)
-    private int tileHeight = 53; // TODO: Prøv å bruk den nye referansen jeg lagde i board-klassen
+    private int tileWidth = 53;
+    private int tileHeight = 53;
     private TextureRegion upText = new TextureRegion(new Texture("upButton.png"));
     private TextureRegion downText = new TextureRegion(new Texture("downButton.png"));
     private TextureRegion leftText = new TextureRegion(new Texture("leftButton.png"));
@@ -58,8 +56,7 @@ public class PlayState extends State {
 
     public PlayState() {
         super();
-        this.board = new Board(super.gsm.getBoardNr());
-        this.controller = new PlayStateController(this.board);
+        this.controller = new PlayStateController();
         this.switchState = false;
         //SHADOW FOR SEEKER
         this.light = new Texture("oaaB1.png");
@@ -83,10 +80,10 @@ public class PlayState extends State {
 
     @Override
     public void update(float dt) {
-        if (super.gsm.getPlayer() instanceof SeekerModel) {
-            this.controller.checkSwitchTurn();
-            if (this.controller.isSeekerTurn()) {
-                SeekerController seekerController = (SeekerController) this.controller.getPlayerController();
+        if (getController().getPlayer() instanceof SeekerModel) {
+            controller.checkSwitchTurn();
+            if (controller.isSeekerTurn()) {
+                SeekerController seekerController = (SeekerController) controller.getPlayerController();
                 seekerController.updateView();
                 seekerController.checkForPlayers();
             }
@@ -98,10 +95,10 @@ public class PlayState extends State {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
-        if (gsm.getPlayer() instanceof SeekerModel) {
+        if (getController().getPlayer() instanceof SeekerModel) {
             shadowingRender(sb);
             showOtherPlayers(sb);
-        } else if (gsm.getPlayer() instanceof HiderModel) {
+        } else if (getController().getPlayer() instanceof HiderModel) {
             sb.begin();
             if(controller.isSeekerTurn()) {
                 sb.setColor(Color.GRAY);
@@ -113,7 +110,7 @@ public class PlayState extends State {
             sb.setProjectionMatrix(cam.combined);
             for (int y = 0; y < GardenGuard.numVertical; y++) {
                 for (int x = 0; x < GardenGuard.numHorisontal; x++) {
-                    board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+                    controller.getBoard().getTiles()[y][x].getTileView().drawTile(sb, x, y);
                 }
             }
             for (PlayerModel player: getController().getPlayers()) {
@@ -124,9 +121,9 @@ public class PlayState extends State {
         sb.begin();
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setProjectionMatrix(cam.combined);
-        font.draw(sb, "Steps: " + super.gsm.getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
-        font.draw(sb, gsm.getPlayer().getScore() + "p", GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
-        font.draw(sb, "Round: " + this.controller.getRounds() + "/5", 200, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Steps: " + getController().getPlayer().getSteps(), 10, GardenGuard.HEIGHT - 20);
+        font.draw(sb, getController().getPlayer().getScore() + "p", GardenGuard.WIDTH - 130, GardenGuard.HEIGHT - 20);
+        font.draw(sb, "Round: " + controller.getRounds() + "/5", GardenGuard.WIDTH - 310, GardenGuard.HEIGHT - 20);
         if(controller.isSeekerTurn()) {
             font.setColor(Color.RED);
             font.draw(sb, "Seekers turn", 180, GardenGuard.HEIGHT - 70);
@@ -140,7 +137,7 @@ public class PlayState extends State {
         stage.act();
         stage.draw();
         if (switchState) {
-            this.controller.pushNewState();
+            controller.pushNewState();
         }
         sb.end();
     }
@@ -149,10 +146,6 @@ public class PlayState extends State {
     @Override
     protected void dispose() {
 
-    }
-
-    private boolean isTurn() {
-        return (gsm.getPlayer() instanceof SeekerModel && controller.isSeekerTurn()) || (gsm.getPlayer() instanceof HiderModel && !controller.isSeekerTurn());
     }
 
     @Override
@@ -175,7 +168,7 @@ public class PlayState extends State {
         up.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (isTurn()) {
+                if (controller.isTurn()) {
                     controller.move("up");
                 }
                 return true;
@@ -184,7 +177,7 @@ public class PlayState extends State {
         down.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (isTurn()) {
+                if (controller.isTurn()) {
                     controller.move("down");
                 }
                 return true;
@@ -193,7 +186,7 @@ public class PlayState extends State {
         left.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (isTurn()) {
+                if (controller.isTurn()) {
                     controller.move("left");
                 }
                 return true;
@@ -202,7 +195,7 @@ public class PlayState extends State {
         right.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (isTurn()) {
+                if (controller.isTurn()) {
                     controller.move("right");
                 }
                 return true;
@@ -219,7 +212,7 @@ public class PlayState extends State {
                 return true;
             }
         });
-        if (super.gsm.getPlayer() instanceof SeekerModel) {
+        if (controller.getPlayer() instanceof SeekerModel) {
             endGame.setVisible(false);
         }
         stage.addActor(endGame);
@@ -231,19 +224,19 @@ public class PlayState extends State {
 
     @Override
     public void setTrueSwitch(){
-        this.controller.setSeekerTurn();
+        controller.setSeekerTurn();
     }
 
     @Override
     public void setFalseSwitch() {
-        if(this.controller.getRounds() > 4) {
+        if(controller.getRounds() > 4) {
             switchState = true;
         }
-        this.controller.setHiderTurn();
+        controller.setHiderTurn();
     }
 
     private void shadowingRender(SpriteBatch sb) {
-        lightSprite.setPosition((gsm.getPlayer().getPosition().x -2) * tileWidth, (gsm.getPlayer().getPosition().y - 2)* tileHeight);
+        lightSprite.setPosition((controller.getPlayer().getPosition().x -2) * tileWidth, (controller.getPlayer().getPosition().y - 2)* tileHeight);
         FrameBuffer frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, tileWidth, tileHeight,false);
         frameBuffer.begin();
         Gdx.gl.glClearColor(.2f, .2f, .2f, 1);
@@ -260,7 +253,7 @@ public class PlayState extends State {
         sb.begin();
         for (int y = 0; y < GardenGuard.numVertical; y++) {
             for (int x = 0; x < GardenGuard.numHorisontal; x++) {
-                board.getTiles()[y][x].getTileView().drawTile(sb, x, y);
+                controller.getBoard().getTiles()[y][x].getTileView().drawTile(sb, x, y);
             }
         }
 
@@ -281,9 +274,8 @@ public class PlayState extends State {
 
     private void showOtherPlayers(SpriteBatch sb){
         //Renders hiders if they are found
-        for(PlayerModel hider : super.gsm.getPlayers()) {
+        for(PlayerModel hider : getController().getPlayers()) {
             if(hider.getIsFound() && hider instanceof HiderModel) {
-                System.out.println("DRAW_HIDER "+ hider.getPosition().x +" : "+ hider.getPosition().y);
                 sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 sb.setProjectionMatrix(cam.combined);
                 sb.begin();

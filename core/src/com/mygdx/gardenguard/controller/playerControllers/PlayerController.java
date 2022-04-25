@@ -32,7 +32,7 @@ public abstract class PlayerController extends Controller {
         if (player.getSteps() > 0){
             switch (direction) {
             case "up":
-                if(super.gsm.getPlayer().getPosition().y == 14) {
+                if(getPlayer().getPosition().y == 14) {
                     System.err.println("Player cannot move further up, out of bounds \n");
                 } else if(board.getTiles()[(int) player.getPosition().y + 1][(int) super.gsm.getPlayer().getPosition().x].isWalkable()) {
                     int x = (int) player.getPosition().x;

@@ -16,20 +16,20 @@ public class PlayStateController extends Controller {
     private Board board;
     private int rounds;
 
-    public PlayStateController(Board board) {
+    public PlayStateController() {
         super();
         this.isSeekerTurn = false;
-        this.board = board;
         this.rounds = 1;
+        this.board = new Board(getBoardNr());
         setPlayerController();
     }
 
     private void setPlayerController() {
-        if (super.gsm.getPlayer() instanceof SeekerModel) {
-            this.playerController = new SeekerController((SeekerModel) super.gsm.getPlayer(), this.board);
-            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
-        } else if (super.gsm.getPlayer() instanceof HiderModel) {
-            this.playerController = new HiderController((HiderModel) super.gsm.getPlayer(), this.board);
+        if (gsm.getPlayer() instanceof SeekerModel) {
+            playerController = new SeekerController((SeekerModel) getPlayer(), board);
+            gsm.getFBIC().UpdateGameSwitchInDB(gsm.getGamePin(), false);
+        } else if (gsm.getPlayer() instanceof HiderModel) {
+            playerController = new HiderController((HiderModel) getPlayer(), board);
         } else {
             System.err.print("Player is neither instance of SeekerModel nor HiderModel");
         }
@@ -44,7 +44,7 @@ public class PlayStateController extends Controller {
     }
 
     private boolean allSavedPos() {
-        for (PlayerModel player : super.getPlayers()) {
+        for (PlayerModel player : getPlayers()) {
             //returns false if player is not done and is a hider
             if (!player.getIsDone() && !player.getIsSeeker()){
                 return false;
@@ -55,20 +55,20 @@ public class PlayStateController extends Controller {
 
     public void handleSavePosition() {
         //SET PLAYER TO DONE AND STEPS TO ZERO
-        super.getPlayer().setIsDone(true);
-        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), true);
-        super.getPlayer().setSteps(0);
-        super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), super.gsm.getPlayer().getSteps());
+        getPlayer().setIsDone(true);
+        gsm.getFBIC().UpdateIsDoneInDB(gsm.getGamePin(), getPlayer().getPlayerID(), true);
+        getPlayer().setSteps(0);
+        gsm.getFBIC().UpdateStepsInDB(gsm.getGamePin(), getPlayer().getPlayerID(), getPlayer().getSteps());
     }
 
     public void checkSwitchTurn(){
         //TRIGGERS SWITCH TURNS IF CONDITIONS ARE MADE FOR FINISHING A ROUND
-        if(isSeekerTurn() && gsm.getPlayer().getSteps() == 0) {
-            super.getPlayer().setIsDone(true);
-            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), false);
+        if(isSeekerTurn() && getPlayer().getSteps() == 0) {
+            getPlayer().setIsDone(true);
+            gsm.getFBIC().UpdateGameSwitchInDB(gsm.getGamePin(), false);
         }
         else if(!isSeekerTurn() && allSavedPos()) {
-            super.gsm.getFBIC().UpdateGameSwitchInDB(super.gsm.getGamePin(), true);
+            gsm.getFBIC().UpdateGameSwitchInDB(gsm.getGamePin(), true);
         }
     }
 
@@ -76,16 +76,16 @@ public class PlayStateController extends Controller {
         //RESETS STEPS FOR BOTH ROLES
         if(player instanceof SeekerModel) {
             player.setSteps(10);
-            super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+            gsm.getFBIC().UpdateStepsInDB(gsm.getGamePin(), player.getPlayerID(), player.getSteps());
         }
         else if (player instanceof HiderModel) {
-            player.setSteps(5);
-            super.gsm.getFBIC().UpdateStepsInDB(super.gsm.getGamePin(), player.getPlayerID(), player.getSteps());
+            player.setSteps(12 - (rounds));
+            gsm.getFBIC().UpdateStepsInDB(gsm.getGamePin(), player.getPlayerID(), player.getSteps());
         }
     }
 
     public int getRounds() {
-        return this.rounds;
+        return rounds;
     }
 
     public void increaseScore() {
@@ -94,28 +94,26 @@ public class PlayStateController extends Controller {
             if (hider instanceof HiderModel &&
                     getPlayer().getPlayerID().equals(hider.getPlayerID()) &&
                     !hider.getIsFound()) {
-                    super.getPlayer().setScore(super.getPlayer().getScore() + 10);
-                    super.gsm.getFBIC().UpdateScoreInDB(super.gsm.getGamePin(), super.getPlayer().getPlayerID(), super.getPlayer().getScore());
-                    System.out.println("GAIN_POINTS_CHECK");
-                    //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
+                    getPlayer().setScore(getPlayer().getScore() + 10);
+                    gsm.getFBIC().UpdateScoreInDB(gsm.getGamePin(), getPlayer().getPlayerID(), getPlayer().getScore());
             }
             else {
                 //SET ISFOUND TO FALSE AGAIN IF IT WAS TRUE
-                super.gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), gsm.getPlayer().getPlayerID(), false);
+                gsm.getFBIC().UpdateIsFoundInDB(gsm.getGamePin(), getPlayer().getPlayerID(), false);
             }
         }
     }
 
     public void setSeekerTurn() {
         //CHANGE FROM HIDER TURN TO SEEKER TURN AND
-        super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        gsm.getFBIC().UpdateIsDoneInDB(gsm.getGamePin(), getPlayer().getPlayerID(), false);
         isSeekerTurn = true;
     }
 
     public void setHiderTurn() {
         //CHANGE FROM SEEKER TURN TO HIDER TURN AND RESOLVE STEPS, POINTS, ROUNDS, AND RESET VARIAVBLE LIKE ISDONE
-        if (super.getPlayer().getIsDone() == true) {
-            super.gsm.getFBIC().UpdateIsDoneInDB(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID(), false);
+        if (getPlayer().getIsDone() == true) {
+            gsm.getFBIC().UpdateIsDoneInDB(gsm.getGamePin(), getPlayer().getPlayerID(), false);
             resetSteps(gsm.getPlayer());
             increaseScore();
             increaseRounds();
@@ -125,7 +123,15 @@ public class PlayStateController extends Controller {
 
     public void increaseRounds() {
         //INCREASE ROUND NUMBERS BY 1
-        this.rounds++;
+        rounds++;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public boolean isTurn() {
+        return (getPlayer() instanceof SeekerModel && isSeekerTurn()) || (getPlayer() instanceof HiderModel && !isSeekerTurn());
     }
 
     @Override
@@ -134,8 +140,7 @@ public class PlayStateController extends Controller {
     }
 
     public PlayerController getPlayerController() {
-        return this.playerController;
+        return playerController;
     }
-
 
 }

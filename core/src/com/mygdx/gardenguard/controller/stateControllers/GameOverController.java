@@ -17,17 +17,17 @@ public class GameOverController extends Controller {
     }
 
     public void handleInput() {
-        if (super.gsm.getPlayers().size() == 1) {
-            super.gsm.getFBIC().DeleteGame(super.gsm.getGamePin());
+        if (getPlayers().size() == 1) {
+            gsm.getFBIC().DeleteGame(gsm.getGamePin());
         }
         else {
-            super.gsm.getFBIC().DeletePlayer(super.gsm.getGamePin(), super.gsm.getPlayer().getPlayerID());
+            gsm.getFBIC().DeletePlayer(gsm.getGamePin(), getPlayer().getPlayerID());
         }
-        super.gsm.set(new MenuState());
+        gsm.set(new MenuState());
     }
 
     public List<String> getScores() {
-        for (PlayerModel player : super.getPlayers()) {
+        for (PlayerModel player : getPlayers()) {
             for (int i = 0; i < sortedPlayers.size(); i++) {
                 if (player.getScore() > sortedPlayers.get(i).getScore()) {
                     sortedPlayers.add(i, player);
@@ -40,7 +40,6 @@ public class GameOverController extends Controller {
         }
         List<String> scores = new ArrayList<>();
         for (PlayerModel player : sortedPlayers) {
-            System.out.println(player.getScore());
             scores.add(player.getUsername() + ": " + player.getScore());
         }
         return scores;

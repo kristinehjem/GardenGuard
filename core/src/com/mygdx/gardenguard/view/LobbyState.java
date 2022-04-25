@@ -156,7 +156,7 @@ public class LobbyState extends State{
                 }
             };
         });
-        if (super.gsm.getPlayer() instanceof HiderModel) {
+        if (lobbyController.getPlayer() instanceof HiderModel) {
             startGame.setVisible(false);
         }
         stage.addActor(startGame);

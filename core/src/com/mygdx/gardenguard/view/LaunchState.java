@@ -10,11 +10,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gardenguard.GardenGuard;
 import com.mygdx.gardenguard.controller.stateControllers.Controller;
+import com.mygdx.gardenguard.controller.stateControllers.LaunchController;
 
 public class LaunchState extends State{
 
     private Sprite splash;
     private Stage stage;
+
+    private LaunchController controller;
 
     private float alpha;
     private boolean animationDone;
@@ -24,6 +27,8 @@ public class LaunchState extends State{
     private boolean fadeIn;
 
     public LaunchState() {
+        super();
+        controller = new LaunchController();
         create();
     }
 
@@ -36,7 +41,7 @@ public class LaunchState extends State{
     public void update(float dt) {
         //Function for fading, checks if fading in is true, then if animation is done
         if(animationDone) {
-            gsm.push(new MenuState());
+            controller.handleDone();
         }
         if (fadeIn) {
             alpha = timer / TIME_TO_FADE;
