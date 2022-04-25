@@ -145,7 +145,7 @@ public class PlayState extends State {
 
     @Override
     protected void dispose() {
-
+        stage.dispose();
     }
 
     @Override

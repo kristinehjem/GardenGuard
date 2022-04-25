@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -62,21 +63,24 @@ public class GameOverState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
+
         sb.begin();
         sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
-        titleText.draw(sb, "Game over", (GardenGuard.WIDTH - 260)/2, 2 * (cam.position.y - titleText.getLineHeight()/2));
+        titleText.draw(sb, "Game over", (GardenGuard.WIDTH - 260)/2f, 2 * (cam.position.y - titleText.getLineHeight()/2));
         int i = 0;
         for (String score : scores) {
             float x_value = (float) (GardenGuard.WIDTH) / 2 - 150;
-            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * i;
+            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4f - scoreText.getLineHeight() * i;
             scoreText.draw(sb, score, x_value, y_value);
             i++;
         }
         int j = 0;
         for (PlayerModel player: this.players) {
             float x_value = (float) (GardenGuard.WIDTH) / 2 - 230;
-            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4 - scoreText.getLineHeight() * j-50;
+            float y_value = (float) GardenGuard.HEIGHT - GardenGuard.HEIGHT/4f - scoreText.getLineHeight() * j-50;
             sb.draw(new Texture(player.getTextureFile()), x_value, y_value, 60, 60);
             j++;
         }
@@ -98,8 +102,8 @@ public class GameOverState extends State {
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         Button endGame = new TextButton("End game", mySkin, "small");
-        endGame.setSize(GardenGuard.WIDTH/4, GardenGuard.HEIGHT/12);
-        endGame.setPosition(GardenGuard.WIDTH/2 - 55, GardenGuard.HEIGHT/8);
+        endGame.setSize(GardenGuard.WIDTH/4f, GardenGuard.HEIGHT/12f);
+        endGame.setPosition(GardenGuard.WIDTH/2f - 55, GardenGuard.HEIGHT/8f);
         endGame.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
