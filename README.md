@@ -9,7 +9,7 @@
 ## Information <a name="Information"></a>
 This repository is made by Ingrid Frøyland Gomo, Kristine Hjemgård, Sven Herman Holmsen, 
 Sondre Westby Liestøl, Elen Katrine Paulsen and Beate Maria Kanutte Simonsen. 
-The project is a result of the course TDT4240 Software Architecture with a goal to create a game.
+The project is a result of the course TDT4240 Software Architecture, and the goal was to create a multiplayer game.
 Our game is called __Garden Guard__, which is inspired by a game similar to hide-and-seek.
 
 ## How to run program <a name="Howto"></a>
@@ -20,14 +20,15 @@ To run the program you press cmd+alt+del and pray to higher powers that nothing 
 ## Overview of project structure <a name="Overview"></a>
 Following is an overview of the most important files in our project. Branches with dotted lines (...) 
 indicates other files/repositories within the branch. They have been omitted to simplify the 
-overall structure. Especially the directories of API, controller, model and view in the core-directory contains several java-files which we have coded. The GardenGuard.java and GameStateManager.java are kept outside of the MVC-pattern in core, and this is discussed more thoroughly in the implementation document. The assets-directory contains pictures used in our application.
+overall structure. Especially the directories of API, controller, model and view in the core-directory contains several java-files which we have coded. The GardenGuard.java and GameStateManager.java are kept outside of the MVC-pattern in core, and this is discussed more thoroughly in the implementation document. The assets- and resources-directories contains pictures used in our application.
 
 ```
 GardenGuard
 ├── android
 │   ├── java
 │   │    └── com.mygdx.GardenGuard
-│   │         └── ...
+│   │         ├── AndroidInterFaceClass.java
+│   │         └── AndroidLauncher.java
 │   ├── assets
 │   │    ├── skin
 │   │    └── ...
@@ -55,10 +56,12 @@ GardenGuard
 │             ├── GardenGuard.java
 │             └── ...
 ├── desktop
-│   └── java
-│        └── com.mygdx.GardenGuard
-│             ├── DesktopInterFaceClass.java
-│             └── DesktopLauncher.java
+│   ├── java
+│   │    └── com.mygdx.GardenGuard
+│   │         ├── DesktopInterFaceClass.java
+│   │         └── DesktopLauncher.java
+│   └── resources
+│        └── ...
 ├── gradle/wrapper
 │   └── ...
 ├── README.md
