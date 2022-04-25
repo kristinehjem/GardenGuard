@@ -1,11 +1,8 @@
 package com.mygdx.gardenguard;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.badlogic.gdx.math.Vector2;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

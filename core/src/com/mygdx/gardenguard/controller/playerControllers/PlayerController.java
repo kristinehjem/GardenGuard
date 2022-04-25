@@ -27,9 +27,9 @@ public abstract class PlayerController extends Controller {
         if (player.getSteps() > 0) {
             switch (direction) {
             case "up":
-                if(getPlayer().getPosition().y == 14) {
+                if(player.getPosition().y == 14) {
                     System.err.println("Player cannot move further up, out of bounds \n");
-                } else if(board.getTiles()[(int) player.getPosition().y + 1][(int) getPlayer().getPosition().x].isWalkable()) {
+                } else if(board.getTiles()[(int) player.getPosition().y + 1][(int) player.getPosition().x].isWalkable()) {
                     int x = (int) player.getPosition().x;
                     int y = (int) player.getPosition().y + 1;
                     player.setPosition(x, y);
@@ -41,11 +41,11 @@ public abstract class PlayerController extends Controller {
                 }
                 break;
             case "down":
-                if(super.gsm.getPlayer().getPosition().y == 0) {
+                if(player.getPosition().y == 0) {
                     System.err.println("Player cannot move further down, out of bounds \n");
                 } else if(board.getTiles()[(int) player.getPosition().y - 1][(int) player.getPosition().x].isWalkable()) {
-                    int x = (int) getPlayer().getPosition().x;
-                    int y = (int) getPlayer().getPosition().y - 1;
+                    int x = (int) player.getPosition().x;
+                    int y = (int) player.getPosition().y - 1;
                     player.setPosition(x, y);
                     gsm.getFBIC().UpdatePositionInDB(gsm.getGamePin(), player.getPlayerID(), new Vector2(player.getPosition().x, player.getPosition().y));
                     player.setSteps(player.getSteps() - 1);
@@ -55,11 +55,11 @@ public abstract class PlayerController extends Controller {
                 }
                 break;
             case "left":
-                if(super.gsm.getPlayer().getPosition().x == 0) {
+                if(player.getPosition().x == 0) {
                     System.err.println("Player cannot move further left, out of bounds \n");
                 } else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x - 1].isWalkable()) {
-                    int x = (int) getPlayer().getPosition().x - 1;
-                    int y = (int) getPlayer().getPosition().y;
+                    int x = (int) player.getPosition().x - 1;
+                    int y = (int) player.getPosition().y;
                     player.setPosition(x, y);
                     gsm.getFBIC().UpdatePositionInDB(gsm.getGamePin(), player.getPlayerID(), new Vector2(player.getPosition().x, player.getPosition().y));
                     player.setSteps(player.getSteps() - 1);
@@ -69,7 +69,7 @@ public abstract class PlayerController extends Controller {
                 }
                 break;
             case "right":
-                if(getPlayer().getPosition().x == 8) {
+                if(player.getPosition().x == 8) {
                     System.err.println("Player cannot move further right, out of bounds \n");
                 } else if(board.getTiles()[(int) player.getPosition().y][(int) player.getPosition().x + 1].isWalkable()) {
                     int x = (int) player.getPosition().x + 1;
