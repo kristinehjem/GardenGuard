@@ -1,6 +1,7 @@
 package com.mygdx.gardenguard.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -66,8 +67,10 @@ public class GameOverState extends State {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
+        sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         sb.begin();
+        sb.setColor(Color.WHITE);
         sb.draw(background, 0, 0, GardenGuard.WIDTH, GardenGuard.HEIGHT);
         titleText.draw(sb, "Game over", (GardenGuard.WIDTH - 260)/2f, 2 * (cam.position.y - titleText.getLineHeight()/2));
         int i = 0;
