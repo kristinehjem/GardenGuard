@@ -2,7 +2,7 @@
 
 ## **Table of Contents**
 1. [Information](#Information) 
-2. [How to run program](#Howto)
+2. [User manual](#Howto)
 3. [Overview of project structure](#Overview)
 
 
@@ -12,10 +12,20 @@ Sondre Westby Liestøl, Elen Katrine Paulsen and Beate Maria Kanutte Simonsen.
 The project is a result of the course TDT4240 Software Architecture, and the goal was to create a multiplayer game.
 Our game is called __Garden Guard__, which is inspired by a game similar to hide-and-seek.
 
-## How to run program <a name="Howto"></a>
-> ##### TODO: How to run program.
+## User manual <a name="Howto"></a>
 
-To run the program you press cmd+alt+del and pray to higher powers that nothing happened.
+### Requirements
+To run this game one would need Android Studios. In addition one would need an Android device connected to this IDE or an emulator in this programming environment. The android device/emulator must run on Android version 5.0 (Lollipop) or higher. For example the emulator Pixel 3a API 29 is a suitable device. 
+
+### Running the game
+Following is an instruction to run the game for the emulator Pixel 3a API 29. 
+
+Download the APK-file from the repository or from the assignment delivery on Blackboard. Drag the APK-file over to the emulator in Android Studio. A view similar to picture_1 will pop up. Then, when the download is finished, a notification will be shown as seen in picture_2.
+
+
+Next, locate the downloaded game in the emulator and click the download to start the game. Navigate to the navbar and click on the settings icon which can be seen in picture_3. Move to the "Apps and notifications" in the settings view in picture_4. Then, tap the "App info" which is shown in picture_5. Picture_6 shows this directory, and the libGDX file with the name Garden Guard. Touch the file and then click "Open" to start running the game.
+
+
 
 ## Overview of project structure <a name="Overview"></a>
 Following is an overview of the most important files in our project. Branches with dotted lines (...) 
