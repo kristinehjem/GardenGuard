@@ -75,11 +75,11 @@ public class PlayStateController extends Controller {
     private void resetSteps(PlayerModel player) {
         //RESETS STEPS FOR BOTH ROLES
         if(player instanceof SeekerModel) {
-            player.setSteps(10);
+            player.setSteps(12);
             gsm.getFBIC().UpdateStepsInDB(gsm.getGamePin(), player.getPlayerID(), player.getSteps());
         }
         else if (player instanceof HiderModel) {
-            player.setSteps(12 - (rounds));
+            player.setSteps(8);
             gsm.getFBIC().UpdateStepsInDB(gsm.getGamePin(), player.getPlayerID(), player.getSteps());
         }
     }

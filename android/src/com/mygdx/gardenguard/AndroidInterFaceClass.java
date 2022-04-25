@@ -1,8 +1,11 @@
 package com.mygdx.gardenguard;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.badlogic.gdx.math.Vector2;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,12 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AndroidInterFaceClass implements FireBaseInterface {
-    FirebaseDatabase database;
-    DatabaseReference gameRef;
-    ValueEventListener gameRefListener;
-    ValueEventListener gameSwitchListener;
-    ValueEventListener boardNrListener;
-    ValueEventListener pinExistListener;
+    private FirebaseDatabase database;
+    private DatabaseReference gameRef;
+    private ValueEventListener gameRefListener;
+    private ValueEventListener gameSwitchListener;
+    private ValueEventListener boardNrListener;
+    private ValueEventListener pinExistListener;
 
     public AndroidInterFaceClass() {
         database = FirebaseDatabase.getInstance();
